@@ -3,4 +3,6 @@
 [feature]
     parametrization = true
 ['remote "minio"']
-    url = http://156.17.248.227:30981/public/gerf/
+    url = s3://dynamic-gerf
+    endpointurl = http://156.17.248.227:30981
+    profile = dynamic_gerf
