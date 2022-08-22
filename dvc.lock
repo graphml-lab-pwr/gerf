@@ -1,0 +1,3889 @@
+schema: '2.0'
+stages:
+  embed_node2vec@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/node2vec.py --dataset
+      WikiCS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/structural/node2vec.py
+      md5: 6b7f6ceee5333cc2b17183e6d80f7c62
+      size: 1915
+    - path: src/embed/structural/node2vec.py
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
+    params:
+      experiments/configs/embed/structural/n2v.yaml:
+        params.WikiCS:
+          batch_size: 256
+          context_size: 11
+          emb_dim: 128
+          lr: 0.015526135020330113
+          num_epochs: 20
+          num_negative_samples: 3
+          p: 0.9903532902564003
+          q: 0.6495195865065801
+          walk_length: 27
+          walks_per_node: 20
+    outs:
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+  embed_line@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/line.py --dataset
+      WikiCS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/structural/line.py
+      md5: 202e83d692708bafbece1ae4461cb1fa
+      size: 1730
+    - path: src/embed/structural/line.py
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
+    params:
+      experiments/configs/embed/structural/line.yaml:
+        params.WikiCS:
+          batch_size: 32
+          emb_dim: 128
+          negative_ratio: 0
+          num_epochs: 10
+          order: first
+    outs:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+  embed_sdne@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/sdne.py --dataset
+      WikiCS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/structural/sdne.py
+      md5: 27563b5321bd644f5b9289bb5a9d0654
+      size: 1770
+    - path: src/embed/structural/sdne.py
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
+    params:
+      experiments/configs/embed/structural/sdne.yaml:
+        params.WikiCS:
+          alpha: 0.0006538975205078281
+          batch_size: 256
+          beta: 3.9129865692749264
+          emb_dim: 128
+          hidden_size: 256
+          nu1: 7.406097210272269e-05
+          nu2: 0.0008783294037345857
+          num_epochs: 50
+    outs:
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+  embed_tadw@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/tadw.py --dataset
+      WikiCS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/attributed/tadw.py
+      md5: 0dc38ece73761c588cff67042a1ea035
+      size: 1813
+    - path: src/embed/attributed/tadw.py
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
+    params:
+      experiments/configs/embed/attributed/tadw.yaml:
+        params.WikiCS:
+          emb_dim: 64
+          lambd: 8
+          lr: 0.0012673894851240107
+          num_epochs: 20
+          reduction_dimensions: 32
+          svd_iterations: 21
+    outs:
+    - path: data/embeddings/attributed/tadw/WikiCS/
+      md5: 4784222190f29ea00389b0934e276c7b.dir
+      size: 59916670
+      nfiles: 10
+  apply_concat_pca_refiner@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
+      ConcatPCA --dataset WikiCS
+    deps:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_naive_refiner.py
+      md5: f9a2fa56d58139593ba0d029d5493a60
+      size: 2222
+    params:
+      experiments/configs/refine/naive/ConcatPCA.yaml:
+        paths:
+          output:
+            embedding: data/embeddings/refined/naive/ConcatPCA/${emb_method}/${dataset}/
+        structural_embedding_methods:
+        - n2v
+        - line
+        - sdne
+    outs:
+    - path: data/embeddings/refined/naive/ConcatPCA/line/WikiCS/
+      md5: 43815b5fa29c08d8bd27d51fc92e649e.dir
+      size: 59916660
+      nfiles: 10
+    - path: data/embeddings/refined/naive/ConcatPCA/n2v/WikiCS/
+      md5: 87fd64921fe7cea007ec5d198e8412be.dir
+      size: 59916660
+      nfiles: 10
+    - path: data/embeddings/refined/naive/ConcatPCA/sdne/WikiCS/
+      md5: 60fc132c98d867b551f240fcdc229da9.dir
+      size: 59916660
+      nfiles: 10
+  apply_concat_refiner@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
+      Concat --dataset WikiCS
+    deps:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_naive_refiner.py
+      md5: f9a2fa56d58139593ba0d029d5493a60
+      size: 2222
+    params:
+      experiments/configs/refine/naive/Concat.yaml:
+        paths:
+          output:
+            embedding: data/embeddings/refined/naive/Concat/${emb_method}/${dataset}/
+        structural_embedding_methods:
+        - n2v
+        - line
+        - sdne
+    outs:
+    - path: data/embeddings/refined/naive/Concat/line/WikiCS/
+      md5: 15d0c647ffeddf04e0b07fce350c76ad.dir
+      size: 200328180
+      nfiles: 10
+    - path: data/embeddings/refined/naive/Concat/n2v/WikiCS/
+      md5: 0ffeab626482c3583ccfb7859fa6a335.dir
+      size: 200328180
+      nfiles: 10
+    - path: data/embeddings/refined/naive/Concat/sdne/WikiCS/
+      md5: 08a1cb8ebb656354b40b8fb51ba8e332.dir
+      size: 200328180
+      nfiles: 10
+  apply_mlp_refiner@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
+      MLP --dataset WikiCS
+    deps:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_naive_refiner.py
+      md5: f9a2fa56d58139593ba0d029d5493a60
+      size: 2222
+    params:
+      experiments/configs/refine/naive/MLP.yaml:
+        WikiCS:
+          lr: 0.001
+          batch_size: 128
+          num_epochs: 20
+        paths:
+          output:
+            embedding: data/embeddings/refined/naive/MLP/${emb_method}/${dataset}/
+        structural_embedding_methods:
+        - n2v
+        - line
+        - sdne
+    outs:
+    - path: data/embeddings/refined/naive/MLP/line/WikiCS/
+      md5: fbac8f54790080f8fb2fbd8d50379459.dir
+      size: 59916664
+      nfiles: 10
+    - path: data/embeddings/refined/naive/MLP/n2v/WikiCS/
+      md5: 8d7cf69f500f5763464a0b2cc73b43bc.dir
+      size: 59916666
+      nfiles: 10
+    - path: data/embeddings/refined/naive/MLP/sdne/WikiCS/
+      md5: dc05f659ee19b3f654989af9b0a63c08.dir
+      size: 59916668
+      nfiles: 10
+  evaluate_node_classification@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_node_classification.py
+      --dataset WikiCS
+    deps:
+    - path: data/embeddings/
+      md5: 2b3d531c8338127dfa97ef39af11320a.dir
+      size: 26033228521
+      nfiles: 1320
+    - path: experiments/scripts/evaluate_node_classification.py
+      md5: dc25a67637b47bd4957d57a704a05782
+      size: 1924
+    - path: src/tasks/node_classification.py
+      md5: 38d3dc3aa4fa6cc054693a92494160fb
+      size: 1531
+    params:
+      experiments/configs/node_classification.yaml:
+        embedding_methods:
+        - features
+        - structural/line
+        - structural/n2v
+        - structural/sdne
+        - attributed/fscnmf
+        - attributed/tadw
+        - attributed/dgi
+        - refined/naive/Concat/line
+        - refined/naive/Concat/n2v
+        - refined/naive/Concat/sdne
+        - refined/naive/ConcatPCA/line
+        - refined/naive/ConcatPCA/n2v
+        - refined/naive/ConcatPCA/sdne
+        - refined/naive/MLP/line
+        - refined/naive/MLP/n2v
+        - refined/naive/MLP/sdne
+        - refined/GERF_grid/line
+        - refined/GERF_grid/n2v
+        - refined/GERF_grid/sdne
+        - refined/GERF_uniform/line
+        - refined/GERF_uniform/n2v
+        - refined/GERF_uniform/sdne
+        - refined/GERF_homophily/line
+        - refined/GERF_homophily/n2v
+        - refined/GERF_homophily/sdne
+    outs:
+    - path: data/metrics/node_classification/WikiCS/
+      md5: 154f8dbda3a5fed963885adcd2e04c75.dir
+      size: 3827082
+      nfiles: 25
+  make_report_tables:
+    cmd: PYTHONPATH=. python3 experiments/scripts/make_report_tables.py
+    deps:
+    - path: data/metrics/link_prediction
+      md5: 873bf26fb217357e221542b5067c8ead.dir
+      size: 4078804
+      nfiles: 118
+    - path: data/metrics/node_classification
+      md5: d5827fe3d5c9f15f32ca3a6469850ce7.dir
+      size: 17246206
+      nfiles: 100
+    - path: experiments/scripts/make_report_tables.py
+      md5: 3ad31ca4f1f44b2a8525c5ae5a1c05fd
+      size: 4228
+    outs:
+    - path: data/report_link_prediction.txt
+      md5: 78fe0b38ca684ffa856036889d8e4433
+      size: 2582
+    - path: data/report_node_classification.txt
+      md5: a863f927d0fce5d4731203f964e4d110
+      size: 2528
+  embed_node2vec@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/node2vec.py --dataset
+      Amazon-CS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/structural/node2vec.py
+      md5: 6b7f6ceee5333cc2b17183e6d80f7c62
+      size: 1915
+    - path: src/embed/structural/node2vec.py
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
+    params:
+      experiments/configs/embed/structural/n2v.yaml:
+        params.Amazon-CS:
+          batch_size: 256
+          context_size: 8
+          emb_dim: 128
+          lr: 0.014882587046783491
+          num_epochs: 20
+          num_negative_samples: 1
+          p: 0.739931968708869
+          q: 1.1484292305792294
+          walk_length: 29
+          walks_per_node: 20
+    outs:
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+  embed_line@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/line.py --dataset
+      Amazon-CS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/structural/line.py
+      md5: 202e83d692708bafbece1ae4461cb1fa
+      size: 1730
+    - path: src/embed/structural/line.py
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
+    params:
+      experiments/configs/embed/structural/line.yaml:
+        params.Amazon-CS:
+          batch_size: 1024
+          emb_dim: 128
+          negative_ratio: 0
+          num_epochs: 10
+          order: first
+    outs:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+  embed_sdne@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/sdne.py --dataset
+      Amazon-CS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/structural/sdne.py
+      md5: 27563b5321bd644f5b9289bb5a9d0654
+      size: 1770
+    - path: src/embed/structural/sdne.py
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
+    params:
+      experiments/configs/embed/structural/sdne.yaml:
+        params.Amazon-CS:
+          alpha: 2.096087512750295e-05
+          batch_size: 256
+          beta: 4.463429019746708
+          emb_dim: 128
+          hidden_size: 128
+          nu1: 3.123777168711336e-05
+          nu2: 0.000977667668104079
+          num_epochs: 50
+    outs:
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+  apply_concat_refiner@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
+      Concat --dataset Amazon-CS
+    deps:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_naive_refiner.py
+      md5: f9a2fa56d58139593ba0d029d5493a60
+      size: 2222
+    params:
+      experiments/configs/refine/naive/Concat.yaml:
+        paths:
+          output:
+            embedding: data/embeddings/refined/naive/Concat/${emb_method}/${dataset}/
+        structural_embedding_methods:
+        - n2v
+        - line
+        - sdne
+    outs:
+    - path: data/embeddings/refined/naive/Concat/line/Amazon-CS/
+      md5: b583a1505dadf524ab1e5f7bbf55c9dc.dir
+      size: 492328820
+      nfiles: 10
+    - path: data/embeddings/refined/naive/Concat/n2v/Amazon-CS/
+      md5: 888c392895fd7b702f230ed199509e38.dir
+      size: 492328820
+      nfiles: 10
+    - path: data/embeddings/refined/naive/Concat/sdne/Amazon-CS/
+      md5: ea299db609b9b187807599a90c90f2e3.dir
+      size: 492328820
+      nfiles: 10
+  apply_concat_pca_refiner@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
+      ConcatPCA --dataset Amazon-CS
+    deps:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_naive_refiner.py
+      md5: f9a2fa56d58139593ba0d029d5493a60
+      size: 2222
+    params:
+      experiments/configs/refine/naive/ConcatPCA.yaml:
+        paths:
+          output:
+            embedding: data/embeddings/refined/naive/ConcatPCA/${emb_method}/${dataset}/
+        structural_embedding_methods:
+        - n2v
+        - line
+        - sdne
+    outs:
+    - path: data/embeddings/refined/naive/ConcatPCA/line/Amazon-CS/
+      md5: f101064c15f8c0061a36538b9eb56d17.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/refined/naive/ConcatPCA/n2v/Amazon-CS/
+      md5: 2aa4cd01a685ef26d1ba17b4c63020a6.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/refined/naive/ConcatPCA/sdne/Amazon-CS/
+      md5: 88d8014af0c89923484710fe1df234dd.dir
+      size: 70417790
+      nfiles: 10
+  apply_mlp_refiner@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
+      MLP --dataset Amazon-CS
+    deps:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_naive_refiner.py
+      md5: f9a2fa56d58139593ba0d029d5493a60
+      size: 2222
+    params:
+      experiments/configs/refine/naive/MLP.yaml:
+        Amazon-CS:
+          lr: 0.001
+          batch_size: 128
+          num_epochs: 20
+        paths:
+          output:
+            embedding: data/embeddings/refined/naive/MLP/${emb_method}/${dataset}/
+        structural_embedding_methods:
+        - n2v
+        - line
+        - sdne
+    outs:
+    - path: data/embeddings/refined/naive/MLP/line/Amazon-CS/
+      md5: 8679cede7017a57a22390e26272d7acd.dir
+      size: 70417798
+      nfiles: 10
+    - path: data/embeddings/refined/naive/MLP/n2v/Amazon-CS/
+      md5: db3790a1ff80ac2dfe73ba5e90376cad.dir
+      size: 70417800
+      nfiles: 10
+    - path: data/embeddings/refined/naive/MLP/sdne/Amazon-CS/
+      md5: a41375dbe6e4759b49e07acc2ed530bc.dir
+      size: 70417800
+      nfiles: 10
+  embed_tadw@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/tadw.py --dataset
+      Amazon-CS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/attributed/tadw.py
+      md5: 0dc38ece73761c588cff67042a1ea035
+      size: 1813
+    - path: src/embed/attributed/tadw.py
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
+    params:
+      experiments/configs/embed/attributed/tadw.yaml:
+        params.Amazon-CS:
+          emb_dim: 64
+          lambd: 1
+          lr: 0.0013739374279425401
+          num_epochs: 20
+          reduction_dimensions: 16
+          svd_iterations: 36
+    outs:
+    - path: data/embeddings/attributed/tadw/Amazon-CS/
+      md5: de6c899fc880672a536efc6fd9022a04.dir
+      size: 70417790
+      nfiles: 10
+  evaluate_node_classification@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_node_classification.py
+      --dataset Amazon-CS
+    deps:
+    - path: data/embeddings/
+      md5: 2b3d531c8338127dfa97ef39af11320a.dir
+      size: 26033228521
+      nfiles: 1320
+    - path: experiments/scripts/evaluate_node_classification.py
+      md5: dc25a67637b47bd4957d57a704a05782
+      size: 1924
+    - path: src/tasks/node_classification.py
+      md5: 38d3dc3aa4fa6cc054693a92494160fb
+      size: 1531
+    params:
+      experiments/configs/node_classification.yaml:
+        embedding_methods:
+        - features
+        - structural/line
+        - structural/n2v
+        - structural/sdne
+        - attributed/fscnmf
+        - attributed/tadw
+        - attributed/dgi
+        - refined/naive/Concat/line
+        - refined/naive/Concat/n2v
+        - refined/naive/Concat/sdne
+        - refined/naive/ConcatPCA/line
+        - refined/naive/ConcatPCA/n2v
+        - refined/naive/ConcatPCA/sdne
+        - refined/naive/MLP/line
+        - refined/naive/MLP/n2v
+        - refined/naive/MLP/sdne
+        - refined/GERF_grid/line
+        - refined/GERF_grid/n2v
+        - refined/GERF_grid/sdne
+        - refined/GERF_uniform/line
+        - refined/GERF_uniform/n2v
+        - refined/GERF_uniform/sdne
+        - refined/GERF_homophily/line
+        - refined/GERF_homophily/n2v
+        - refined/GERF_homophily/sdne
+    outs:
+    - path: data/metrics/node_classification/Amazon-CS/
+      md5: c0811dda9d5f9aabca671ca19d2e8ebb.dir
+      size: 3819624
+      nfiles: 25
+  embed_dgi@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/dgi.py --dataset
+      WikiCS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/attributed/dgi.py
+      md5: 2cfe6b3c9568f26a6e4441181c4833f7
+      size: 1601
+    - path: src/embed/attributed/dgi.py
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
+    params:
+      experiments/configs/embed/attributed/dgi.yaml:
+        params.WikiCS:
+          emb_dim: 128
+          lr: 0.0004877389523631676
+          num_epochs: 100
+    outs:
+    - path: data/embeddings/attributed/dgi/WikiCS/
+      md5: 956c43d45224b1198c12f0efc9a3af5c.dir
+      size: 59916679
+      nfiles: 10
+  embed_dgi@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/dgi.py --dataset
+      Amazon-CS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/attributed/dgi.py
+      md5: 2cfe6b3c9568f26a6e4441181c4833f7
+      size: 1601
+    - path: src/embed/attributed/dgi.py
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
+    params:
+      experiments/configs/embed/attributed/dgi.yaml:
+        params.Amazon-CS:
+          emb_dim: 128
+          lr: 0.00022433497490294773
+          num_epochs: 100
+    outs:
+    - path: data/embeddings/attributed/dgi/Amazon-CS/
+      md5: 77a2e321f740fb7986a2b64ad96cf8cc.dir
+      size: 70417800
+      nfiles: 10
+  embed_fscnmf@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/fscnmf.py --dataset
+      WikiCS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/attributed/fscnmf.py
+      md5: 35e2ef7c1dbf7316bc2d7eaca531ea3b
+      size: 1881
+    - path: src/embed/attributed/fscnmf.py
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
+    params:
+      experiments/configs/embed/attributed/fscnmf.yaml:
+        params.WikiCS:
+          alpha_1: 1204
+          alpha_2: 1.4891700115683768
+          alpha_3: 0.6838041609077723
+          beta_1: 1337
+          beta_2: 1.340005869245568
+          beta_3: 1.3879204425017988
+          emb_dim: 64
+          num_epochs: 500
+    outs:
+    - path: data/embeddings/attributed/fscnmf/WikiCS/
+      md5: cba03dffcd183d72c82a1b124e2725c2.dir
+      size: 59916663
+      nfiles: 10
+  embed_fscnmf@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/fscnmf.py --dataset
+      Amazon-CS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/attributed/fscnmf.py
+      md5: 35e2ef7c1dbf7316bc2d7eaca531ea3b
+      size: 1881
+    - path: src/embed/attributed/fscnmf.py
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
+    params:
+      experiments/configs/embed/attributed/fscnmf.yaml:
+        params.Amazon-CS:
+          alpha_1: 227
+          alpha_2: 1.2886208038871247
+          alpha_3: 0.3802003542154301
+          beta_1: 100
+          beta_2: 0.25423894181169904
+          beta_3: 0.10867964292175775
+          emb_dim: 64
+          num_epochs: 500
+    outs:
+    - path: data/embeddings/attributed/fscnmf/Amazon-CS/
+      md5: 8300bac0745b33d00388af500d52cb39.dir
+      size: 70417780
+      nfiles: 10
+  hps_GERF@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF.py --dataset WikiCS
+    deps:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+    - path: experiments/scripts/refine/hps_GERF.py
+      md5: 87c372b07e89124b5a6212ca4c044811
+      size: 3335
+    outs:
+    - path: data/hps/GERF/WikiCS/best.json
+      md5: 2f49561cb11c6387bae903673a0d2b56
+      size: 328
+    - path: data/hps/GERF/WikiCS/log.csv
+      md5: 5f091e8d3db8f1c90b4785e786db746c
+      size: 2762
+  hps_GERF@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF.py --dataset Amazon-CS
+    deps:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+    - path: experiments/scripts/refine/hps_GERF.py
+      md5: 87c372b07e89124b5a6212ca4c044811
+      size: 3335
+    outs:
+    - path: data/hps/GERF/Amazon-CS/best.json
+      md5: d17dcea530d1a7df035740a2ba6191b9
+      size: 361
+    - path: data/hps/GERF/Amazon-CS/log.csv
+      md5: ea88fef471c58bac363be7feaeeaa0e0
+      size: 2761
+  embed_node2vec@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/node2vec.py --dataset
+      Amazon-Photo --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/structural/node2vec.py
+      md5: 6b7f6ceee5333cc2b17183e6d80f7c62
+      size: 1915
+    - path: src/embed/structural/node2vec.py
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
+    params:
+      experiments/configs/embed/structural/n2v.yaml:
+        params.Amazon-Photo:
+          batch_size: 256
+          context_size: 10
+          emb_dim: 128
+          lr: 0.01619429669481697
+          num_epochs: 20
+          num_negative_samples: 3
+          p: 0.8956405902580619
+          q: 1.3021330154973136
+          walk_length: 27
+          walks_per_node: 17
+    outs:
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+  embed_line@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/line.py --dataset
+      Amazon-Photo --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/structural/line.py
+      md5: 202e83d692708bafbece1ae4461cb1fa
+      size: 1730
+    - path: src/embed/structural/line.py
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
+    params:
+      experiments/configs/embed/structural/line.yaml:
+        params.Amazon-Photo:
+          batch_size: 64
+          emb_dim: 128
+          negative_ratio: 0
+          num_epochs: 10
+          order: first
+    outs:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+  embed_sdne@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/sdne.py --dataset
+      Amazon-Photo --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/structural/sdne.py
+      md5: 27563b5321bd644f5b9289bb5a9d0654
+      size: 1770
+    - path: src/embed/structural/sdne.py
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
+    params:
+      experiments/configs/embed/structural/sdne.yaml:
+        params.Amazon-Photo:
+          alpha: 0.0004122915224267525
+          batch_size: 256
+          beta: 5.4047113784687895
+          emb_dim: 128
+          hidden_size: 512
+          nu1: 9.18909389592212e-05
+          nu2: 0.0007711930118292152
+          num_epochs: 50
+    outs:
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+  embed_dgi@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/dgi.py --dataset
+      Amazon-Photo --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/attributed/dgi.py
+      md5: 2cfe6b3c9568f26a6e4441181c4833f7
+      size: 1601
+    - path: src/embed/attributed/dgi.py
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
+    params:
+      experiments/configs/embed/attributed/dgi.yaml:
+        params.Amazon-Photo:
+          emb_dim: 128
+          lr: 0.0005662724736601763
+          num_epochs: 100
+    outs:
+    - path: data/embeddings/attributed/dgi/Amazon-Photo/
+      md5: e24a009204b36e4c4e3b673d941e0681.dir
+      size: 39175560
+      nfiles: 10
+  apply_concat_refiner@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
+      Concat --dataset Amazon-Photo
+    deps:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_naive_refiner.py
+      md5: f9a2fa56d58139593ba0d029d5493a60
+      size: 2222
+    params:
+      experiments/configs/refine/naive/Concat.yaml:
+        paths:
+          output:
+            embedding: data/embeddings/refined/naive/Concat/${emb_method}/${dataset}/
+        structural_embedding_methods:
+        - n2v
+        - line
+        - sdne
+    outs:
+    - path: data/embeddings/refined/naive/Concat/line/Amazon-Photo/
+      md5: ddd32fe66efcc5a7551ce414bb4e9250.dir
+      size: 267145460
+      nfiles: 10
+    - path: data/embeddings/refined/naive/Concat/n2v/Amazon-Photo/
+      md5: beb50f33d3d4dc42e6968039806f381a.dir
+      size: 267145460
+      nfiles: 10
+    - path: data/embeddings/refined/naive/Concat/sdne/Amazon-Photo/
+      md5: e3e01f52ba2d62aae67fac1dd4dafc5d.dir
+      size: 267145460
+      nfiles: 10
+  apply_concat_pca_refiner@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
+      ConcatPCA --dataset Amazon-Photo
+    deps:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_naive_refiner.py
+      md5: f9a2fa56d58139593ba0d029d5493a60
+      size: 2222
+    params:
+      experiments/configs/refine/naive/ConcatPCA.yaml:
+        paths:
+          output:
+            embedding: data/embeddings/refined/naive/ConcatPCA/${emb_method}/${dataset}/
+        structural_embedding_methods:
+        - n2v
+        - line
+        - sdne
+    outs:
+    - path: data/embeddings/refined/naive/ConcatPCA/line/Amazon-Photo/
+      md5: a8c77ec0e8063ca12b3c714b447507bd.dir
+      size: 39175540
+      nfiles: 10
+    - path: data/embeddings/refined/naive/ConcatPCA/n2v/Amazon-Photo/
+      md5: ca35e13ad808c0bb6f0e365e4265d403.dir
+      size: 39175540
+      nfiles: 10
+    - path: data/embeddings/refined/naive/ConcatPCA/sdne/Amazon-Photo/
+      md5: 54e3eb39ec92f9db05268840a5880cad.dir
+      size: 39175540
+      nfiles: 10
+  apply_mlp_refiner@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
+      MLP --dataset Amazon-Photo
+    deps:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_naive_refiner.py
+      md5: f9a2fa56d58139593ba0d029d5493a60
+      size: 2222
+    params:
+      experiments/configs/refine/naive/MLP.yaml:
+        Amazon-Photo:
+          lr: 0.001
+          batch_size: 128
+          num_epochs: 20
+        paths:
+          output:
+            embedding: data/embeddings/refined/naive/MLP/${emb_method}/${dataset}/
+        structural_embedding_methods:
+        - n2v
+        - line
+        - sdne
+    outs:
+    - path: data/embeddings/refined/naive/MLP/line/Amazon-Photo/
+      md5: 27d055ed75dd0b301660c2a9beb09dba.dir
+      size: 39175555
+      nfiles: 10
+    - path: data/embeddings/refined/naive/MLP/n2v/Amazon-Photo/
+      md5: 4b265c769e30cc853fae5ceaa760bd39.dir
+      size: 39175555
+      nfiles: 10
+    - path: data/embeddings/refined/naive/MLP/sdne/Amazon-Photo/
+      md5: 92d18f66539780c9145d2aa9c1ba3f5c.dir
+      size: 39175559
+      nfiles: 10
+  embed_tadw@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/tadw.py --dataset
+      Amazon-Photo --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/attributed/tadw.py
+      md5: 0dc38ece73761c588cff67042a1ea035
+      size: 1813
+    - path: src/embed/attributed/tadw.py
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
+    params:
+      experiments/configs/embed/attributed/tadw.yaml:
+        params.Amazon-Photo:
+          emb_dim: 64
+          lambd: 9
+          lr: 0.0012924394318061566
+          num_epochs: 20
+          reduction_dimensions: 64
+          svd_iterations: 18
+    outs:
+    - path: data/embeddings/attributed/tadw/Amazon-Photo/
+      md5: 4f5a93d872aee3818373510f9e437872.dir
+      size: 39175541
+      nfiles: 10
+  embed_fscnmf@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/fscnmf.py --dataset
+      Amazon-Photo --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/attributed/fscnmf.py
+      md5: 35e2ef7c1dbf7316bc2d7eaca531ea3b
+      size: 1881
+    - path: src/embed/attributed/fscnmf.py
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
+    params:
+      experiments/configs/embed/attributed/fscnmf.yaml:
+        params.Amazon-Photo:
+          alpha_1: 255
+          alpha_2: 1.4441718246177857
+          alpha_3: 0.1923242321989463
+          beta_1: 224
+          beta_2: 0.3180584962714869
+          beta_3: 0.5952530860398961
+          emb_dim: 64
+          num_epochs: 500
+    outs:
+    - path: data/embeddings/attributed/fscnmf/Amazon-Photo/
+      md5: a7ec1de4d97e7c5051ef40851c6e89ff.dir
+      size: 39175542
+      nfiles: 10
+  hps_GERF@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF.py --dataset Amazon-Photo
+    deps:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+    - path: experiments/scripts/refine/hps_GERF.py
+      md5: 87c372b07e89124b5a6212ca4c044811
+      size: 3335
+    outs:
+    - path: data/hps/GERF/Amazon-Photo/best.json
+      md5: d2fbad7774c4abd5d1e63f17001cb854
+      size: 376
+    - path: data/hps/GERF/Amazon-Photo/log.csv
+      md5: a42c218ac8b31d285aa44a6e75d9e222
+      size: 2758
+  embed_node2vec@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/node2vec.py --dataset
+      Coauthor-CS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/structural/node2vec.py
+      md5: 6b7f6ceee5333cc2b17183e6d80f7c62
+      size: 1915
+    - path: src/embed/structural/node2vec.py
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
+    params:
+      experiments/configs/embed/structural/n2v.yaml:
+        params.Coauthor-CS:
+          batch_size: 256
+          context_size: 20
+          emb_dim: 128
+          lr: 0.010512850008743762
+          num_epochs: 20
+          num_negative_samples: 2
+          p: 1.0661616864973307
+          q: 1.279779305448772
+          walk_length: 30
+          walks_per_node: 12
+    outs:
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+  embed_sdne@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/sdne.py --dataset
+      Coauthor-CS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/structural/sdne.py
+      md5: 27563b5321bd644f5b9289bb5a9d0654
+      size: 1770
+    - path: src/embed/structural/sdne.py
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
+    params:
+      experiments/configs/embed/structural/sdne.yaml:
+        params.Coauthor-CS:
+          alpha: 0.0003282659035978998
+          batch_size: 256
+          beta: 6.239437204135304
+          emb_dim: 128
+          hidden_size: 128
+          nu1: 3.1749958779312295e-06
+          nu2: 0.0004261131270556746
+          num_epochs: 50
+    outs:
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+  embed_line@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/line.py --dataset
+      Coauthor-CS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/structural/line.py
+      md5: 202e83d692708bafbece1ae4461cb1fa
+      size: 1730
+    - path: src/embed/structural/line.py
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
+    params:
+      experiments/configs/embed/structural/line.yaml:
+        params.Coauthor-CS:
+          batch_size: 32
+          emb_dim: 128
+          negative_ratio: 0
+          num_epochs: 10
+          order: first
+    outs:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+  embed_dgi@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/dgi.py --dataset
+      Coauthor-CS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/attributed/dgi.py
+      md5: 2cfe6b3c9568f26a6e4441181c4833f7
+      size: 1601
+    - path: src/embed/attributed/dgi.py
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
+    params:
+      experiments/configs/embed/attributed/dgi.yaml:
+        params.Coauthor-CS:
+          emb_dim: 128
+          lr: 0.0001796714020170723
+          num_epochs: 100
+    outs:
+    - path: data/embeddings/attributed/dgi/Coauthor-CS/
+      md5: f1624f648e535a85ab6561e9c212c994.dir
+      size: 93872519
+      nfiles: 10
+  embed_fscnmf@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/fscnmf.py --dataset
+      Coauthor-CS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/attributed/fscnmf.py
+      md5: 35e2ef7c1dbf7316bc2d7eaca531ea3b
+      size: 1881
+    - path: src/embed/attributed/fscnmf.py
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
+    params:
+      experiments/configs/embed/attributed/fscnmf.yaml:
+        params.Coauthor-CS:
+          alpha_1: 158
+          alpha_2: 1.0023287375849204
+          alpha_3: 0.27115567565701376
+          beta_1: 276
+          beta_2: 0.9231700320793558
+          beta_3: 0.18769578539819926
+          emb_dim: 64
+          num_epochs: 500
+    outs:
+    - path: data/embeddings/attributed/fscnmf/Coauthor-CS/
+      md5: 6edca1c9b99ee730744737cc83d7d771.dir
+      size: 93872500
+      nfiles: 10
+  embed_tadw@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/tadw.py --dataset
+      Coauthor-CS --num-retrains 10
+    deps:
+    - path: experiments/scripts/embed/attributed/tadw.py
+      md5: 0dc38ece73761c588cff67042a1ea035
+      size: 1813
+    - path: src/embed/attributed/tadw.py
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
+    params:
+      experiments/configs/embed/attributed/tadw.yaml:
+        params.Coauthor-CS:
+          emb_dim: 64
+          lambd: 1
+          lr: 0.0018229329876730746
+          num_epochs: 20
+          reduction_dimensions: 16
+          svd_iterations: 11
+    outs:
+    - path: data/embeddings/attributed/tadw/Coauthor-CS/
+      md5: 4d2538cc79837b54899ef9f6824953bb.dir
+      size: 93872500
+      nfiles: 10
+  apply_concat_refiner@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
+      Concat --dataset Coauthor-CS
+    deps:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_naive_refiner.py
+      md5: f9a2fa56d58139593ba0d029d5493a60
+      size: 2222
+    params:
+      experiments/configs/refine/naive/Concat.yaml:
+        paths:
+          output:
+            embedding: data/embeddings/refined/naive/Concat/${emb_method}/${dataset}/
+        structural_embedding_methods:
+        - n2v
+        - line
+        - sdne
+    outs:
+    - path: data/embeddings/refined/naive/Concat/line/Coauthor-CS/
+      md5: 6334e8042ec274fb9bcf8a7b81912068.dir
+      size: 5084115060
+      nfiles: 10
+    - path: data/embeddings/refined/naive/Concat/n2v/Coauthor-CS/
+      md5: 183a1f01dd310cc8a6a6c0033ca73b26.dir
+      size: 5084115060
+      nfiles: 10
+    - path: data/embeddings/refined/naive/Concat/sdne/Coauthor-CS/
+      md5: 16818b7aa3f00b4dd581926d3441e0ef.dir
+      size: 5084115060
+      nfiles: 10
+  apply_concat_pca_refiner@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
+      ConcatPCA --dataset Coauthor-CS
+    deps:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_naive_refiner.py
+      md5: f9a2fa56d58139593ba0d029d5493a60
+      size: 2222
+    params:
+      experiments/configs/refine/naive/ConcatPCA.yaml:
+        paths:
+          output:
+            embedding: data/embeddings/refined/naive/ConcatPCA/${emb_method}/${dataset}/
+        structural_embedding_methods:
+        - n2v
+        - line
+        - sdne
+    outs:
+    - path: data/embeddings/refined/naive/ConcatPCA/line/Coauthor-CS/
+      md5: 40b4c0479d0e2010f4a8e04ce030270d.dir
+      size: 93872502
+      nfiles: 10
+    - path: data/embeddings/refined/naive/ConcatPCA/n2v/Coauthor-CS/
+      md5: b943d1e429f23a43bca19d5ff0c39cd5.dir
+      size: 93872502
+      nfiles: 10
+    - path: data/embeddings/refined/naive/ConcatPCA/sdne/Coauthor-CS/
+      md5: 939ce456d00cd1dabb6a12ed61a8d6d3.dir
+      size: 93872502
+      nfiles: 10
+  apply_mlp_refiner@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
+      MLP --dataset Coauthor-CS
+    deps:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_naive_refiner.py
+      md5: f9a2fa56d58139593ba0d029d5493a60
+      size: 2222
+    params:
+      experiments/configs/refine/naive/MLP.yaml:
+        Coauthor-CS:
+          lr: 0.001
+          batch_size: 128
+          num_epochs: 20
+        paths:
+          output:
+            embedding: data/embeddings/refined/naive/MLP/${emb_method}/${dataset}/
+        structural_embedding_methods:
+        - n2v
+        - line
+        - sdne
+    outs:
+    - path: data/embeddings/refined/naive/MLP/line/Coauthor-CS/
+      md5: 6595508744248b6222bebc335ff8f403.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/refined/naive/MLP/n2v/Coauthor-CS/
+      md5: b299955814a4e072d7d640b8ddf1dc82.dir
+      size: 93872518
+      nfiles: 10
+    - path: data/embeddings/refined/naive/MLP/sdne/Coauthor-CS/
+      md5: a5aff5f88f9749cbc21d28268fc2391e.dir
+      size: 93872520
+      nfiles: 10
+  hps_GERF@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF.py --dataset Coauthor-CS
+    deps:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+    - path: experiments/scripts/refine/hps_GERF.py
+      md5: 87c372b07e89124b5a6212ca4c044811
+      size: 3335
+    outs:
+    - path: data/hps/GERF/Coauthor-CS/best.json
+      md5: b9e35326606a3142cb5fd7fd54931ecf
+      size: 363
+    - path: data/hps/GERF/Coauthor-CS/log.csv
+      md5: 7809802a61453ceaf0e107d6f45554ab
+      size: 2755
+  evaluate_node_classification@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_node_classification.py
+      --dataset Coauthor-CS
+    deps:
+    - path: data/embeddings/
+      md5: 2b3d531c8338127dfa97ef39af11320a.dir
+      size: 26033228521
+      nfiles: 1320
+    - path: experiments/scripts/evaluate_node_classification.py
+      md5: dc25a67637b47bd4957d57a704a05782
+      size: 1924
+    - path: src/tasks/node_classification.py
+      md5: 38d3dc3aa4fa6cc054693a92494160fb
+      size: 1531
+    params:
+      experiments/configs/node_classification.yaml:
+        embedding_methods:
+        - features
+        - structural/line
+        - structural/n2v
+        - structural/sdne
+        - attributed/fscnmf
+        - attributed/tadw
+        - attributed/dgi
+        - refined/naive/Concat/line
+        - refined/naive/Concat/n2v
+        - refined/naive/Concat/sdne
+        - refined/naive/ConcatPCA/line
+        - refined/naive/ConcatPCA/n2v
+        - refined/naive/ConcatPCA/sdne
+        - refined/naive/MLP/line
+        - refined/naive/MLP/n2v
+        - refined/naive/MLP/sdne
+        - refined/GERF_grid/line
+        - refined/GERF_grid/n2v
+        - refined/GERF_grid/sdne
+        - refined/GERF_uniform/line
+        - refined/GERF_uniform/n2v
+        - refined/GERF_uniform/sdne
+        - refined/GERF_homophily/line
+        - refined/GERF_homophily/n2v
+        - refined/GERF_homophily/sdne
+    outs:
+    - path: data/metrics/node_classification/Coauthor-CS/
+      md5: 2ca7d42fb6b4850e0860c6bc8e0948d1.dir
+      size: 6733877
+      nfiles: 25
+  evaluate_node_classification@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_node_classification.py
+      --dataset Amazon-Photo
+    deps:
+    - path: data/embeddings/
+      md5: 2b3d531c8338127dfa97ef39af11320a.dir
+      size: 26033228521
+      nfiles: 1320
+    - path: experiments/scripts/evaluate_node_classification.py
+      md5: dc25a67637b47bd4957d57a704a05782
+      size: 1924
+    - path: src/tasks/node_classification.py
+      md5: 38d3dc3aa4fa6cc054693a92494160fb
+      size: 1531
+    params:
+      experiments/configs/node_classification.yaml:
+        embedding_methods:
+        - features
+        - structural/line
+        - structural/n2v
+        - structural/sdne
+        - attributed/fscnmf
+        - attributed/tadw
+        - attributed/dgi
+        - refined/naive/Concat/line
+        - refined/naive/Concat/n2v
+        - refined/naive/Concat/sdne
+        - refined/naive/ConcatPCA/line
+        - refined/naive/ConcatPCA/n2v
+        - refined/naive/ConcatPCA/sdne
+        - refined/naive/MLP/line
+        - refined/naive/MLP/n2v
+        - refined/naive/MLP/sdne
+        - refined/GERF_grid/line
+        - refined/GERF_grid/n2v
+        - refined/GERF_grid/sdne
+        - refined/GERF_uniform/line
+        - refined/GERF_uniform/n2v
+        - refined/GERF_uniform/sdne
+        - refined/GERF_homophily/line
+        - refined/GERF_homophily/n2v
+        - refined/GERF_homophily/sdne
+    outs:
+    - path: data/metrics/node_classification/Amazon-Photo/
+      md5: 88f2515c52314369591aa7018eefddde.dir
+      size: 2865623
+      nfiles: 25
+  make_hps_plot@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/make_hps_plot.py --dataset Coauthor-CS
+    deps:
+    - path: data/hps/GERF/Coauthor-CS/log.csv
+      md5: 7809802a61453ceaf0e107d6f45554ab
+      size: 2755
+    - path: experiments/scripts/make_hps_plot.py
+      md5: fc636ae1a63c242eb009ff77ae4c06c1
+      size: 1961
+    outs:
+    - path: data/plots/hps_Coauthor-CS.png
+      md5: 488fbdaff452978e8b4e517851892c18
+      size: 45470
+  make_hps_plot@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/make_hps_plot.py --dataset Amazon-CS
+    deps:
+    - path: data/hps/GERF/Amazon-CS/log.csv
+      md5: ea88fef471c58bac363be7feaeeaa0e0
+      size: 2761
+    - path: experiments/scripts/make_hps_plot.py
+      md5: fc636ae1a63c242eb009ff77ae4c06c1
+      size: 1961
+    outs:
+    - path: data/plots/hps_Amazon-CS.png
+      md5: 58f3b9ac777fa2200fb2b69703052877
+      size: 46583
+  make_hps_plot@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/make_hps_plot.py --dataset Amazon-Photo
+    deps:
+    - path: data/hps/GERF/Amazon-Photo/log.csv
+      md5: a42c218ac8b31d285aa44a6e75d9e222
+      size: 2758
+    - path: experiments/scripts/make_hps_plot.py
+      md5: fc636ae1a63c242eb009ff77ae4c06c1
+      size: 1961
+    outs:
+    - path: data/plots/hps_Amazon-Photo.png
+      md5: 11e23cb42f518119a3192c69b063dc83
+      size: 45387
+  make_hps_plot@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/make_hps_plot.py --dataset WikiCS
+    deps:
+    - path: data/hps/GERF/WikiCS/log.csv
+      md5: 5f091e8d3db8f1c90b4785e786db746c
+      size: 2762
+    - path: experiments/scripts/make_hps_plot.py
+      md5: fc636ae1a63c242eb009ff77ae4c06c1
+      size: 1961
+    outs:
+    - path: data/plots/hps_WikiCS.png
+      md5: 9437f55b51abe200e211d641ed02a096
+      size: 48347
+  hps_embed_node2vec@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/node2vec.py
+      --dataset Amazon-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/node2vec.py
+      md5: 3bc3c730bfd3187fd6d7d055828981b9
+      size: 2015
+    - path: src/embed/structural/node2vec.py
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
+    params:
+      experiments/configs/hps_embed/structural/node2vec.yaml:
+        params.Amazon-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          walk_length:
+            low: 10
+            high: 30
+            param_type: searchable
+            type: int
+          walks_per_node:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          context_size:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          num_negative_samples:
+            low: 1
+            high: 3
+            param_type: searchable
+            type: int
+          p:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          q:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          num_epochs:
+            value: 20
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/n2v/${name}.db
+    outs:
+    - path: data/hps/structural/n2v/Amazon-CS.db
+      md5: 418218ebd090e2b119665594909d8c67
+      size: 802816
+  hps_embed_node2vec@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/node2vec.py
+      --dataset Amazon-Photo --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/node2vec.py
+      md5: 3bc3c730bfd3187fd6d7d055828981b9
+      size: 2015
+    - path: src/embed/structural/node2vec.py
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
+    params:
+      experiments/configs/hps_embed/structural/node2vec.yaml:
+        params.Amazon-Photo:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          walk_length:
+            low: 10
+            high: 30
+            param_type: searchable
+            type: int
+          walks_per_node:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          context_size:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          num_negative_samples:
+            low: 1
+            high: 3
+            param_type: searchable
+            type: int
+          p:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          q:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          num_epochs:
+            value: 20
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/n2v/${name}.db
+    outs:
+    - path: data/hps/structural/n2v/Amazon-Photo.db
+      md5: 18d60511e18590d9a0fa420ec0cc18a1
+      size: 675840
+  hps_embed_node2vec@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/node2vec.py
+      --dataset Coauthor-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/node2vec.py
+      md5: 3bc3c730bfd3187fd6d7d055828981b9
+      size: 2015
+    - path: src/embed/structural/node2vec.py
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
+    params:
+      experiments/configs/hps_embed/structural/node2vec.yaml:
+        params.Coauthor-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          walk_length:
+            low: 10
+            high: 30
+            param_type: searchable
+            type: int
+          walks_per_node:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          context_size:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          num_negative_samples:
+            low: 1
+            high: 3
+            param_type: searchable
+            type: int
+          p:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          q:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          num_epochs:
+            value: 20
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/n2v/${name}.db
+    outs:
+    - path: data/hps/structural/n2v/Coauthor-CS.db
+      md5: c18846d017b39a4e65d1289b72776c8a
+      size: 1085440
+  hps_embed_node2vec@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/node2vec.py
+      --dataset WikiCS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/node2vec.py
+      md5: 3bc3c730bfd3187fd6d7d055828981b9
+      size: 2015
+    - path: src/embed/structural/node2vec.py
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
+    params:
+      experiments/configs/hps_embed/structural/node2vec.yaml:
+        params.WikiCS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          walk_length:
+            low: 10
+            high: 30
+            param_type: searchable
+            type: int
+          walks_per_node:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          context_size:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          num_negative_samples:
+            low: 1
+            high: 3
+            param_type: searchable
+            type: int
+          p:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          q:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          num_epochs:
+            value: 20
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/n2v/${name}.db
+    outs:
+    - path: data/hps/structural/n2v/WikiCS.db
+      md5: 43434be0dd202a38e7d480bd259d3b9c
+      size: 843776
+  hps_embed_line@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/line.py --dataset
+      Amazon-Photo --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/line.py
+      md5: 3f286865ec4ece8e0c274baf283c11c1
+      size: 1939
+    - path: src/embed/structural/line.py
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
+    params:
+      experiments/configs/hps_embed/structural/line.yaml:
+        params.Amazon-Photo:
+          emb_dim:
+            value: 128
+            param_type: constant
+          negative_ratio:
+            low: 0
+            high: 3
+            param_type: searchable
+            type: int
+          order:
+            choices:
+            - first
+            - second
+            - all
+            param_type: searchable
+            type: categorical
+          batch_size:
+            choices:
+            - 64
+            - 128
+            - 256
+            - 512
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 10
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/line/${name}.db
+    outs:
+    - path: data/hps/structural/line/Amazon-Photo.db
+      md5: a67ec63cd56001c4b7ae11063b84bd76
+      size: 638976
+  hps_embed_line@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/line.py --dataset
+      WikiCS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/line.py
+      md5: 3f286865ec4ece8e0c274baf283c11c1
+      size: 1939
+    - path: src/embed/structural/line.py
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
+    params:
+      experiments/configs/hps_embed/structural/line.yaml:
+        params.WikiCS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          negative_ratio:
+            low: 0
+            high: 3
+            param_type: searchable
+            type: int
+          order:
+            choices:
+            - first
+            - second
+            - all
+            param_type: searchable
+            type: categorical
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 10
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/line/${name}.db
+    outs:
+    - path: data/hps/structural/line/WikiCS.db
+      md5: baaf933ee64f6742b627ff6880ee3f19
+      size: 368640
+  hps_embed_line@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/line.py --dataset
+      Amazon-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/line.py
+      md5: 3f286865ec4ece8e0c274baf283c11c1
+      size: 1939
+    - path: src/embed/structural/line.py
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
+    params:
+      experiments/configs/hps_embed/structural/line.yaml:
+        params.Amazon-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          negative_ratio:
+            low: 0
+            high: 3
+            param_type: searchable
+            type: int
+          order:
+            choices:
+            - first
+            - second
+            - all
+            param_type: searchable
+            type: categorical
+          batch_size:
+            choices:
+            - 1024
+            - 2048
+            - 4096
+            - 8192
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 10
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/line/${name}.db
+    outs:
+    - path: data/hps/structural/line/Amazon-CS.db
+      md5: 8d6fabd697b7eefe1b5d3408c01fd68d
+      size: 733184
+  hps_embed_line@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/line.py --dataset
+      Coauthor-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/line.py
+      md5: 3f286865ec4ece8e0c274baf283c11c1
+      size: 1939
+    - path: src/embed/structural/line.py
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
+    params:
+      experiments/configs/hps_embed/structural/line.yaml:
+        params.Coauthor-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          negative_ratio:
+            low: 0
+            high: 3
+            param_type: searchable
+            type: int
+          order:
+            choices:
+            - first
+            - second
+            - all
+            param_type: searchable
+            type: categorical
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 10
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/line/${name}.db
+    outs:
+    - path: data/hps/structural/line/Coauthor-CS.db
+      md5: fc9a0cd718d5c98ce2bf1e6d56a56261
+      size: 1048576
+  hps_embed_dgi@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/dgi.py --dataset
+      Amazon-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/dgi.py
+      md5: fca7cc978e31db451945465f52c25cd5
+      size: 1564
+    - path: src/embed/attributed/dgi.py
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
+    params:
+      experiments/configs/hps_embed/attributed/dgi.yaml:
+        params.Amazon-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.0001
+            high: 0.01
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 100
+            param_type: constant
+        paths:
+          output:
+            storage: hps/attributed/dgi/${name}.db
+    outs:
+    - path: data/hps/attributed/dgi/Amazon-CS.db
+      md5: d69509d5d07487db393972a1e7684e41
+      size: 610304
+  hps_embed_dgi@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/dgi.py --dataset
+      Amazon-Photo --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/dgi.py
+      md5: fca7cc978e31db451945465f52c25cd5
+      size: 1564
+    - path: src/embed/attributed/dgi.py
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
+    params:
+      experiments/configs/hps_embed/attributed/dgi.yaml:
+        params.Amazon-Photo:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.0001
+            high: 0.01
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 100
+            param_type: constant
+        paths:
+          output:
+            storage: hps/attributed/dgi/${name}.db
+    outs:
+    - path: data/hps/attributed/dgi/Amazon-Photo.db
+      md5: 1f650791125157fd5b5558c9a93cba24
+      size: 548864
+  hps_embed_dgi@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/dgi.py --dataset
+      WikiCS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/dgi.py
+      md5: fca7cc978e31db451945465f52c25cd5
+      size: 1564
+    - path: src/embed/attributed/dgi.py
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
+    params:
+      experiments/configs/hps_embed/attributed/dgi.yaml:
+        params.WikiCS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.0001
+            high: 0.01
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 100
+            param_type: constant
+        paths:
+          output:
+            storage: hps/attributed/dgi/${name}.db
+    outs:
+    - path: data/hps/attributed/dgi/WikiCS.db
+      md5: 789d82229b1811a267ef65c1b7816e04
+      size: 688128
+  hps_embed_dgi@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/dgi.py --dataset
+      Coauthor-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/dgi.py
+      md5: fca7cc978e31db451945465f52c25cd5
+      size: 1564
+    - path: src/embed/attributed/dgi.py
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
+    params:
+      experiments/configs/hps_embed/attributed/dgi.yaml:
+        params.Coauthor-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.0001
+            high: 0.01
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 100
+            param_type: constant
+        paths:
+          output:
+            storage: hps/attributed/dgi/${name}.db
+    outs:
+    - path: data/hps/attributed/dgi/Coauthor-CS.db
+      md5: c83b88dc250935f1d5b2605e2bdefba8
+      size: 958464
+  hps_embed_fscnmf@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/fscnmf.py --dataset
+      Coauthor-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/fscnmf.py
+      md5: d6e688e7ff19500d45441e855724f378
+      size: 1979
+    - path: src/embed/attributed/fscnmf.py
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
+    params:
+      experiments/configs/hps_embed/attributed/fscnmf.yaml:
+        params.Coauthor-CS:
+          emb_dim:
+            value: 64
+            param_type: constant
+          num_epochs:
+            value: 500
+            param_type: constant
+          alpha_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          beta_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          alpha_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          alpha_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+        paths:
+          output:
+            storage: hps/attributed/fscnmf/${name}.db
+    outs:
+    - path: data/hps/attributed/fscnmf/Coauthor-CS.db
+      md5: 3314e6cef2c5963e93d69138690f0331
+      size: 1024000
+  hps_embed_fscnmf@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/fscnmf.py --dataset
+      Amazon-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/fscnmf.py
+      md5: d6e688e7ff19500d45441e855724f378
+      size: 1979
+    - path: src/embed/attributed/fscnmf.py
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
+    params:
+      experiments/configs/hps_embed/attributed/fscnmf.yaml:
+        params.Amazon-CS:
+          emb_dim:
+            value: 64
+            param_type: constant
+          num_epochs:
+            value: 500
+            param_type: constant
+          alpha_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          beta_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          alpha_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          alpha_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+        paths:
+          output:
+            storage: hps/attributed/fscnmf/${name}.db
+    outs:
+    - path: data/hps/attributed/fscnmf/Amazon-CS.db
+      md5: 5cdeec3a2418ad42b4e6b7f9fe469562
+      size: 675840
+  hps_embed_fscnmf@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/fscnmf.py --dataset
+      Amazon-Photo --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/fscnmf.py
+      md5: d6e688e7ff19500d45441e855724f378
+      size: 1979
+    - path: src/embed/attributed/fscnmf.py
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
+    params:
+      experiments/configs/hps_embed/attributed/fscnmf.yaml:
+        params.Amazon-Photo:
+          emb_dim:
+            value: 64
+            param_type: constant
+          num_epochs:
+            value: 500
+            param_type: constant
+          alpha_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          beta_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          alpha_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          alpha_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+        paths:
+          output:
+            storage: hps/attributed/fscnmf/${name}.db
+    outs:
+    - path: data/hps/attributed/fscnmf/Amazon-Photo.db
+      md5: 6c1f40f0b67436b30509e19007ae469b
+      size: 614400
+  hps_embed_fscnmf@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/fscnmf.py --dataset
+      WikiCS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/fscnmf.py
+      md5: d6e688e7ff19500d45441e855724f378
+      size: 1979
+    - path: src/embed/attributed/fscnmf.py
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
+    params:
+      experiments/configs/hps_embed/attributed/fscnmf.yaml:
+        params.WikiCS:
+          emb_dim:
+            value: 64
+            param_type: constant
+          num_epochs:
+            value: 500
+            param_type: constant
+          alpha_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          beta_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          alpha_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          alpha_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+        paths:
+          output:
+            storage: hps/attributed/fscnmf/${name}.db
+    outs:
+    - path: data/hps/attributed/fscnmf/WikiCS.db
+      md5: 961381545116dab6da3ecaad7c667680
+      size: 692224
+  hps_embed_tadw@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/tadw.py --dataset
+      Amazon-Photo --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/tadw.py
+      md5: e5a01c04c5a34775331d9ece154204af
+      size: 1914
+    - path: src/embed/attributed/tadw.py
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
+    params:
+      experiments/configs/hps_embed/attributed/tadw.yaml:
+        params.Amazon-Photo:
+          emb_dim:
+            value: 64
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 20
+            param_type: constant
+          reduction_dimensions:
+            choices:
+            - 16
+            - 32
+            - 64
+            - 128
+            param_type: searchable
+            type: categorical
+          svd_iterations:
+            low: 10
+            high: 50
+            param_type: searchable
+            type: int
+          lambd:
+            low: 1
+            high: 15
+            param_type: searchable
+            type: int
+        paths:
+          output:
+            storage: hps/attributed/tadw/${name}.db
+    outs:
+    - path: data/hps/attributed/tadw/Amazon-Photo.db
+      md5: 1a6ed38d71bf7f6ee3c016f953fc5b1f
+      size: 651264
+  hps_embed_tadw@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/tadw.py --dataset
+      Amazon-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/tadw.py
+      md5: e5a01c04c5a34775331d9ece154204af
+      size: 1914
+    - path: src/embed/attributed/tadw.py
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
+    params:
+      experiments/configs/hps_embed/attributed/tadw.yaml:
+        params.Amazon-CS:
+          emb_dim:
+            value: 64
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 20
+            param_type: constant
+          reduction_dimensions:
+            choices:
+            - 16
+            - 32
+            - 64
+            - 128
+            param_type: searchable
+            type: categorical
+          svd_iterations:
+            low: 10
+            high: 50
+            param_type: searchable
+            type: int
+          lambd:
+            low: 1
+            high: 15
+            param_type: searchable
+            type: int
+        paths:
+          output:
+            storage: hps/attributed/tadw/${name}.db
+    outs:
+    - path: data/hps/attributed/tadw/Amazon-CS.db
+      md5: d4f6f72aec7d3180db5b80e61028f8b2
+      size: 737280
+  hps_embed_tadw@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/tadw.py --dataset
+      WikiCS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/tadw.py
+      md5: e5a01c04c5a34775331d9ece154204af
+      size: 1914
+    - path: src/embed/attributed/tadw.py
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
+    params:
+      experiments/configs/hps_embed/attributed/tadw.yaml:
+        params.WikiCS:
+          emb_dim:
+            value: 64
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 20
+            param_type: constant
+          reduction_dimensions:
+            choices:
+            - 16
+            - 32
+            - 64
+            - 128
+            param_type: searchable
+            type: categorical
+          svd_iterations:
+            low: 10
+            high: 50
+            param_type: searchable
+            type: int
+          lambd:
+            low: 1
+            high: 15
+            param_type: searchable
+            type: int
+        paths:
+          output:
+            storage: hps/attributed/tadw/${name}.db
+    outs:
+    - path: data/hps/attributed/tadw/WikiCS.db
+      md5: 963c081ad4ac620f63477fe8c04f5eca
+      size: 794624
+  hps_embed_tadw@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/tadw.py --dataset
+      Coauthor-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/tadw.py
+      md5: e5a01c04c5a34775331d9ece154204af
+      size: 1914
+    - path: src/embed/attributed/tadw.py
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
+    params:
+      experiments/configs/hps_embed/attributed/tadw.yaml:
+        params.Coauthor-CS:
+          emb_dim:
+            value: 64
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 20
+            param_type: constant
+          reduction_dimensions:
+            choices:
+            - 16
+            - 32
+            - 64
+            - 128
+            param_type: searchable
+            type: categorical
+          svd_iterations:
+            low: 10
+            high: 50
+            param_type: searchable
+            type: int
+          lambd:
+            low: 1
+            high: 15
+            param_type: searchable
+            type: int
+        paths:
+          output:
+            storage: hps/attributed/tadw/${name}.db
+    outs:
+    - path: data/hps/attributed/tadw/Coauthor-CS.db
+      md5: b0726fea29aca816e95274781ede56be
+      size: 1060864
+  hps_embed_sdne@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/sdne.py --dataset
+      Amazon-Photo --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/sdne.py
+      md5: 471564495dbbc5f8d0608e471e9860a1
+      size: 1838
+    - path: src/embed/structural/sdne.py
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
+    params:
+      experiments/configs/hps_embed/structural/sdne.yaml:
+        params.Amazon-Photo:
+          emb_dim:
+            value: 128
+            param_type: constant
+          hidden_size:
+            choices:
+            - 128
+            - 256
+            - 512
+            - 1024
+            param_type: searchable
+            type: categorical
+          nu1:
+            low: 1e-06
+            high: 0.0001
+            param_type: searchable
+            type: float
+          nu2:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          alpha:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          beta:
+            low: 3
+            high: 7
+            param_type: searchable
+            type: float
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 50
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/sdne/${name}.db
+    outs:
+    - path: data/hps/structural/sdne/Amazon-Photo.db
+      md5: 69548e882c02c84f1713c156525ffd2f
+      size: 675840
+  hps_embed_sdne@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/sdne.py --dataset
+      WikiCS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/sdne.py
+      md5: 471564495dbbc5f8d0608e471e9860a1
+      size: 1838
+    - path: src/embed/structural/sdne.py
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
+    params:
+      experiments/configs/hps_embed/structural/sdne.yaml:
+        params.WikiCS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          hidden_size:
+            choices:
+            - 128
+            - 256
+            - 512
+            - 1024
+            param_type: searchable
+            type: categorical
+          nu1:
+            low: 1e-06
+            high: 0.0001
+            param_type: searchable
+            type: float
+          nu2:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          alpha:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          beta:
+            low: 3
+            high: 7
+            param_type: searchable
+            type: float
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 50
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/sdne/${name}.db
+    outs:
+    - path: data/hps/structural/sdne/WikiCS.db
+      md5: 3c358c9ea6755f0e62fce9e3f95c807a
+      size: 753664
+  hps_embed_sdne@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/sdne.py --dataset
+      Coauthor-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/sdne.py
+      md5: 471564495dbbc5f8d0608e471e9860a1
+      size: 1838
+    - path: src/embed/structural/sdne.py
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
+    params:
+      experiments/configs/hps_embed/structural/sdne.yaml:
+        params.Coauthor-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          hidden_size:
+            choices:
+            - 128
+            - 256
+            - 512
+            - 1024
+            param_type: searchable
+            type: categorical
+          nu1:
+            low: 1e-06
+            high: 0.0001
+            param_type: searchable
+            type: float
+          nu2:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          alpha:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          beta:
+            low: 3
+            high: 7
+            param_type: searchable
+            type: float
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 50
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/sdne/${name}.db
+    outs:
+    - path: data/hps/structural/sdne/Coauthor-CS.db
+      md5: 0efe5bb684c6720c24ced39903f5bd4d
+      size: 1052672
+  hps_embed_sdne@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/sdne.py --dataset
+      Amazon-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/sdne.py
+      md5: 471564495dbbc5f8d0608e471e9860a1
+      size: 1838
+    - path: src/embed/structural/sdne.py
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
+    params:
+      experiments/configs/hps_embed/structural/sdne.yaml:
+        params.Amazon-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          hidden_size:
+            choices:
+            - 128
+            - 256
+            - 512
+            - 1024
+            param_type: searchable
+            type: categorical
+          nu1:
+            low: 1e-06
+            high: 0.0001
+            param_type: searchable
+            type: float
+          nu2:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          alpha:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          beta:
+            low: 3
+            high: 7
+            param_type: searchable
+            type: float
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 50
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/sdne/${name}.db
+    outs:
+    - path: data/hps/structural/sdne/Amazon-CS.db
+      md5: c5d3135d5d5472b4fb28eeff00a2d5e4
+      size: 819200
+  extract_best_runs@structural/n2v:
+    cmd: python3 experiments/scripts/hps_embed/extract_best_runs.py --storage-dir
+      sqlite:///data/hps/structural/n2v --output-path experiments/configs/embed/structural/n2v.yaml
+    deps:
+    - path: data/hps/structural/n2v/
+      md5: 94d16165c2313bf928951bfbdef509b8.dir
+      size: 3407872
+      nfiles: 4
+    - path: experiments/scripts/hps_embed/extract_best_runs.py
+      md5: 59bfba2e17b06cf1990cfc1aa1ecee80
+      size: 745
+    outs:
+    - path: experiments/configs/embed/structural/n2v.yaml
+      md5: b297a527047b4a929100195c7396a602
+      size: 974
+  extract_best_runs@attributed/dgi:
+    cmd: python3 experiments/scripts/hps_embed/extract_best_runs.py --storage-dir
+      sqlite:///data/hps/attributed/dgi --output-path experiments/configs/embed/attributed/dgi.yaml
+    deps:
+    - path: data/hps/attributed/dgi/
+      md5: d69d415025224b619441850842542a6e.dir
+      size: 2805760
+      nfiles: 4
+    - path: experiments/scripts/hps_embed/extract_best_runs.py
+      md5: 59bfba2e17b06cf1990cfc1aa1ecee80
+      size: 745
+    outs:
+    - path: experiments/configs/embed/attributed/dgi.yaml
+      md5: bcb58aa88fea81b12732befa68c2b366
+      size: 331
+  extract_best_runs@structural/sdne:
+    cmd: python3 experiments/scripts/hps_embed/extract_best_runs.py --storage-dir
+      sqlite:///data/hps/structural/sdne --output-path experiments/configs/embed/structural/sdne.yaml
+    deps:
+    - path: data/hps/structural/sdne/
+      md5: 9e55e4e53f609b9a81591c9840484e07.dir
+      size: 3301376
+      nfiles: 4
+    - path: experiments/scripts/hps_embed/extract_best_runs.py
+      md5: 59bfba2e17b06cf1990cfc1aa1ecee80
+      size: 745
+    outs:
+    - path: experiments/configs/embed/structural/sdne.yaml
+      md5: 435a528a53b5650a9283a8eb7dab7907
+      size: 863
+  extract_best_runs@attributed/fscnmf:
+    cmd: python3 experiments/scripts/hps_embed/extract_best_runs.py --storage-dir
+      sqlite:///data/hps/attributed/fscnmf --output-path experiments/configs/embed/attributed/fscnmf.yaml
+    deps:
+    - path: data/hps/attributed/fscnmf/
+      md5: 2b45d8901874c48ac6d93649c3c2e28f.dir
+      size: 3006464
+      nfiles: 4
+    - path: experiments/scripts/hps_embed/extract_best_runs.py
+      md5: 59bfba2e17b06cf1990cfc1aa1ecee80
+      size: 745
+    outs:
+    - path: experiments/configs/embed/attributed/fscnmf.yaml
+      md5: 032b45dfa6523af94fb200e612af5deb
+      size: 847
+  extract_best_runs@structural/line:
+    cmd: python3 experiments/scripts/hps_embed/extract_best_runs.py --storage-dir
+      sqlite:///data/hps/structural/line --output-path experiments/configs/embed/structural/line.yaml
+    deps:
+    - path: data/hps/structural/line/
+      md5: 87e2f794a3980fc19b6c64719200d08a.dir
+      size: 2789376
+      nfiles: 4
+    - path: experiments/scripts/hps_embed/extract_best_runs.py
+      md5: 59bfba2e17b06cf1990cfc1aa1ecee80
+      size: 745
+    outs:
+    - path: experiments/configs/embed/structural/line.yaml
+      md5: 4dcbf2e29f67b8771105f53f101febd8
+      size: 440
+  extract_best_runs@attributed/tadw:
+    cmd: python3 experiments/scripts/hps_embed/extract_best_runs.py --storage-dir
+      sqlite:///data/hps/attributed/tadw --output-path experiments/configs/embed/attributed/tadw.yaml
+    deps:
+    - path: data/hps/attributed/tadw/
+      md5: 2beb68129b1a31cfd8c31929b10431ac.dir
+      size: 3244032
+      nfiles: 4
+    - path: experiments/scripts/hps_embed/extract_best_runs.py
+      md5: 59bfba2e17b06cf1990cfc1aa1ecee80
+      size: 745
+    outs:
+    - path: experiments/configs/embed/attributed/tadw.yaml
+      md5: 5e4057ccb1a559c6fcb8ff2780547aa8
+      size: 582
+  evaluate_link_prediction@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_link_prediction.py --dataset
+      WikiCS
+    deps:
+    - path: data/embeddings/
+      md5: 2b3d531c8338127dfa97ef39af11320a.dir
+      size: 26033228521
+      nfiles: 1320
+    - path: experiments/scripts/evaluate_link_prediction.py
+      md5: 838d54dd1b21679245c3543c93f429ba
+      size: 1900
+    - path: src/tasks/link_prediction.py
+      md5: 3074685e1a3602b31a00a48b8efe4a76
+      size: 2749
+    params:
+      experiments/configs/link_prediction.yaml:
+        embedding_methods:
+        - features
+        - structural/line
+        - structural/n2v
+        - structural/sdne
+        - attributed/fscnmf
+        - attributed/tadw
+        - attributed/dgi
+        - refined/naive/Concat/line
+        - refined/naive/Concat/n2v
+        - refined/naive/Concat/sdne
+        - refined/naive/ConcatPCA/line
+        - refined/naive/ConcatPCA/n2v
+        - refined/naive/ConcatPCA/sdne
+        - refined/naive/MLP/line
+        - refined/naive/MLP/n2v
+        - refined/naive/MLP/sdne
+        - refined/GERF_grid_lp/line
+        - refined/GERF_grid_lp/n2v
+        - refined/GERF_grid_lp/sdne
+        - refined/GERF_uniform_lp/line
+        - refined/GERF_uniform_lp/n2v
+        - refined/GERF_uniform_lp/sdne
+        - refined/GERF_homophily_lp/line
+        - refined/GERF_homophily_lp/n2v
+        - refined/GERF_homophily_lp/sdne
+    outs:
+    - path: data/metrics/link_prediction/WikiCS/
+      md5: 66289c822b459297a0b06dfa7bd70aa4.dir
+      size: 861004
+      nfiles: 25
+  evaluate_link_prediction@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_link_prediction.py --dataset
+      Coauthor-CS
+    deps:
+    - path: data/embeddings/
+      md5: 2b3d531c8338127dfa97ef39af11320a.dir
+      size: 26033228521
+      nfiles: 1320
+    - path: experiments/scripts/evaluate_link_prediction.py
+      md5: 838d54dd1b21679245c3543c93f429ba
+      size: 1900
+    - path: src/tasks/link_prediction.py
+      md5: 3074685e1a3602b31a00a48b8efe4a76
+      size: 2749
+    params:
+      experiments/configs/link_prediction.yaml:
+        embedding_methods:
+        - features
+        - structural/line
+        - structural/n2v
+        - structural/sdne
+        - attributed/fscnmf
+        - attributed/tadw
+        - attributed/dgi
+        - refined/naive/Concat/line
+        - refined/naive/Concat/n2v
+        - refined/naive/Concat/sdne
+        - refined/naive/ConcatPCA/line
+        - refined/naive/ConcatPCA/n2v
+        - refined/naive/ConcatPCA/sdne
+        - refined/naive/MLP/line
+        - refined/naive/MLP/n2v
+        - refined/naive/MLP/sdne
+        - refined/GERF_grid_lp/line
+        - refined/GERF_grid_lp/n2v
+        - refined/GERF_grid_lp/sdne
+        - refined/GERF_uniform_lp/line
+        - refined/GERF_uniform_lp/n2v
+        - refined/GERF_uniform_lp/sdne
+        - refined/GERF_homophily_lp/line
+        - refined/GERF_homophily_lp/n2v
+        - refined/GERF_homophily_lp/sdne
+    outs:
+    - path: data/metrics/link_prediction/Coauthor-CS/
+      md5: c3eb5374d6a9205d151813de6a3c819b.dir
+      size: 1067172
+      nfiles: 31
+  evaluate_link_prediction@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_link_prediction.py --dataset
+      Amazon-CS
+    deps:
+    - path: data/embeddings/
+      md5: 2b3d531c8338127dfa97ef39af11320a.dir
+      size: 26033228521
+      nfiles: 1320
+    - path: experiments/scripts/evaluate_link_prediction.py
+      md5: 838d54dd1b21679245c3543c93f429ba
+      size: 1900
+    - path: src/tasks/link_prediction.py
+      md5: 3074685e1a3602b31a00a48b8efe4a76
+      size: 2749
+    params:
+      experiments/configs/link_prediction.yaml:
+        embedding_methods:
+        - features
+        - structural/line
+        - structural/n2v
+        - structural/sdne
+        - attributed/fscnmf
+        - attributed/tadw
+        - attributed/dgi
+        - refined/naive/Concat/line
+        - refined/naive/Concat/n2v
+        - refined/naive/Concat/sdne
+        - refined/naive/ConcatPCA/line
+        - refined/naive/ConcatPCA/n2v
+        - refined/naive/ConcatPCA/sdne
+        - refined/naive/MLP/line
+        - refined/naive/MLP/n2v
+        - refined/naive/MLP/sdne
+        - refined/GERF_grid_lp/line
+        - refined/GERF_grid_lp/n2v
+        - refined/GERF_grid_lp/sdne
+        - refined/GERF_uniform_lp/line
+        - refined/GERF_uniform_lp/n2v
+        - refined/GERF_uniform_lp/sdne
+        - refined/GERF_homophily_lp/line
+        - refined/GERF_homophily_lp/n2v
+        - refined/GERF_homophily_lp/sdne
+    outs:
+    - path: data/metrics/link_prediction/Amazon-CS/
+      md5: d5a4a3f9364a43a163643c38b7c5efa6.dir
+      size: 1075752
+      nfiles: 31
+  evaluate_link_prediction@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_link_prediction.py --dataset
+      Amazon-Photo
+    deps:
+    - path: data/embeddings/
+      md5: 2b3d531c8338127dfa97ef39af11320a.dir
+      size: 26033228521
+      nfiles: 1320
+    - path: experiments/scripts/evaluate_link_prediction.py
+      md5: 838d54dd1b21679245c3543c93f429ba
+      size: 1900
+    - path: src/tasks/link_prediction.py
+      md5: 3074685e1a3602b31a00a48b8efe4a76
+      size: 2749
+    params:
+      experiments/configs/link_prediction.yaml:
+        embedding_methods:
+        - features
+        - structural/line
+        - structural/n2v
+        - structural/sdne
+        - attributed/fscnmf
+        - attributed/tadw
+        - attributed/dgi
+        - refined/naive/Concat/line
+        - refined/naive/Concat/n2v
+        - refined/naive/Concat/sdne
+        - refined/naive/ConcatPCA/line
+        - refined/naive/ConcatPCA/n2v
+        - refined/naive/ConcatPCA/sdne
+        - refined/naive/MLP/line
+        - refined/naive/MLP/n2v
+        - refined/naive/MLP/sdne
+        - refined/GERF_grid_lp/line
+        - refined/GERF_grid_lp/n2v
+        - refined/GERF_grid_lp/sdne
+        - refined/GERF_uniform_lp/line
+        - refined/GERF_uniform_lp/n2v
+        - refined/GERF_uniform_lp/sdne
+        - refined/GERF_homophily_lp/line
+        - refined/GERF_homophily_lp/n2v
+        - refined/GERF_homophily_lp/sdne
+    outs:
+    - path: data/metrics/link_prediction/Amazon-Photo/
+      md5: d72e81c5491a322d63018ee4140ae93b.dir
+      size: 1074876
+      nfiles: 31
+  apply_GERF_grid@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-CS
+      --hyperparameters-strategy grid
+    deps:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/hps/GERF/Amazon-CS/best.json
+      md5: d17dcea530d1a7df035740a2ba6191b9
+      size: 361
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: df7a52dae7d6f3ffe64900a26d249b4a
+      size: 2810
+    outs:
+    - path: data/embeddings/refined/GERF_grid/line/Amazon-CS/
+      md5: 4382c6650235e270ec54fd37b456491b.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/n2v/Amazon-CS/
+      md5: 5046de8cec1eeb812f580d0c2f418fbc.dir
+      size: 70417792
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/sdne/Amazon-CS/
+      md5: ed09b4fd16ec4a2faf3047d700d4bb10.dir
+      size: 70417798
+      nfiles: 10
+  apply_GERF_grid@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-Photo
+      --hyperparameters-strategy grid
+    deps:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/hps/GERF/Amazon-Photo/best.json
+      md5: d2fbad7774c4abd5d1e63f17001cb854
+      size: 376
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: df7a52dae7d6f3ffe64900a26d249b4a
+      size: 2810
+    outs:
+    - path: data/embeddings/refined/GERF_grid/line/Amazon-Photo/
+      md5: 9214cd4ab204f9ac4f6498551eb774b6.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/n2v/Amazon-Photo/
+      md5: 4b459c107cbe6215380d6513b2199318.dir
+      size: 39175556
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/sdne/Amazon-Photo/
+      md5: 8ebd4693520d91929049b0ca31fa50f6.dir
+      size: 39175560
+      nfiles: 10
+  apply_GERF_grid@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset WikiCS
+      --hyperparameters-strategy grid
+    deps:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/hps/GERF/WikiCS/best.json
+      md5: 2f49561cb11c6387bae903673a0d2b56
+      size: 328
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: df7a52dae7d6f3ffe64900a26d249b4a
+      size: 2810
+    outs:
+    - path: data/embeddings/refined/GERF_grid/line/WikiCS/
+      md5: fffdd4583c5e8f0617e7b27322d7be33.dir
+      size: 59916679
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/n2v/WikiCS/
+      md5: 3f4f4873e3c16cc8a0e876e65f3a0e60.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/sdne/WikiCS/
+      md5: f572498165171229ba854e21559fff9d.dir
+      size: 59916675
+      nfiles: 10
+  apply_GERF_grid@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Coauthor-CS
+      --hyperparameters-strategy grid
+    deps:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+    - path: data/hps/GERF/Coauthor-CS/best.json
+      md5: b9e35326606a3142cb5fd7fd54931ecf
+      size: 363
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: df7a52dae7d6f3ffe64900a26d249b4a
+      size: 2810
+    outs:
+    - path: data/embeddings/refined/GERF_grid/line/Coauthor-CS/
+      md5: cd24c9c240293db4ea78e7ec220d692a.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/n2v/Coauthor-CS/
+      md5: 84a2235f757e59747cabacabc41df8da.dir
+      size: 93872519
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/sdne/Coauthor-CS/
+      md5: a1ef5fdc0cc5617c94e8f6b241cef8e4.dir
+      size: 93872516
+      nfiles: 10
+  apply_GERF_uniform@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset WikiCS
+      --hyperparameters-strategy uniform
+    deps:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: df7a52dae7d6f3ffe64900a26d249b4a
+      size: 2810
+    outs:
+    - path: data/embeddings/refined/GERF_uniform/line/WikiCS/
+      md5: f3af35c70fd8a98e1e0dc66dcdf8107b.dir
+      size: 59916660
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/n2v/WikiCS/
+      md5: 90ba3fe5b4d34eb16fdc822d6b3e71ce.dir
+      size: 59916664
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/sdne/WikiCS/
+      md5: ecf20ba7f2d8e82aad84ad9cc90c8f9d.dir
+      size: 59916660
+      nfiles: 10
+  apply_GERF_uniform@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-CS
+      --hyperparameters-strategy uniform
+    deps:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: df7a52dae7d6f3ffe64900a26d249b4a
+      size: 2810
+    outs:
+    - path: data/embeddings/refined/GERF_uniform/line/Amazon-CS/
+      md5: 722c81888874c6d9720fe6d9ca88200d.dir
+      size: 70417788
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/n2v/Amazon-CS/
+      md5: 04a954a6cb914c9002de46c460832d64.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/sdne/Amazon-CS/
+      md5: 0581432e87b1b043425ea9d2b179e5eb.dir
+      size: 70417792
+      nfiles: 10
+  apply_GERF_uniform@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Coauthor-CS
+      --hyperparameters-strategy uniform
+    deps:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: df7a52dae7d6f3ffe64900a26d249b4a
+      size: 2810
+    outs:
+    - path: data/embeddings/refined/GERF_uniform/line/Coauthor-CS/
+      md5: 17509708dd46ed94c273c394b1a02bb4.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/n2v/Coauthor-CS/
+      md5: 4d4766969fafaecb8293f70bccaa379c.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/sdne/Coauthor-CS/
+      md5: f79fcc9a6ccbe41304d5f78b7a6a152c.dir
+      size: 93872518
+      nfiles: 10
+  apply_GERF_uniform@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-Photo
+      --hyperparameters-strategy uniform
+    deps:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: df7a52dae7d6f3ffe64900a26d249b4a
+      size: 2810
+    outs:
+    - path: data/embeddings/refined/GERF_uniform/line/Amazon-Photo/
+      md5: 463eae85c5b0ebdc56e316df79175564.dir
+      size: 39175558
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/n2v/Amazon-Photo/
+      md5: 5237e518b7f5338b3358a22f60c0c4e0.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/sdne/Amazon-Photo/
+      md5: 045d433e05267eba4b6faaa3407eaa52.dir
+      size: 39175559
+      nfiles: 10
+  hps_GERF_lp@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF_lp.py --dataset
+      WikiCS
+    deps:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+    - path: experiments/scripts/refine/hps_GERF_lp.py
+      md5: 14eae8e1f4e9db71fb1d7109b7e9f7a3
+      size: 3344
+    outs:
+    - path: data/hps/GERF_lp/WikiCS/best.json
+      md5: 872caf6e298ea801502bf27fb462f6d3
+      size: 332
+    - path: data/hps/GERF_lp/WikiCS/log.csv
+      md5: 8e03e3cd3246ea63c2adfff13fd02611
+      size: 2759
+  apply_GERF_grid_lp@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF_lp.py --dataset
+      WikiCS --hyperparameters-strategy grid
+    deps:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/hps/GERF_lp/WikiCS/best.json
+      md5: 872caf6e298ea801502bf27fb462f6d3
+      size: 332
+    - path: experiments/scripts/refine/apply_GERF_lp.py
+      md5: d696c26342aef99a7cf5f600239eea2f
+      size: 4458
+    outs:
+    - path: data/embeddings/refined/GERF_grid_lp/line/WikiCS/
+      md5: 9d79b2b6caeb3dce40e809247f7a97d0.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid_lp/n2v/WikiCS/
+      md5: fb843620ac1369f5d8bb1f942aa4067b.dir
+      size: 59916674
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid_lp/sdne/WikiCS/
+      md5: 96360a789140ea2aaaa94ba933461288.dir
+      size: 59916676
+      nfiles: 10
+  apply_GERF_uniform_lp@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF_lp.py --dataset
+      WikiCS --hyperparameters-strategy uniform
+    deps:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF_lp.py
+      md5: d696c26342aef99a7cf5f600239eea2f
+      size: 4458
+    outs:
+    - path: data/embeddings/refined/GERF_uniform_lp/line/WikiCS/
+      md5: b76be59c0a09ecf1ef822ec87441c11a.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform_lp/n2v/WikiCS/
+      md5: caa09d0f3d9c1423d71efaf38f32ebea.dir
+      size: 59916674
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform_lp/sdne/WikiCS/
+      md5: e1105f44ffb57a525f87d687492a351d.dir
+      size: 59916676
+      nfiles: 10
+  hps_GERF_lp@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF_lp.py --dataset
+      Amazon-Photo
+    deps:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+    - path: experiments/scripts/refine/hps_GERF_lp.py
+      md5: 14eae8e1f4e9db71fb1d7109b7e9f7a3
+      size: 3344
+    outs:
+    - path: data/hps/GERF_lp/Amazon-Photo/best.json
+      md5: 8f3a981924e8950ab06a2d8cce9ad82e
+      size: 328
+    - path: data/hps/GERF_lp/Amazon-Photo/log.csv
+      md5: 6a33ef15aed711a0cf5853be07864668
+      size: 2767
+  hps_GERF_lp@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF_lp.py --dataset
+      Coauthor-CS
+    deps:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+    - path: experiments/scripts/refine/hps_GERF_lp.py
+      md5: 14eae8e1f4e9db71fb1d7109b7e9f7a3
+      size: 3344
+    outs:
+    - path: data/hps/GERF_lp/Coauthor-CS/best.json
+      md5: 94caf2e290ff0c8bb0c8af24a7d6077a
+      size: 328
+    - path: data/hps/GERF_lp/Coauthor-CS/log.csv
+      md5: da10410d4c71364339bb96d91ac5c1b3
+      size: 2759
+  hps_GERF_lp@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF_lp.py --dataset
+      Amazon-CS
+    deps:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+    - path: experiments/scripts/refine/hps_GERF_lp.py
+      md5: 14eae8e1f4e9db71fb1d7109b7e9f7a3
+      size: 3344
+    outs:
+    - path: data/hps/GERF_lp/Amazon-CS/best.json
+      md5: f5ad45d1dbafc1e6838eb8b8e43a9d81
+      size: 328
+    - path: data/hps/GERF_lp/Amazon-CS/log.csv
+      md5: 9d524231d54c217fc1e9567adb823166
+      size: 2758
+  apply_GERF_grid_lp@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF_lp.py --dataset
+      Amazon-Photo --hyperparameters-strategy grid
+    deps:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/hps/GERF_lp/Amazon-Photo/best.json
+      md5: 8f3a981924e8950ab06a2d8cce9ad82e
+      size: 328
+    - path: experiments/scripts/refine/apply_GERF_lp.py
+      md5: d696c26342aef99a7cf5f600239eea2f
+      size: 4458
+    outs:
+    - path: data/embeddings/refined/GERF_grid_lp/line/Amazon-Photo/
+      md5: 262c2460c2bf9f156023b0f2a4440afd.dir
+      size: 39175551
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid_lp/n2v/Amazon-Photo/
+      md5: f1c78680a7aeb158d0e81f1ceeb40fc1.dir
+      size: 39175555
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid_lp/sdne/Amazon-Photo/
+      md5: 281456a37978f04dbf89c2ac7514f787.dir
+      size: 39175547
+      nfiles: 10
+  apply_GERF_grid_lp@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF_lp.py --dataset
+      Coauthor-CS --hyperparameters-strategy grid
+    deps:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+    - path: data/hps/GERF_lp/Coauthor-CS/best.json
+      md5: 94caf2e290ff0c8bb0c8af24a7d6077a
+      size: 328
+    - path: experiments/scripts/refine/apply_GERF_lp.py
+      md5: d696c26342aef99a7cf5f600239eea2f
+      size: 4458
+    outs:
+    - path: data/embeddings/refined/GERF_grid_lp/line/Coauthor-CS/
+      md5: 17ea7d5cef6da49313a579aa69d7106c.dir
+      size: 93872516
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid_lp/n2v/Coauthor-CS/
+      md5: 51809da287b92e5def92f8c36b14a153.dir
+      size: 93872516
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid_lp/sdne/Coauthor-CS/
+      md5: 6022f93166ffc3f0f4e61ac1a37d8c29.dir
+      size: 93872514
+      nfiles: 10
+  apply_GERF_grid_lp@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF_lp.py --dataset
+      Amazon-CS --hyperparameters-strategy grid
+    deps:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/hps/GERF_lp/Amazon-CS/best.json
+      md5: f5ad45d1dbafc1e6838eb8b8e43a9d81
+      size: 328
+    - path: experiments/scripts/refine/apply_GERF_lp.py
+      md5: d696c26342aef99a7cf5f600239eea2f
+      size: 4458
+    outs:
+    - path: data/embeddings/refined/GERF_grid_lp/line/Amazon-CS/
+      md5: 753293b1699268f3a43215f0c59bf178.dir
+      size: 70417788
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid_lp/n2v/Amazon-CS/
+      md5: 08a607c50c4027376767115688d5c710.dir
+      size: 70417796
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid_lp/sdne/Amazon-CS/
+      md5: 5f13097793dd6c078e8d5bc379b4aa79.dir
+      size: 70417798
+      nfiles: 10
+  apply_GERF_uniform_lp@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF_lp.py --dataset
+      Amazon-CS --hyperparameters-strategy uniform
+    deps:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF_lp.py
+      md5: d696c26342aef99a7cf5f600239eea2f
+      size: 4458
+    outs:
+    - path: data/embeddings/refined/GERF_uniform_lp/line/Amazon-CS/
+      md5: 65f3cfb1b2af57d39182106446bd6991.dir
+      size: 70417795
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform_lp/n2v/Amazon-CS/
+      md5: 2542d55cbc3c14463ff7b92f3b88dfc7.dir
+      size: 70417793
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform_lp/sdne/Amazon-CS/
+      md5: 188e7c3261073c84027d98b4eebe177a.dir
+      size: 70417795
+      nfiles: 10
+  apply_GERF_uniform_lp@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF_lp.py --dataset
+      Coauthor-CS --hyperparameters-strategy uniform
+    deps:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF_lp.py
+      md5: d696c26342aef99a7cf5f600239eea2f
+      size: 4458
+    outs:
+    - path: data/embeddings/refined/GERF_uniform_lp/line/Coauthor-CS/
+      md5: 658b158c8b99d1aa5d96e1b48bc75b0e.dir
+      size: 93872514
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform_lp/n2v/Coauthor-CS/
+      md5: f0ecf1b2f4bdb9d5fb671404afff1044.dir
+      size: 93872514
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform_lp/sdne/Coauthor-CS/
+      md5: 894fc7e05fb0f513250ba7b03938b556.dir
+      size: 93872516
+      nfiles: 10
+  apply_GERF_uniform_lp@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF_lp.py --dataset
+      Amazon-Photo --hyperparameters-strategy uniform
+    deps:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF_lp.py
+      md5: d696c26342aef99a7cf5f600239eea2f
+      size: 4458
+    outs:
+    - path: data/embeddings/refined/GERF_uniform_lp/line/Amazon-Photo/
+      md5: 54d94628d99a582f252b963d8ef900cb.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform_lp/n2v/Amazon-Photo/
+      md5: 9a03272190c008a944ccbdebd2716f58.dir
+      size: 39175559
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform_lp/sdne/Amazon-Photo/
+      md5: 35fbcd5e725171d2244ed354ff6812c1.dir
+      size: 39175557
+      nfiles: 10
+  apply_GERF_homophily@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-Photo
+      --hyperparameters-strategy homophily
+    deps:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: df7a52dae7d6f3ffe64900a26d249b4a
+      size: 2810
+    outs:
+    - path: data/embeddings/refined/GERF_homophily/line/Amazon-Photo/
+      md5: 036d46b613be0fbdcf316d91ec1cb1e4.dir
+      size: 39175548
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily/n2v/Amazon-Photo/
+      md5: 8391ac301e6cce4a90bacb628af8e5dd.dir
+      size: 39175552
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily/sdne/Amazon-Photo/
+      md5: a7ac43d849fa2411ac25899d209a493e.dir
+      size: 39175550
+      nfiles: 10
+  apply_GERF_homophily@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-CS
+      --hyperparameters-strategy homophily
+    deps:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: df7a52dae7d6f3ffe64900a26d249b4a
+      size: 2810
+    outs:
+    - path: data/embeddings/refined/GERF_homophily/line/Amazon-CS/
+      md5: a4437ae7d36e62bfaa953708dc96b6ed.dir
+      size: 70417798
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily/n2v/Amazon-CS/
+      md5: 9a57d74ef163d66dc4bd2a63b711b118.dir
+      size: 70417800
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily/sdne/Amazon-CS/
+      md5: 9f8d42edc212d85f367a5f48f370fb70.dir
+      size: 70417796
+      nfiles: 10
+  apply_GERF_homophily@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset WikiCS
+      --hyperparameters-strategy homophily
+    deps:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: df7a52dae7d6f3ffe64900a26d249b4a
+      size: 2810
+    outs:
+    - path: data/embeddings/refined/GERF_homophily/line/WikiCS/
+      md5: 983dba573bcbc06e1a7113f1650e0635.dir
+      size: 59916672
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily/n2v/WikiCS/
+      md5: 9f4682ebb2037a3fb9f36d2b4a6e0060.dir
+      size: 59916673
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily/sdne/WikiCS/
+      md5: cc84d7c0ccdf73915e9351e10b5e6e53.dir
+      size: 59916671
+      nfiles: 10
+  apply_GERF_homophily@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Coauthor-CS
+      --hyperparameters-strategy homophily
+    deps:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: df7a52dae7d6f3ffe64900a26d249b4a
+      size: 2810
+    outs:
+    - path: data/embeddings/refined/GERF_homophily/line/Coauthor-CS/
+      md5: 58d61ffadd415e00e35c046292ae5a3e.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily/n2v/Coauthor-CS/
+      md5: c71da8617c0827fc404bfe5062b0a0e4.dir
+      size: 93872516
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily/sdne/Coauthor-CS/
+      md5: f05cd43b7fc5130711d784820fe67bb1.dir
+      size: 93872520
+      nfiles: 10
+  apply_GERF_homophily_lp@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF_lp.py --dataset
+      WikiCS --hyperparameters-strategy homophily
+    deps:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF_lp.py
+      md5: d696c26342aef99a7cf5f600239eea2f
+      size: 4458
+    outs:
+    - path: data/embeddings/refined/GERF_homophily_lp/line/WikiCS/
+      md5: 283be284710246874d8d6e0b09bb68a4.dir
+      size: 59916676
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily_lp/n2v/WikiCS/
+      md5: b4d9c7b3df7835ed38f11a6b8a2c2b28.dir
+      size: 59916673
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily_lp/sdne/WikiCS/
+      md5: 842da368465e1cf992175d27aeca4c2d.dir
+      size: 59916674
+      nfiles: 10
+  apply_GERF_homophily_lp@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF_lp.py --dataset
+      Coauthor-CS --hyperparameters-strategy homophily
+    deps:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF_lp.py
+      md5: d696c26342aef99a7cf5f600239eea2f
+      size: 4458
+    outs:
+    - path: data/embeddings/refined/GERF_homophily_lp/line/Coauthor-CS/
+      md5: 5032bfaefe323f7805617be2b3f9aa32.dir
+      size: 93872518
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily_lp/n2v/Coauthor-CS/
+      md5: 0d7fe51a92cd9f5f70ddac5d735842b6.dir
+      size: 93872516
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily_lp/sdne/Coauthor-CS/
+      md5: 0696d2d6a4a9d31790e84e194b8e9fa3.dir
+      size: 93872512
+      nfiles: 10
+  apply_GERF_homophily_lp@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF_lp.py --dataset
+      Amazon-CS --hyperparameters-strategy homophily
+    deps:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF_lp.py
+      md5: d696c26342aef99a7cf5f600239eea2f
+      size: 4458
+    outs:
+    - path: data/embeddings/refined/GERF_homophily_lp/line/Amazon-CS/
+      md5: 8d479997a0c3e5425d74ebad3a12310b.dir
+      size: 70417798
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily_lp/n2v/Amazon-CS/
+      md5: 76cbf81a1a0c9933ac364b9044278a39.dir
+      size: 70417798
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily_lp/sdne/Amazon-CS/
+      md5: c74fe7b0f51d4697bc97090ae9cc087b.dir
+      size: 70417800
+      nfiles: 10
+  apply_GERF_homophily_lp@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF_lp.py --dataset
+      Amazon-Photo --hyperparameters-strategy homophily
+    deps:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF_lp.py
+      md5: d696c26342aef99a7cf5f600239eea2f
+      size: 4458
+    outs:
+    - path: data/embeddings/refined/GERF_homophily_lp/line/Amazon-Photo/
+      md5: 91da012bee21a62a9b12cb8225350710.dir
+      size: 39175556
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily_lp/n2v/Amazon-Photo/
+      md5: 0e6ae34c348e3d8fca53135a29a2e9e9.dir
+      size: 39175553
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_homophily_lp/sdne/Amazon-Photo/
+      md5: d029f2a7376bd4661353cc22ae92a7bd.dir
+      size: 39175556
+      nfiles: 10

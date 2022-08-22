@@ -1,0 +1,25 @@
+params:
+  Amazon-CS:
+    batch_size: 1024
+    emb_dim: 128
+    negative_ratio: 0
+    num_epochs: 10
+    order: first
+  Amazon-Photo:
+    batch_size: 64
+    emb_dim: 128
+    negative_ratio: 0
+    num_epochs: 10
+    order: first
+  Coauthor-CS:
+    batch_size: 32
+    emb_dim: 128
+    negative_ratio: 0
+    num_epochs: 10
+    order: first
+  WikiCS:
+    batch_size: 32
+    emb_dim: 128
+    negative_ratio: 0
+    num_epochs: 10
+    order: first

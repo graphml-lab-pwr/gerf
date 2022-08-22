@@ -1,0 +1,26 @@
+embedding_methods:
+  - features
+  - structural/line
+  - structural/n2v
+  - structural/sdne
+  - attributed/fscnmf
+  - attributed/tadw
+  - attributed/dgi
+  - refined/naive/Concat/line
+  - refined/naive/Concat/n2v
+  - refined/naive/Concat/sdne
+  - refined/naive/ConcatPCA/line
+  - refined/naive/ConcatPCA/n2v
+  - refined/naive/ConcatPCA/sdne
+  - refined/naive/MLP/line
+  - refined/naive/MLP/n2v
+  - refined/naive/MLP/sdne
+  - refined/GERF_grid/line
+  - refined/GERF_grid/n2v
+  - refined/GERF_grid/sdne
+  - refined/GERF_uniform/line
+  - refined/GERF_uniform/n2v
+  - refined/GERF_uniform/sdne
+  - refined/GERF_homophily/line
+  - refined/GERF_homophily/n2v
+  - refined/GERF_homophily/sdne

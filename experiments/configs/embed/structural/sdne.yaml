@@ -1,0 +1,37 @@
+params:
+  Amazon-CS:
+    alpha: 2.096087512750295e-05
+    batch_size: 256
+    beta: 4.463429019746708
+    emb_dim: 128
+    hidden_size: 128
+    nu1: 3.123777168711336e-05
+    nu2: 0.000977667668104079
+    num_epochs: 50
+  Amazon-Photo:
+    alpha: 0.0004122915224267525
+    batch_size: 256
+    beta: 5.4047113784687895
+    emb_dim: 128
+    hidden_size: 512
+    nu1: 9.18909389592212e-05
+    nu2: 0.0007711930118292152
+    num_epochs: 50
+  Coauthor-CS:
+    alpha: 0.0003282659035978998
+    batch_size: 256
+    beta: 6.239437204135304
+    emb_dim: 128
+    hidden_size: 128
+    nu1: 3.1749958779312296e-06
+    nu2: 0.0004261131270556746
+    num_epochs: 50
+  WikiCS:
+    alpha: 0.0006538975205078281
+    batch_size: 256
+    beta: 3.9129865692749264
+    emb_dim: 128
+    hidden_size: 256
+    nu1: 7.406097210272269e-05
+    nu2: 0.0008783294037345857
+    num_epochs: 50

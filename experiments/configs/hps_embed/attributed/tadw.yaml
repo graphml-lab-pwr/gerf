@@ -1,0 +1,49 @@
+defaults: &default_values
+  emb_dim:  # Resulting embedding will be of size 128
+    value: 64
+    param_type: constant
+  lr:
+    low: 0.001
+    high: 0.1
+    param_type: searchable
+    type: float_log
+  num_epochs:
+    value: 20
+    param_type: constant
+  reduction_dimensions:
+    choices:
+      - 16
+      - 32
+      - 64
+      - 128
+    param_type: searchable
+    type: categorical
+  svd_iterations:
+    low: 10
+    high: 50
+    param_type: searchable
+    type: int
+  lambd:
+    low: 1
+    high: 15
+    param_type: searchable
+    type: int
+
+
+
+paths:
+  output:
+    storage: 'hps/attributed/tadw/${name}.db'
+
+params:
+  WikiCS:
+    <<: *default_values
+
+  Amazon-CS:
+    <<: *default_values
+
+  Amazon-Photo:
+    <<: *default_values
+
+  Coauthor-CS:
+    <<: *default_values

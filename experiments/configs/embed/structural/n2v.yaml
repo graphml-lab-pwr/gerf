@@ -1,0 +1,45 @@
+params:
+  Amazon-CS:
+    batch_size: 256
+    context_size: 8
+    emb_dim: 128
+    lr: 0.014882587046783491
+    num_epochs: 20
+    num_negative_samples: 1
+    p: 0.739931968708869
+    q: 1.1484292305792294
+    walk_length: 29
+    walks_per_node: 20
+  Amazon-Photo:
+    batch_size: 256
+    context_size: 10
+    emb_dim: 128
+    lr: 0.01619429669481697
+    num_epochs: 20
+    num_negative_samples: 3
+    p: 0.8956405902580619
+    q: 1.3021330154973136
+    walk_length: 27
+    walks_per_node: 17
+  Coauthor-CS:
+    batch_size: 256
+    context_size: 20
+    emb_dim: 128
+    lr: 0.010512850008743762
+    num_epochs: 20
+    num_negative_samples: 2
+    p: 1.0661616864973307
+    q: 1.279779305448772
+    walk_length: 30
+    walks_per_node: 12
+  WikiCS:
+    batch_size: 256
+    context_size: 11
+    emb_dim: 128
+    lr: 0.015526135020330113
+    num_epochs: 20
+    num_negative_samples: 3
+    p: 0.9903532902564003
+    q: 0.6495195865065801
+    walk_length: 27
+    walks_per_node: 20

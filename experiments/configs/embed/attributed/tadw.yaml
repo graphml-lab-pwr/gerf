@@ -1,0 +1,29 @@
+params:
+  Amazon-CS:
+    emb_dim: 64
+    lambd: 1
+    lr: 0.0013739374279425401
+    num_epochs: 20
+    reduction_dimensions: 16
+    svd_iterations: 36
+  Amazon-Photo:
+    emb_dim: 64
+    lambd: 9
+    lr: 0.0012924394318061566
+    num_epochs: 20
+    reduction_dimensions: 64
+    svd_iterations: 18
+  Coauthor-CS:
+    emb_dim: 64
+    lambd: 1
+    lr: 0.0018229329876730746
+    num_epochs: 20
+    reduction_dimensions: 16
+    svd_iterations: 11
+  WikiCS:
+    emb_dim: 64
+    lambd: 8
+    lr: 0.0012673894851240107
+    num_epochs: 20
+    reduction_dimensions: 32
+    svd_iterations: 21

@@ -1,0 +1,69 @@
+defaults: &default_values
+  emb_dim:
+    value: 128
+    param_type: constant
+  lr:
+    low: 0.001
+    high: 0.1
+    param_type: searchable
+    type: float_log
+  batch_size:
+    choices:
+      - 32
+      - 64
+      - 128
+      - 256
+    param_type: searchable
+    type: categorical
+  walk_length:
+    low:  10
+    high: 30
+    param_type: searchable
+    type: int
+  walks_per_node:
+    low:  2
+    high: 20
+    param_type: searchable
+    type: int
+  context_size:
+    low:  2
+    high: 20
+    param_type: searchable
+    type: int
+  num_negative_samples:
+    low:  1
+    high: 3
+    param_type: searchable
+    type: int
+
+  p:
+    low:  0.5
+    high: 1.5
+    param_type: searchable
+    type: float
+  q:
+    low:  0.5
+    high: 1.5
+    param_type: searchable
+    type: float
+
+  num_epochs:
+    value: 20
+    param_type: constant
+
+paths:
+  output:
+    storage: 'hps/structural/n2v/${name}.db'
+
+params:
+  WikiCS:
+    <<: *default_values
+
+  Amazon-CS:
+    <<: *default_values
+
+  Amazon-Photo:
+    <<: *default_values
+
+  Coauthor-CS:
+    <<: *default_values
