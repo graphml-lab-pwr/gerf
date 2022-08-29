@@ -9,6 +9,9 @@ PyYAML==5.4.1
 jupyter==1.0.0
 seaborn==0.11.1
 matplotlib==3.3.1
+optuna==2.10.1
+wandb==0.13.2
+plotly==5.10.0
 
 # DVC
 dvc[s3]==2.1.0
@@ -26,8 +29,8 @@ torch-spline-conv==1.2.0
 torch-geometric==1.7.0
 
 # Graph Embedding library
-# (The official implementation uses a Gensim version that is 
-# incompatible with karateclub, but the two models (LINE, SDNE) 
+# (The official implementation uses a Gensim version that is
+# incompatible with karateclub, but the two models (LINE, SDNE)
 # we utilize here, do not utilize Gensim at all. I updated the
 # dependency versions so it can be installed without additional hacks)
 git+https://github.com/pbielak/GraphEmbedding
