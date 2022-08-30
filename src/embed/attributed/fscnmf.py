@@ -8,7 +8,6 @@ from tqdm.auto import trange
 
 
 class _FSCNMF(FSCNMF):
-
     def fit(
         self,
         graph: nx.classes.graph.Graph,
@@ -40,10 +39,12 @@ class _FSCNMF(FSCNMF):
             * **D_inverse** *(Scipy array)* - Diagonal inverse degree matrix.
         """
         index = np.arange(graph.number_of_nodes())
-        values = np.array([
-            1.0/graph.degree[node] if graph.degree[node] > 0 else 0.0
-            for node in range(graph.number_of_nodes())
-        ])
+        values = np.array(
+            [
+                1.0 / graph.degree[node] if graph.degree[node] > 0 else 0.0
+                for node in range(graph.number_of_nodes())
+            ]
+        )
         shape = (graph.number_of_nodes(), graph.number_of_nodes())
         D_inverse = coo_matrix((values, (index, index)), shape=shape)
         return D_inverse

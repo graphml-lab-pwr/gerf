@@ -8,7 +8,6 @@ from tqdm import trange
 
 
 class _TADW(TADW):
-
     def fit(
         self,
         graph: nx.classes.graph.Graph,

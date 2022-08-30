@@ -7,7 +7,6 @@ from tqdm import tqdm
 
 
 class Node2vecModel:
-
     def __init__(
         self,
         edge_index: torch.Tensor,
@@ -78,19 +77,18 @@ class Node2vecModel:
                 epoch_loss += loss.item()
 
             losses.append(epoch_loss / len(loader))
-            pbar.set_postfix({
-                'first_loss': losses[0],
-                'current_loss': losses[-1],
-                'mean_loss': np.mean(losses),
-            })
+            pbar.set_postfix(
+                {
+                    "first_loss": losses[0],
+                    "current_loss": losses[-1],
+                    "mean_loss": np.mean(losses),
+                }
+            )
 
         pbar.close()
         return losses
 
-    def predict(
-        self,
-        nodes: Optional[torch.Tensor] = None
-    ) -> torch.Tensor:
+    def predict(self, nodes: Optional[torch.Tensor] = None) -> torch.Tensor:
         self._model.eval()
         embeddings = self._model.embedding.weight.cpu().detach()
 
