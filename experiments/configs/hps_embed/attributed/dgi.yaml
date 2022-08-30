@@ -1,0 +1,42 @@
+#defaults: &default_values
+#  emb_dim: 128
+#  lr: 0.001
+#  num_epochs: 100
+
+defaults: &default_values
+  emb_dim:
+    choices:
+      - 32
+      - 64
+      - 128
+      - 256
+      - 512
+    param_type: searchable
+    type: categorical
+  lr:
+    low:  0.00000001
+    high: 0.0000001
+    param_type: searchable
+    type: log_uniform
+  num_epochs:
+    value: 5
+    param_type: constant
+
+
+paths:
+  output:
+    storage: 'hps/attributed/dgi/${name}.db'
+
+params:
+  WikiCS:
+    <<: *default_values
+
+  Amazon-CS:
+    <<: *default_values
+
+  Amazon-Photo:
+    <<: *default_values
+
+  Coauthor-CS:
+    <<: *default_values
+
