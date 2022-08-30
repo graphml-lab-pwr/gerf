@@ -17,6 +17,7 @@ stages:
             - params.${item}
       deps:
         - experiments/scripts/embed/structural/node2vec.py
+        - src/embed/structural/node2vec.py
       outs:
         - data/embeddings/structural/n2v/${item}/
 
@@ -35,6 +36,7 @@ stages:
             - params.${item}
       deps:
         - experiments/scripts/embed/structural/line.py
+        - src/embed/structural/line.py
       outs:
         - data/embeddings/structural/line/${item}/
 
@@ -53,6 +55,7 @@ stages:
             - params.${item}
       deps:
         - experiments/scripts/embed/structural/sdne.py
+        - src/embed/structural/sdne.py
       outs:
         - data/embeddings/structural/sdne/${item}/
 
@@ -71,6 +74,7 @@ stages:
             - params.${item}
       deps:
         - experiments/scripts/embed/attributed/tadw.py
+        - src/embed/attributed/tadw.py
       outs:
         - data/embeddings/attributed/tadw/${item}/
 
@@ -89,6 +93,7 @@ stages:
             - params.${item}
       deps:
         - experiments/scripts/embed/attributed/fscnmf.py
+        - src/embed/attributed/fscnmf.py
       outs:
         - data/embeddings/attributed/fscnmf/${item}/
 
@@ -107,6 +112,7 @@ stages:
             - params.${item}
       deps:
         - experiments/scripts/embed/attributed/dgi.py
+        - src/embed/attributed/dgi.py
       outs:
         - data/embeddings/attributed/dgi/${item}/
 
