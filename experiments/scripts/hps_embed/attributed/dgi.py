@@ -40,16 +40,14 @@ def main(
     dataset: str = typer.Option(...), n_trials: int = typer.Option(...)
 ) -> None:
     # Read config
-    with open("experiments/configs/hps_embed/attributed/dgi.yaml", 'r') as fin:
+    with open("experiments/configs/hps_embed/attributed/dgi.yaml", "r") as fin:
         cfg = yaml.safe_load(fin)
 
     params = cfg["params"][dataset]
 
     task = DGIOptimizationTask(dataset, params)
     storage_path = os.path.join(
-        DATA_DIR,
-        cfg["paths"]["output"]["storage"]
-        .replace("${name}", dataset)
+        DATA_DIR, cfg["paths"]["output"]["storage"].replace("${name}", dataset)
     )
     task.optimize(storage_path, n_trials)
 

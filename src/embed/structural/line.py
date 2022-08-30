@@ -6,7 +6,6 @@ from ge import LINE
 
 
 class LINEModel:
-
     def __init__(
         self,
         graph: nx.Graph,
@@ -33,18 +32,15 @@ class LINEModel:
         losses = hist.history
         return losses
 
-    def predict(
-        self,
-        nodes: Optional[torch.Tensor] = None
-    ) -> torch.Tensor:
+    def predict(self, nodes: Optional[torch.Tensor] = None) -> torch.Tensor:
         emb = self._model.get_embeddings()
 
         if nodes is None:
             nodes = sorted(emb.keys())
 
-        embeddings = torch.stack([
-            torch.tensor(emb[node], dtype=torch.float)
-            for node in nodes
-        ], dim=0)
+        embeddings = torch.stack(
+            [torch.tensor(emb[node], dtype=torch.float) for node in nodes],
+            dim=0,
+        )
 
         return embeddings

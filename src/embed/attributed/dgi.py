@@ -23,7 +23,6 @@ def corruption(x, edge_index):
 
 
 class DGI:
-
     def __init__(
         self,
         num_node_features: int,
@@ -56,11 +55,13 @@ class DGI:
             loss.backward()
             self._optimizer.step()
 
-            pbar.set_postfix({
-                "first_loss": losses[0],
-                "current_loss": losses[-1],
-                "mean_loss": np.mean(losses),
-            })
+            pbar.set_postfix(
+                {
+                    "first_loss": losses[0],
+                    "current_loss": losses[-1],
+                    "mean_loss": np.mean(losses),
+                }
+            )
 
     @torch.no_grad()
     def predict(self, data: Data) -> torch.Tensor:

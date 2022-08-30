@@ -8,8 +8,8 @@ stages:
       md5: 2f394d3a741bb93db281679f2ce8e98d
       size: 1986
     - path: src/embed/structural/node2vec.py
-      md5: fbf3caed8460ca8398683c38072b4c22
-      size: 2696
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
     params:
       experiments/configs/embed/structural/node2vec.yaml:
         params.WikiCS:
@@ -39,8 +39,8 @@ stages:
       md5: 7e38e04715d4398b546b9d701b85a762
       size: 1795
     - path: src/embed/structural/line.py
-      md5: e84389d9eb942aa5b049972209562dca
-      size: 1081
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
     params:
       experiments/configs/embed/structural/line.yaml:
         params.WikiCS:
@@ -65,8 +65,8 @@ stages:
       md5: 0fbaac1f8f5c15abee046ede21fdf001
       size: 1835
     - path: src/embed/structural/sdne.py
-      md5: e41b903332dd9b2a120c4c525f51a484
-      size: 1175
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
     params:
       experiments/configs/embed/structural/sdne.yaml:
         params.WikiCS:
@@ -94,8 +94,8 @@ stages:
       md5: 0b5ea04be3851efafa842db837771f37
       size: 1725
     - path: src/embed/attributed/tadw.py
-      md5: 8403fbfbfa3e1329b8aa983bed66a5da
-      size: 770
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
     params:
       experiments/configs/embed/attributed/tadw.yaml:
         params.WikiCS:
@@ -300,8 +300,8 @@ stages:
       md5: 2f394d3a741bb93db281679f2ce8e98d
       size: 1986
     - path: src/embed/structural/node2vec.py
-      md5: fbf3caed8460ca8398683c38072b4c22
-      size: 2696
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
     params:
       experiments/configs/embed/structural/node2vec.yaml:
         params.Amazon-CS:
@@ -331,8 +331,8 @@ stages:
       md5: 7e38e04715d4398b546b9d701b85a762
       size: 1795
     - path: src/embed/structural/line.py
-      md5: e84389d9eb942aa5b049972209562dca
-      size: 1081
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
     params:
       experiments/configs/embed/structural/line.yaml:
         params.Amazon-CS:
@@ -357,8 +357,8 @@ stages:
       md5: 0fbaac1f8f5c15abee046ede21fdf001
       size: 1835
     - path: src/embed/structural/sdne.py
-      md5: e41b903332dd9b2a120c4c525f51a484
-      size: 1175
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
     params:
       experiments/configs/embed/structural/sdne.yaml:
         params.Amazon-CS:
@@ -513,8 +513,8 @@ stages:
       md5: 0b5ea04be3851efafa842db837771f37
       size: 1725
     - path: src/embed/attributed/tadw.py
-      md5: 8403fbfbfa3e1329b8aa983bed66a5da
-      size: 770
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
     params:
       experiments/configs/embed/attributed/tadw.yaml:
         params.Amazon-CS:
@@ -578,8 +578,8 @@ stages:
       md5: 828d1c4c35df1625649e4b39bae34a58
       size: 1667
     - path: src/embed/attributed/dgi.py
-      md5: f2ec48aed6b88b80afdfd8e753913732
-      size: 1990
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
     params:
       experiments/configs/embed/attributed/dgi.yaml:
         params.WikiCS:
@@ -602,8 +602,8 @@ stages:
       md5: 828d1c4c35df1625649e4b39bae34a58
       size: 1667
     - path: src/embed/attributed/dgi.py
-      md5: f2ec48aed6b88b80afdfd8e753913732
-      size: 1990
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
     params:
       experiments/configs/embed/attributed/dgi.yaml:
         params.Amazon-CS:
@@ -626,8 +626,8 @@ stages:
       md5: 557a256601585b1862b3146929c5af30
       size: 1716
     - path: src/embed/attributed/fscnmf.py
-      md5: 077af9dc387688b697cbf108ffe931ed
-      size: 1378
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
     params:
       experiments/configs/embed/attributed/fscnmf.yaml:
         params.WikiCS:
@@ -649,8 +649,8 @@ stages:
       md5: 557a256601585b1862b3146929c5af30
       size: 1716
     - path: src/embed/attributed/fscnmf.py
-      md5: 077af9dc387688b697cbf108ffe931ed
-      size: 1378
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
     params:
       experiments/configs/embed/attributed/fscnmf.yaml:
         params.Amazon-CS:
@@ -812,8 +812,8 @@ stages:
       md5: 2f394d3a741bb93db281679f2ce8e98d
       size: 1986
     - path: src/embed/structural/node2vec.py
-      md5: fbf3caed8460ca8398683c38072b4c22
-      size: 2696
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
     params:
       experiments/configs/embed/structural/node2vec.yaml:
         params.Amazon-Photo:
@@ -843,8 +843,8 @@ stages:
       md5: 7e38e04715d4398b546b9d701b85a762
       size: 1795
     - path: src/embed/structural/line.py
-      md5: e84389d9eb942aa5b049972209562dca
-      size: 1081
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
     params:
       experiments/configs/embed/structural/line.yaml:
         params.Amazon-Photo:
@@ -869,8 +869,8 @@ stages:
       md5: 0fbaac1f8f5c15abee046ede21fdf001
       size: 1835
     - path: src/embed/structural/sdne.py
-      md5: e41b903332dd9b2a120c4c525f51a484
-      size: 1175
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
     params:
       experiments/configs/embed/structural/sdne.yaml:
         params.Amazon-Photo:
@@ -898,8 +898,8 @@ stages:
       md5: 828d1c4c35df1625649e4b39bae34a58
       size: 1667
     - path: src/embed/attributed/dgi.py
-      md5: f2ec48aed6b88b80afdfd8e753913732
-      size: 1990
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
     params:
       experiments/configs/embed/attributed/dgi.yaml:
         params.Amazon-Photo:
@@ -1049,8 +1049,8 @@ stages:
       md5: 0b5ea04be3851efafa842db837771f37
       size: 1725
     - path: src/embed/attributed/tadw.py
-      md5: 8403fbfbfa3e1329b8aa983bed66a5da
-      size: 770
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
     params:
       experiments/configs/embed/attributed/tadw.yaml:
         params.Amazon-Photo:
@@ -1073,8 +1073,8 @@ stages:
       md5: 557a256601585b1862b3146929c5af30
       size: 1716
     - path: src/embed/attributed/fscnmf.py
-      md5: 077af9dc387688b697cbf108ffe931ed
-      size: 1378
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
     params:
       experiments/configs/embed/attributed/fscnmf.yaml:
         params.Amazon-Photo:
@@ -1166,8 +1166,8 @@ stages:
       md5: 2f394d3a741bb93db281679f2ce8e98d
       size: 1986
     - path: src/embed/structural/node2vec.py
-      md5: fbf3caed8460ca8398683c38072b4c22
-      size: 2696
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
     params:
       experiments/configs/embed/structural/node2vec.yaml:
         params.Coauthor-CS:
@@ -1197,8 +1197,8 @@ stages:
       md5: 0fbaac1f8f5c15abee046ede21fdf001
       size: 1835
     - path: src/embed/structural/sdne.py
-      md5: e41b903332dd9b2a120c4c525f51a484
-      size: 1175
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
     params:
       experiments/configs/embed/structural/sdne.yaml:
         params.Coauthor-CS:
@@ -1226,8 +1226,8 @@ stages:
       md5: 7e38e04715d4398b546b9d701b85a762
       size: 1795
     - path: src/embed/structural/line.py
-      md5: e84389d9eb942aa5b049972209562dca
-      size: 1081
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
     params:
       experiments/configs/embed/structural/line.yaml:
         params.Coauthor-CS:
@@ -1252,8 +1252,8 @@ stages:
       md5: 828d1c4c35df1625649e4b39bae34a58
       size: 1667
     - path: src/embed/attributed/dgi.py
-      md5: f2ec48aed6b88b80afdfd8e753913732
-      size: 1990
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
     params:
       experiments/configs/embed/attributed/dgi.yaml:
         params.Coauthor-CS:
@@ -1276,8 +1276,8 @@ stages:
       md5: 557a256601585b1862b3146929c5af30
       size: 1716
     - path: src/embed/attributed/fscnmf.py
-      md5: 077af9dc387688b697cbf108ffe931ed
-      size: 1378
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
     params:
       experiments/configs/embed/attributed/fscnmf.yaml:
         params.Coauthor-CS:
@@ -1299,8 +1299,8 @@ stages:
       md5: 0b5ea04be3851efafa842db837771f37
       size: 1725
     - path: src/embed/attributed/tadw.py
-      md5: 8403fbfbfa3e1329b8aa983bed66a5da
-      size: 770
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
     params:
       experiments/configs/embed/attributed/tadw.yaml:
         params.Coauthor-CS:
