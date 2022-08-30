@@ -1,26 +1,20 @@
 defaults: &default_values
-  emb_dim:
+  emb_dim: # Resulting embedding will be of size emb_dim*2
     choices:
+      - 16
       - 32
       - 64
       - 128
       - 256
-      - 512
     param_type: searchable
     type: categorical
-  lr:
-    low:  0.0001
-    high: 0.01
-    param_type: searchable
-    type: float_log
   num_epochs:
-    value: 100
+    value: 500
     param_type: constant
-
 
 paths:
   output:
-    storage: 'hps/attributed/dgi/${name}.db'
+    storage: 'hps/attributed/fscnmf/${name}.db'
 
 params:
   WikiCS:

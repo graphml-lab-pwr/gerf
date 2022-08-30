@@ -13,6 +13,7 @@ optuna==2.10.1
 wandb==0.13.2
 plotly==5.10.0
 typer[all]==0.6.1
+darker==1.5.0
 
 # DVC
 dvc[s3]==2.1.0

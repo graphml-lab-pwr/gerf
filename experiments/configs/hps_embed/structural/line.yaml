@@ -1,0 +1,52 @@
+defaults: &default_values
+  emb_dim:  # The resulting embedding is twice this size if order='all'
+    choices:
+      - 16
+      - 32
+      - 64
+      - 128
+      - 256
+    param_type: searchable
+    type: categorical
+  negative_ratio:
+    low:  0
+    high: 3
+    param_type: searchable
+    type: int
+  order:
+    choices:
+      - 'first'
+      - 'second'
+      - 'all'
+    param_type: searchable
+    type: categorical
+  batch_size:
+    choices:
+      - 32
+      - 64
+      - 128
+      - 256
+    param_type: searchable
+    type: categorical
+  num_epochs:
+    value: 10
+    param_type: constant
+
+paths:
+  output:
+    storage: 'hps/structural/line/${name}.db'
+
+params:
+  WikiCS:
+    <<: *default_values
+
+  Amazon-CS:
+    <<: *default_values
+    batch_size: 4096
+
+  Amazon-Photo:
+    batch_size: 256
+    <<: *default_values
+
+  Coauthor-CS:
+    <<: *default_values

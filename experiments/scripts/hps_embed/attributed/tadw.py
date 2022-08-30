@@ -1,32 +1,38 @@
-"""Run DeepGraphInfomax (based on the example in PyTorch-Geometric)."""
-import os.path
+"""Run TADW method to obtain attributed node embeddings."""
+import os
 
 import optuna
+import torch
 import typer
 import yaml
+from torch_geometric.utils import to_networkx
 
 from src import DATA_DIR
-from src.embed.attributed.dgi import DGI
+from src.embed.attributed.tadw import _TADW
 from src.hps.optimization_task import OptimizationTask
 from src.tasks.node_classification import evaluate_node_classification
 
 
-class DGIOptimizationTask(OptimizationTask):
+class TADWOptimizationTask(OptimizationTask):
     def _objective(self, trial: optuna.Trial) -> float:
         params = self._suggest_params(trial)
 
+        graph = to_networkx(data=self.data, to_undirected=True)
+
         # Build model
-        dgi = DGI(
-            num_node_features=self.data.num_node_features,
-            emb_dim=params["emb_dim"],
-            lr=params["lr"],
+        tadw = _TADW(
+            dimensions=params["emb_dim"],
+            iterations=params["num_epochs"],
+            alpha=params["lr"],
         )
 
+        tadw.allow_disjoint = True
+
         # Train model
-        dgi.train(data=self.data, num_epochs=5)
+        tadw.fit(graph=graph, X=self.data.x.numpy())
 
         # Get embeddings
-        z = dgi.predict(data=self.data)
+        z = torch.from_numpy(tadw.get_embedding()).float()
 
         # Evaluate
         metrics = evaluate_node_classification(z=z, data=self.data)
@@ -40,16 +46,16 @@ def main(
     dataset: str = typer.Option(...), n_trials: int = typer.Option(...)
 ) -> None:
     # Read config
-    with open("experiments/configs/hps_embed/attributed/dgi.yaml", 'r') as fin:
+    with open(
+        "experiments/configs/hps_embed/attributed/tadw.yaml", "r"
+    ) as fin:
         cfg = yaml.safe_load(fin)
 
     params = cfg["params"][dataset]
 
-    task = DGIOptimizationTask(dataset, params)
+    task = TADWOptimizationTask(dataset, params)
     storage_path = os.path.join(
-        DATA_DIR,
-        cfg["paths"]["output"]["storage"]
-        .replace("${name}", dataset)
+        DATA_DIR, cfg["paths"]["output"]["storage"].replace("${name}", dataset)
     )
     task.optimize(storage_path, n_trials)
 
