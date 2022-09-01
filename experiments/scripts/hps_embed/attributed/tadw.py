@@ -24,6 +24,9 @@ class TADWOptimizationTask(OptimizationTask):
             dimensions=params["emb_dim"],
             iterations=params["num_epochs"],
             alpha=params["lr"],
+            reduction_dimensions=params["reduction_dimensions"],
+            svd_iterations=params["svd_iterations"],
+            lambd=params["lambd"],
         )
 
         tadw.allow_disjoint = True

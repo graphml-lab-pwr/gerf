@@ -23,6 +23,12 @@ class FSCBNMFOptimizationTask(OptimizationTask):
         fscnmf = _FSCNMF(
             dimensions=params["emb_dim"],
             iterations=params["num_epochs"],
+            alpha_1=params["alpha_1"],
+            alpha_2=params["alpha_2"],
+            alpha_3=params["alpha_3"],
+            beta_1=params["beta_1"],
+            beta_2=params["beta_2"],
+            beta_3=params["beta_3"],
         )
 
         fscnmf.allow_disjoint = True
