@@ -19,7 +19,7 @@ class LINEOptimizationTask(OptimizationTask):
         graph = to_networkx(data=self.data, to_undirected=True)
 
         if params["order"] == "all":
-            embed_dim = params["emb_dim"] / 2
+            embed_dim = params["emb_dim"] // 2
         else:
             embed_dim = params["emb_dim"]
 
