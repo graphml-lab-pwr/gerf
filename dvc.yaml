@@ -1,5 +1,6 @@
 vars:
   - num_retrains: 10
+  - n_trials: 300
 
 stages:
   embed_node2vec:
@@ -115,6 +116,121 @@ stages:
         - src/embed/attributed/dgi.py
       outs:
         - data/embeddings/attributed/dgi/${item}/
+
+  hps_embed_node2vec:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/node2vec.py --dataset ${item} --n-trials ${n_trials}
+      params:
+        - experiments/configs/hps_embed/structural/node2vec.yaml:
+            - paths
+            - params.${item}
+      deps:
+        - experiments/scripts/hps_embed/structural/node2vec.py
+        - src/embed/structural/node2vec.py
+      outs:
+        - data/hps/structural/n2v/${item}.db
+
+  hps_embed_line:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/line.py --dataset ${item} --n-trials ${n_trials}
+      params:
+        - experiments/configs/hps_embed/structural/line.yaml:
+            - paths
+            - params.${item}
+      deps:
+        - experiments/scripts/hps_embed/structural/line.py
+        - src/embed/structural/line.py
+      outs:
+        - data/hps/structural/line/${item}.db
+
+  hps_embed_sdne:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/sdne.py --dataset ${item} --n-trials ${n_trials}
+      params:
+        - experiments/configs/hps_embed/structural/sdne.yaml:
+            - paths
+            - params.${item}
+      deps:
+        - experiments/scripts/hps_embed/structural/sdne.py
+        - src/embed/structural/sdne.py
+      outs:
+        - data/hps/structural/sdne/${item}.db
+
+  hps_embed_tadw:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/tadw.py --dataset ${item} --n-trials ${n_trials}
+      params:
+        - experiments/configs/hps_embed/attributed/tadw.yaml:
+            - paths
+            - params.${item}
+      deps:
+        - experiments/scripts/hps_embed/attributed/tadw.py
+        - src/embed/attributed/tadw.py
+      outs:
+        - data/hps/attributed/tadw/${item}.db
+
+  hps_embed_fscnmf:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/fscnmf.py --dataset ${item} --n-trials ${n_trials}
+      params:
+        - experiments/configs/hps_embed/attributed/fscnmf.yaml:
+            - paths
+            - params.${item}
+      deps:
+        - experiments/scripts/hps_embed/attributed/fscnmf.py
+        - src/embed/attributed/fscnmf.py
+      outs:
+        - data/hps/attributed/fscnmf/${item}.db
+
+  hps_embed_dgi:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/dgi.py --dataset ${item} --n-trials ${n_trials}
+      params:
+        - experiments/configs/hps_embed/attributed/dgi.yaml:
+            - paths
+            - params.${item}
+      deps:
+        - experiments/scripts/hps_embed/attributed/dgi.py
+        - src/embed/attributed/dgi.py
+      outs:
+        - data/hps/attributed/dgi/${item}.db
+
 
   apply_concat_refiner:
     foreach:
