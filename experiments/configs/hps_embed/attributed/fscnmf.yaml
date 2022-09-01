@@ -5,6 +5,36 @@ defaults: &default_values
   num_epochs:
     value: 500
     param_type: constant
+  alpha_1:
+    low:  100
+    high: 1500
+    param_type: searchable
+    type: int
+  beta_1:
+    low:  100
+    high: 1500
+    param_type: searchable
+    type: int
+  alpha_2:
+    low: 0.1
+    high: 1.5
+    param_type: searchable
+    type: float
+  alpha_3:
+    low: 0.1
+    high: 1.5
+    param_type: searchable
+    type: float
+  beta_2:
+    low: 0.1
+    high: 1.5
+    param_type: searchable
+    type: float
+  beta_3:
+    low: 0.1
+    high: 1.5
+    param_type: searchable
+    type: float
 
 paths:
   output:
