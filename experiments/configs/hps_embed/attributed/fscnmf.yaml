@@ -1,13 +1,7 @@
 defaults: &default_values
-  emb_dim: # Resulting embedding will be of size emb_dim*2
-    choices:
-      - 16
-      - 32
-      - 64
-      - 128
-      - 256
-    param_type: searchable
-    type: categorical
+  emb_dim:  # Resulting embedding will be of size 128
+    value: 64
+    param_type: constant
   num_epochs:
     value: 500
     param_type: constant
