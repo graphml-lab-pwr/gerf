@@ -36,11 +36,25 @@ params:
 
   Amazon-CS:
     <<: *default_values
-    batch_size: 4096
+    batch_size:
+      choices:
+        - 1024
+        - 2048
+        - 4096
+        - 8192
+      param_type: searchable
+      type: categorical
 
   Amazon-Photo:
-    batch_size: 256
     <<: *default_values
+    batch_size:
+      choices:
+        - 64
+        - 128
+        - 256
+        - 512
+      param_type: searchable
+      type: categorical
 
   Coauthor-CS:
     <<: *default_values
