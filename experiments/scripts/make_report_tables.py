@@ -70,6 +70,7 @@ def make_metric_table(
 def main():
     tasks = [
         "node_classification",
+        "link_prediction",
     ]
 
     methods = [

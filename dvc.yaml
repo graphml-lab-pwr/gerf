@@ -401,6 +401,25 @@ stages:
       outs:
         - data/metrics/node_classification/${item}/
 
+  evaluate_link_prediction:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_link_prediction.py --dataset ${item}
+      params:
+        - experiments/configs/link_prediction.yaml:
+            - embedding_methods
+      deps:
+        - experiments/scripts/evaluate_link_prediction.py
+        - src/tasks/link_prediction.py
+        - data/embeddings/
+      outs:
+        - data/metrics/link_prediction/${item}/
+
   make_report_tables:
     wdir: .
     cmd: PYTHONPATH=. python3 experiments/scripts/make_report_tables.py
