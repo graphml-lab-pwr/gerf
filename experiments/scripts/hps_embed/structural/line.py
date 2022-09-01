@@ -18,10 +18,15 @@ class LINEOptimizationTask(OptimizationTask):
 
         graph = to_networkx(data=self.data, to_undirected=True)
 
+        if params["order"] == "all":
+            embed_dim = params["emb_dim"] / 2
+        else:
+            embed_dim = params["emb_dim"]
+
         # Build model
         line = LINEModel(
             graph=graph,
-            emb_dim=params["emb_dim"],
+            emb_dim=embed_dim,
             negative_ratio=params["negative_ratio"],
             order=params["order"],
             batch_size=params["batch_size"],

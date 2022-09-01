@@ -1,13 +1,7 @@
 defaults: &default_values
   emb_dim:
-    choices:
-      - 32
-      - 64
-      - 128
-      - 256
-      - 512
-    param_type: searchable
-    type: categorical
+    value: 128
+    param_type: constant
   hidden_size:
     choices:
       - 128
