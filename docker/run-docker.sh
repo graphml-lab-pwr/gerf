@@ -3,8 +3,9 @@
 GPU="${1}"
 
 docker run -d \
-	   --name gerf \
+	   --name "dynamic-gerf-$(whoami)" \
 	   -v "${PWD}:/app" \
+	   -v "${HOME}/.aws/credentials:/root/.aws/credentials" \
 	   --gpus "device=${GPU}" \
 	   --ipc=host \
-	   gerf:latest /bin/bash -c "trap : TERM INT; sleep infinity & wait"
+	   dynamic_gerf:latest /bin/bash -c "trap : TERM INT; sleep infinity & wait"

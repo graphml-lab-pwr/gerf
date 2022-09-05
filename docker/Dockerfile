@@ -1,4 +1,6 @@
-FROM nvidia/cuda:11.2.0-cudnn8-devel-ubuntu18.04
+FROM nvidia/cuda:11.6.0-cudnn8-devel-ubuntu18.04
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -y software-properties-common wget git && \
@@ -7,11 +9,12 @@ RUN apt-get update && \
 
 RUN apt-get install -y --no-install-recommends \
         python3.7 \
-        python3.7-dev
+        python3.7-dev \
+        python3-pip
 
-RUN wget https://bootstrap.pypa.io/get-pip.py &&  \
-	 python3.7 get-pip.py && \
-	 ln -s /usr/bin/python3.7 /usr/local/bin/python3
+#RUN wget https://bootstrap.pypa.io/get-pip.py &&  \
+#        python3.7 get-pip.py && \
+RUN        ln -s /usr/bin/python3.7 /usr/local/bin/python3
 
 RUN apt-get install -y zsh && \
     chsh -s /bin/zsh && \
@@ -22,6 +25,7 @@ WORKDIR /app
 
 RUN apt-get install -y $(awk '{print $1}' docker/apt.packages)
 
-RUN pip install -r ./requirements.txt
+RUN python3 -m pip install -U pip setuptools wheel
+RUN python3 -m pip install -r ./requirements.txt
 
 CMD exec /bin/zsh -c "trap : TERM INT; sleep infinity & wait"
