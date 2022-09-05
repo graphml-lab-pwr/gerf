@@ -37,7 +37,10 @@ class SDNEOptimizationTask(OptimizationTask):
         z = line.predict()
 
         # Evaluate
-        metrics = evaluate_node_classification(z=z, data=self.data)
+        metrics = evaluate_node_classification(
+            z=z,
+            data=self.data.clone().to("cpu"),
+        )
         trial.set_user_attr("metrics", metrics)
         value = metrics["val"]["auc"]
         assert isinstance(value, float)
