@@ -1,6 +1,6 @@
 vars:
   - num_retrains: 10
-  - n_trials: 300
+  - n_trials: 100
 
 stages:
   embed_node2vec:
