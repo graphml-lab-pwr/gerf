@@ -1646,3 +1646,463 @@ stages:
     - path: data/plots/hps_WikiCS.png
       md5: a741ea04a85387a22e65f7d65075b2d0
       size: 43955
+  hps_embed_node2vec@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/node2vec.py
+      --dataset Amazon-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/node2vec.py
+      md5: 3bc3c730bfd3187fd6d7d055828981b9
+      size: 2015
+    - path: src/embed/structural/node2vec.py
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
+    params:
+      experiments/configs/hps_embed/structural/node2vec.yaml:
+        params.Amazon-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          walk_length:
+            low: 10
+            high: 30
+            param_type: searchable
+            type: int
+          walks_per_node:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          context_size:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          num_negative_samples:
+            low: 1
+            high: 3
+            param_type: searchable
+            type: int
+          p:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          q:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          num_epochs:
+            value: 20
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/n2v/${name}.db
+    outs:
+    - path: data/hps/structural/n2v/Amazon-CS.db
+      md5: 418218ebd090e2b119665594909d8c67
+      size: 802816
+  hps_embed_node2vec@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/node2vec.py
+      --dataset Amazon-Photo --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/node2vec.py
+      md5: 3bc3c730bfd3187fd6d7d055828981b9
+      size: 2015
+    - path: src/embed/structural/node2vec.py
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
+    params:
+      experiments/configs/hps_embed/structural/node2vec.yaml:
+        params.Amazon-Photo:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          walk_length:
+            low: 10
+            high: 30
+            param_type: searchable
+            type: int
+          walks_per_node:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          context_size:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          num_negative_samples:
+            low: 1
+            high: 3
+            param_type: searchable
+            type: int
+          p:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          q:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          num_epochs:
+            value: 20
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/n2v/${name}.db
+    outs:
+    - path: data/hps/structural/n2v/Amazon-Photo.db
+      md5: 18d60511e18590d9a0fa420ec0cc18a1
+      size: 675840
+  hps_embed_node2vec@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/node2vec.py
+      --dataset Coauthor-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/node2vec.py
+      md5: 3bc3c730bfd3187fd6d7d055828981b9
+      size: 2015
+    - path: src/embed/structural/node2vec.py
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
+    params:
+      experiments/configs/hps_embed/structural/node2vec.yaml:
+        params.Coauthor-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          walk_length:
+            low: 10
+            high: 30
+            param_type: searchable
+            type: int
+          walks_per_node:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          context_size:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          num_negative_samples:
+            low: 1
+            high: 3
+            param_type: searchable
+            type: int
+          p:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          q:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          num_epochs:
+            value: 20
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/n2v/${name}.db
+    outs:
+    - path: data/hps/structural/n2v/Coauthor-CS.db
+      md5: c18846d017b39a4e65d1289b72776c8a
+      size: 1085440
+  hps_embed_node2vec@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/node2vec.py
+      --dataset WikiCS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/node2vec.py
+      md5: 3bc3c730bfd3187fd6d7d055828981b9
+      size: 2015
+    - path: src/embed/structural/node2vec.py
+      md5: 7afa219ee2979a8bb0d118cab4ebb526
+      size: 2719
+    params:
+      experiments/configs/hps_embed/structural/node2vec.yaml:
+        params.WikiCS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          walk_length:
+            low: 10
+            high: 30
+            param_type: searchable
+            type: int
+          walks_per_node:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          context_size:
+            low: 2
+            high: 20
+            param_type: searchable
+            type: int
+          num_negative_samples:
+            low: 1
+            high: 3
+            param_type: searchable
+            type: int
+          p:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          q:
+            low: 0.5
+            high: 1.5
+            param_type: searchable
+            type: float
+          num_epochs:
+            value: 20
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/n2v/${name}.db
+    outs:
+    - path: data/hps/structural/n2v/WikiCS.db
+      md5: 43434be0dd202a38e7d480bd259d3b9c
+      size: 843776
+  hps_embed_line@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/line.py --dataset
+      Amazon-Photo --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/line.py
+      md5: 3f286865ec4ece8e0c274baf283c11c1
+      size: 1939
+    - path: src/embed/structural/line.py
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
+    params:
+      experiments/configs/hps_embed/structural/line.yaml:
+        params.Amazon-Photo:
+          emb_dim:
+            value: 128
+            param_type: constant
+          negative_ratio:
+            low: 0
+            high: 3
+            param_type: searchable
+            type: int
+          order:
+            choices:
+            - first
+            - second
+            - all
+            param_type: searchable
+            type: categorical
+          batch_size:
+            choices:
+            - 64
+            - 128
+            - 256
+            - 512
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 10
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/line/${name}.db
+    outs:
+    - path: data/hps/structural/line/Amazon-Photo.db
+      md5: a67ec63cd56001c4b7ae11063b84bd76
+      size: 638976
+  hps_embed_line@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/line.py --dataset
+      WikiCS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/line.py
+      md5: 3f286865ec4ece8e0c274baf283c11c1
+      size: 1939
+    - path: src/embed/structural/line.py
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
+    params:
+      experiments/configs/hps_embed/structural/line.yaml:
+        params.WikiCS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          negative_ratio:
+            low: 0
+            high: 3
+            param_type: searchable
+            type: int
+          order:
+            choices:
+            - first
+            - second
+            - all
+            param_type: searchable
+            type: categorical
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 10
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/line/${name}.db
+    outs:
+    - path: data/hps/structural/line/WikiCS.db
+      md5: baaf933ee64f6742b627ff6880ee3f19
+      size: 368640
+  hps_embed_line@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/line.py --dataset
+      Amazon-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/line.py
+      md5: 3f286865ec4ece8e0c274baf283c11c1
+      size: 1939
+    - path: src/embed/structural/line.py
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
+    params:
+      experiments/configs/hps_embed/structural/line.yaml:
+        params.Amazon-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          negative_ratio:
+            low: 0
+            high: 3
+            param_type: searchable
+            type: int
+          order:
+            choices:
+            - first
+            - second
+            - all
+            param_type: searchable
+            type: categorical
+          batch_size:
+            choices:
+            - 1024
+            - 2048
+            - 4096
+            - 8192
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 10
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/line/${name}.db
+    outs:
+    - path: data/hps/structural/line/Amazon-CS.db
+      md5: 8d6fabd697b7eefe1b5d3408c01fd68d
+      size: 733184
+  hps_embed_line@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/line.py --dataset
+      Coauthor-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/line.py
+      md5: 3f286865ec4ece8e0c274baf283c11c1
+      size: 1939
+    - path: src/embed/structural/line.py
+      md5: bb397890d7e8ae86e8fce49b20ac61e2
+      size: 1059
+    params:
+      experiments/configs/hps_embed/structural/line.yaml:
+        params.Coauthor-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          negative_ratio:
+            low: 0
+            high: 3
+            param_type: searchable
+            type: int
+          order:
+            choices:
+            - first
+            - second
+            - all
+            param_type: searchable
+            type: categorical
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 10
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/line/${name}.db
+    outs:
+    - path: data/hps/structural/line/Coauthor-CS.db
+      md5: fc9a0cd718d5c98ce2bf1e6d56a56261
+      size: 1048576
