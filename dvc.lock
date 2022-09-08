@@ -2106,3 +2106,127 @@ stages:
     - path: data/hps/structural/line/Coauthor-CS.db
       md5: fc9a0cd718d5c98ce2bf1e6d56a56261
       size: 1048576
+  hps_embed_dgi@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/dgi.py --dataset
+      Amazon-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/dgi.py
+      md5: fca7cc978e31db451945465f52c25cd5
+      size: 1564
+    - path: src/embed/attributed/dgi.py
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
+    params:
+      experiments/configs/hps_embed/attributed/dgi.yaml:
+        params.Amazon-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.0001
+            high: 0.01
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 100
+            param_type: constant
+        paths:
+          output:
+            storage: hps/attributed/dgi/${name}.db
+    outs:
+    - path: data/hps/attributed/dgi/Amazon-CS.db
+      md5: d69509d5d07487db393972a1e7684e41
+      size: 610304
+  hps_embed_dgi@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/dgi.py --dataset
+      Amazon-Photo --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/dgi.py
+      md5: fca7cc978e31db451945465f52c25cd5
+      size: 1564
+    - path: src/embed/attributed/dgi.py
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
+    params:
+      experiments/configs/hps_embed/attributed/dgi.yaml:
+        params.Amazon-Photo:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.0001
+            high: 0.01
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 100
+            param_type: constant
+        paths:
+          output:
+            storage: hps/attributed/dgi/${name}.db
+    outs:
+    - path: data/hps/attributed/dgi/Amazon-Photo.db
+      md5: 1f650791125157fd5b5558c9a93cba24
+      size: 548864
+  hps_embed_dgi@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/dgi.py --dataset
+      WikiCS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/dgi.py
+      md5: fca7cc978e31db451945465f52c25cd5
+      size: 1564
+    - path: src/embed/attributed/dgi.py
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
+    params:
+      experiments/configs/hps_embed/attributed/dgi.yaml:
+        params.WikiCS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.0001
+            high: 0.01
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 100
+            param_type: constant
+        paths:
+          output:
+            storage: hps/attributed/dgi/${name}.db
+    outs:
+    - path: data/hps/attributed/dgi/WikiCS.db
+      md5: 789d82229b1811a267ef65c1b7816e04
+      size: 688128
+  hps_embed_dgi@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/dgi.py --dataset
+      Coauthor-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/dgi.py
+      md5: fca7cc978e31db451945465f52c25cd5
+      size: 1564
+    - path: src/embed/attributed/dgi.py
+      md5: 5b2024dcca751529c41578a62d54ff92
+      size: 2035
+    params:
+      experiments/configs/hps_embed/attributed/dgi.yaml:
+        params.Coauthor-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          lr:
+            low: 0.0001
+            high: 0.01
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 100
+            param_type: constant
+        paths:
+          output:
+            storage: hps/attributed/dgi/${name}.db
+    outs:
+    - path: data/hps/attributed/dgi/Coauthor-CS.db
+      md5: c83b88dc250935f1d5b2605e2bdefba8
+      size: 958464
