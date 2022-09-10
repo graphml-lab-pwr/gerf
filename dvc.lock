@@ -2230,3 +2230,227 @@ stages:
     - path: data/hps/attributed/dgi/Coauthor-CS.db
       md5: c83b88dc250935f1d5b2605e2bdefba8
       size: 958464
+  hps_embed_fscnmf@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/fscnmf.py --dataset
+      Coauthor-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/fscnmf.py
+      md5: d6e688e7ff19500d45441e855724f378
+      size: 1979
+    - path: src/embed/attributed/fscnmf.py
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
+    params:
+      experiments/configs/hps_embed/attributed/fscnmf.yaml:
+        params.Coauthor-CS:
+          emb_dim:
+            value: 64
+            param_type: constant
+          num_epochs:
+            value: 500
+            param_type: constant
+          alpha_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          beta_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          alpha_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          alpha_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+        paths:
+          output:
+            storage: hps/attributed/fscnmf/${name}.db
+    outs:
+    - path: data/hps/attributed/fscnmf/Coauthor-CS.db
+      md5: 3314e6cef2c5963e93d69138690f0331
+      size: 1024000
+  hps_embed_fscnmf@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/fscnmf.py --dataset
+      Amazon-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/fscnmf.py
+      md5: d6e688e7ff19500d45441e855724f378
+      size: 1979
+    - path: src/embed/attributed/fscnmf.py
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
+    params:
+      experiments/configs/hps_embed/attributed/fscnmf.yaml:
+        params.Amazon-CS:
+          emb_dim:
+            value: 64
+            param_type: constant
+          num_epochs:
+            value: 500
+            param_type: constant
+          alpha_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          beta_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          alpha_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          alpha_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+        paths:
+          output:
+            storage: hps/attributed/fscnmf/${name}.db
+    outs:
+    - path: data/hps/attributed/fscnmf/Amazon-CS.db
+      md5: 5cdeec3a2418ad42b4e6b7f9fe469562
+      size: 675840
+  hps_embed_fscnmf@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/fscnmf.py --dataset
+      Amazon-Photo --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/fscnmf.py
+      md5: d6e688e7ff19500d45441e855724f378
+      size: 1979
+    - path: src/embed/attributed/fscnmf.py
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
+    params:
+      experiments/configs/hps_embed/attributed/fscnmf.yaml:
+        params.Amazon-Photo:
+          emb_dim:
+            value: 64
+            param_type: constant
+          num_epochs:
+            value: 500
+            param_type: constant
+          alpha_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          beta_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          alpha_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          alpha_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+        paths:
+          output:
+            storage: hps/attributed/fscnmf/${name}.db
+    outs:
+    - path: data/hps/attributed/fscnmf/Amazon-Photo.db
+      md5: 6c1f40f0b67436b30509e19007ae469b
+      size: 614400
+  hps_embed_fscnmf@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/fscnmf.py --dataset
+      WikiCS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/fscnmf.py
+      md5: d6e688e7ff19500d45441e855724f378
+      size: 1979
+    - path: src/embed/attributed/fscnmf.py
+      md5: db25cddb25bbdd70f095acd522f29254
+      size: 1413
+    params:
+      experiments/configs/hps_embed/attributed/fscnmf.yaml:
+        params.WikiCS:
+          emb_dim:
+            value: 64
+            param_type: constant
+          num_epochs:
+            value: 500
+            param_type: constant
+          alpha_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          beta_1:
+            low: 100
+            high: 1500
+            param_type: searchable
+            type: int
+          alpha_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          alpha_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_2:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+          beta_3:
+            low: 0.1
+            high: 1.5
+            param_type: searchable
+            type: float
+        paths:
+          output:
+            storage: hps/attributed/fscnmf/${name}.db
+    outs:
+    - path: data/hps/attributed/fscnmf/WikiCS.db
+      md5: 961381545116dab6da3ecaad7c667680
+      size: 692224
