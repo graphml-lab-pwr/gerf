@@ -2454,3 +2454,199 @@ stages:
     - path: data/hps/attributed/fscnmf/WikiCS.db
       md5: 961381545116dab6da3ecaad7c667680
       size: 692224
+  hps_embed_tadw@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/tadw.py --dataset
+      Amazon-Photo --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/tadw.py
+      md5: e5a01c04c5a34775331d9ece154204af
+      size: 1914
+    - path: src/embed/attributed/tadw.py
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
+    params:
+      experiments/configs/hps_embed/attributed/tadw.yaml:
+        params.Amazon-Photo:
+          emb_dim:
+            value: 64
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 20
+            param_type: constant
+          reduction_dimensions:
+            choices:
+            - 16
+            - 32
+            - 64
+            - 128
+            param_type: searchable
+            type: categorical
+          svd_iterations:
+            low: 10
+            high: 50
+            param_type: searchable
+            type: int
+          lambd:
+            low: 1
+            high: 15
+            param_type: searchable
+            type: int
+        paths:
+          output:
+            storage: hps/attributed/tadw/${name}.db
+    outs:
+    - path: data/hps/attributed/tadw/Amazon-Photo.db
+      md5: 1a6ed38d71bf7f6ee3c016f953fc5b1f
+      size: 651264
+  hps_embed_tadw@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/tadw.py --dataset
+      Amazon-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/tadw.py
+      md5: e5a01c04c5a34775331d9ece154204af
+      size: 1914
+    - path: src/embed/attributed/tadw.py
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
+    params:
+      experiments/configs/hps_embed/attributed/tadw.yaml:
+        params.Amazon-CS:
+          emb_dim:
+            value: 64
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 20
+            param_type: constant
+          reduction_dimensions:
+            choices:
+            - 16
+            - 32
+            - 64
+            - 128
+            param_type: searchable
+            type: categorical
+          svd_iterations:
+            low: 10
+            high: 50
+            param_type: searchable
+            type: int
+          lambd:
+            low: 1
+            high: 15
+            param_type: searchable
+            type: int
+        paths:
+          output:
+            storage: hps/attributed/tadw/${name}.db
+    outs:
+    - path: data/hps/attributed/tadw/Amazon-CS.db
+      md5: d4f6f72aec7d3180db5b80e61028f8b2
+      size: 737280
+  hps_embed_tadw@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/tadw.py --dataset
+      WikiCS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/tadw.py
+      md5: e5a01c04c5a34775331d9ece154204af
+      size: 1914
+    - path: src/embed/attributed/tadw.py
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
+    params:
+      experiments/configs/hps_embed/attributed/tadw.yaml:
+        params.WikiCS:
+          emb_dim:
+            value: 64
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 20
+            param_type: constant
+          reduction_dimensions:
+            choices:
+            - 16
+            - 32
+            - 64
+            - 128
+            param_type: searchable
+            type: categorical
+          svd_iterations:
+            low: 10
+            high: 50
+            param_type: searchable
+            type: int
+          lambd:
+            low: 1
+            high: 15
+            param_type: searchable
+            type: int
+        paths:
+          output:
+            storage: hps/attributed/tadw/${name}.db
+    outs:
+    - path: data/hps/attributed/tadw/WikiCS.db
+      md5: 963c081ad4ac620f63477fe8c04f5eca
+      size: 794624
+  hps_embed_tadw@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/attributed/tadw.py --dataset
+      Coauthor-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/attributed/tadw.py
+      md5: e5a01c04c5a34775331d9ece154204af
+      size: 1914
+    - path: src/embed/attributed/tadw.py
+      md5: 4f28414eb682677e8b96a00cecf1a5d4
+      size: 769
+    params:
+      experiments/configs/hps_embed/attributed/tadw.yaml:
+        params.Coauthor-CS:
+          emb_dim:
+            value: 64
+            param_type: constant
+          lr:
+            low: 0.001
+            high: 0.1
+            param_type: searchable
+            type: float_log
+          num_epochs:
+            value: 20
+            param_type: constant
+          reduction_dimensions:
+            choices:
+            - 16
+            - 32
+            - 64
+            - 128
+            param_type: searchable
+            type: categorical
+          svd_iterations:
+            low: 10
+            high: 50
+            param_type: searchable
+            type: int
+          lambd:
+            low: 1
+            high: 15
+            param_type: searchable
+            type: int
+        paths:
+          output:
+            storage: hps/attributed/tadw/${name}.db
+    outs:
+    - path: data/hps/attributed/tadw/Coauthor-CS.db
+      md5: b0726fea29aca816e95274781ede56be
+      size: 1060864
