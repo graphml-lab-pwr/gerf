@@ -32,7 +32,8 @@ class TADWOptimizationTask(OptimizationTask):
         tadw.allow_disjoint = True
 
         # Train model
-        tadw.fit(graph=graph, X=self.data.x.numpy())
+        data = self.data.clone().to("cpu")
+        tadw.fit(graph=graph, X=data.x.numpy())
 
         # Get embeddings
         z = torch.from_numpy(tadw.get_embedding()).float()
@@ -40,7 +41,7 @@ class TADWOptimizationTask(OptimizationTask):
         # Evaluate
         metrics = evaluate_node_classification(
             z=z,
-            data=self.data.clone().to("cpu"),
+            data=data,
         )
         trial.set_user_attr("metrics", metrics)
         value = metrics["val"]["auc"]
