@@ -2650,3 +2650,251 @@ stages:
     - path: data/hps/attributed/tadw/Coauthor-CS.db
       md5: b0726fea29aca816e95274781ede56be
       size: 1060864
+  hps_embed_sdne@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/sdne.py --dataset
+      Amazon-Photo --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/sdne.py
+      md5: 471564495dbbc5f8d0608e471e9860a1
+      size: 1838
+    - path: src/embed/structural/sdne.py
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
+    params:
+      experiments/configs/hps_embed/structural/sdne.yaml:
+        params.Amazon-Photo:
+          emb_dim:
+            value: 128
+            param_type: constant
+          hidden_size:
+            choices:
+            - 128
+            - 256
+            - 512
+            - 1024
+            param_type: searchable
+            type: categorical
+          nu1:
+            low: 1e-06
+            high: 0.0001
+            param_type: searchable
+            type: float
+          nu2:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          alpha:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          beta:
+            low: 3
+            high: 7
+            param_type: searchable
+            type: float
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 50
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/sdne/${name}.db
+    outs:
+    - path: data/hps/structural/sdne/Amazon-Photo.db
+      md5: 69548e882c02c84f1713c156525ffd2f
+      size: 675840
+  hps_embed_sdne@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/sdne.py --dataset
+      WikiCS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/sdne.py
+      md5: 471564495dbbc5f8d0608e471e9860a1
+      size: 1838
+    - path: src/embed/structural/sdne.py
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
+    params:
+      experiments/configs/hps_embed/structural/sdne.yaml:
+        params.WikiCS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          hidden_size:
+            choices:
+            - 128
+            - 256
+            - 512
+            - 1024
+            param_type: searchable
+            type: categorical
+          nu1:
+            low: 1e-06
+            high: 0.0001
+            param_type: searchable
+            type: float
+          nu2:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          alpha:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          beta:
+            low: 3
+            high: 7
+            param_type: searchable
+            type: float
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 50
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/sdne/${name}.db
+    outs:
+    - path: data/hps/structural/sdne/WikiCS.db
+      md5: 3c358c9ea6755f0e62fce9e3f95c807a
+      size: 753664
+  hps_embed_sdne@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/sdne.py --dataset
+      Coauthor-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/sdne.py
+      md5: 471564495dbbc5f8d0608e471e9860a1
+      size: 1838
+    - path: src/embed/structural/sdne.py
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
+    params:
+      experiments/configs/hps_embed/structural/sdne.yaml:
+        params.Coauthor-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          hidden_size:
+            choices:
+            - 128
+            - 256
+            - 512
+            - 1024
+            param_type: searchable
+            type: categorical
+          nu1:
+            low: 1e-06
+            high: 0.0001
+            param_type: searchable
+            type: float
+          nu2:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          alpha:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          beta:
+            low: 3
+            high: 7
+            param_type: searchable
+            type: float
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 50
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/sdne/${name}.db
+    outs:
+    - path: data/hps/structural/sdne/Coauthor-CS.db
+      md5: 0efe5bb684c6720c24ced39903f5bd4d
+      size: 1052672
+  hps_embed_sdne@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/sdne.py --dataset
+      Amazon-CS --n-trials 100
+    deps:
+    - path: experiments/scripts/hps_embed/structural/sdne.py
+      md5: 471564495dbbc5f8d0608e471e9860a1
+      size: 1838
+    - path: src/embed/structural/sdne.py
+      md5: 05dbed82355e314895b84e85d8f80925
+      size: 1153
+    params:
+      experiments/configs/hps_embed/structural/sdne.yaml:
+        params.Amazon-CS:
+          emb_dim:
+            value: 128
+            param_type: constant
+          hidden_size:
+            choices:
+            - 128
+            - 256
+            - 512
+            - 1024
+            param_type: searchable
+            type: categorical
+          nu1:
+            low: 1e-06
+            high: 0.0001
+            param_type: searchable
+            type: float
+          nu2:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          alpha:
+            low: 1e-05
+            high: 0.001
+            param_type: searchable
+            type: float
+          beta:
+            low: 3
+            high: 7
+            param_type: searchable
+            type: float
+          batch_size:
+            choices:
+            - 32
+            - 64
+            - 128
+            - 256
+            param_type: searchable
+            type: categorical
+          num_epochs:
+            value: 50
+            param_type: constant
+        paths:
+          output:
+            storage: hps/structural/sdne/${name}.db
+    outs:
+    - path: data/hps/structural/sdne/Amazon-CS.db
+      md5: c5d3135d5d5472b4fb28eeff00a2d5e4
+      size: 819200
