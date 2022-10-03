@@ -1,21 +1,37 @@
-defaults: &default_values
-  emb_dim: 64  # Resulting embedding will be of size 128
-  num_epochs: 500
-
-paths:
-  output:
-    embedding: 'embeddings/attributed/fscnmf/${name}/emb_${idx}.pt'
-
 params:
-  WikiCS:
-    <<: *default_values
-
   Amazon-CS:
-    <<: *default_values
-
+    alpha_1: 227
+    alpha_2: 1.2886208038871247
+    alpha_3: 0.3802003542154301
+    beta_1: 100
+    beta_2: 0.25423894181169904
+    beta_3: 0.10867964292175775
+    emb_dim: 64
+    num_epochs: 500
   Amazon-Photo:
-    <<: *default_values
-
+    alpha_1: 255
+    alpha_2: 1.4441718246177857
+    alpha_3: 0.1923242321989463
+    beta_1: 224
+    beta_2: 0.3180584962714869
+    beta_3: 0.5952530860398961
+    emb_dim: 64
+    num_epochs: 500
   Coauthor-CS:
-    <<: *default_values
-
+    alpha_1: 158
+    alpha_2: 1.0023287375849204
+    alpha_3: 0.27115567565701376
+    beta_1: 276
+    beta_2: 0.9231700320793558
+    beta_3: 0.18769578539819926
+    emb_dim: 64
+    num_epochs: 500
+  WikiCS:
+    alpha_1: 1204
+    alpha_2: 1.4891700115683768
+    alpha_3: 0.6838041609077723
+    beta_1: 1337
+    beta_2: 1.340005869245568
+    beta_3: 1.3879204425017988
+    emb_dim: 64
+    num_epochs: 500

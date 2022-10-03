@@ -42,6 +42,9 @@ def main():
             dimensions=params["emb_dim"],
             iterations=params["num_epochs"],
             alpha=params["lr"],
+            reduction_dimensions=params["reduction_dimensions"],
+            svd_iterations=params["svd_iterations"],
+            lambd=params["lambd"],
         )
 
         tadw.allow_disjoint = True
@@ -55,9 +58,7 @@ def main():
         # Save embeddings
         embedding_path = os.path.join(
             DATA_DIR,
-            cfg["paths"]["output"]["embedding"]
-            .replace("${name}", dataset_name)
-            .replace("${idx}", str(idx)),
+            f"embeddings/attributed/tadw/{dataset_name}/emb_{idx}.pt",
         )
         os.makedirs(os.path.dirname(embedding_path), exist_ok=True)
         torch.save(obj=z, f=embedding_path)

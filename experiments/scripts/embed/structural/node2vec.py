@@ -22,7 +22,7 @@ def get_args() -> argparse.Namespace:
 
 def main():
     # Read config
-    with open("experiments/configs/embed/structural/node2vec.yaml", 'r') as fin:
+    with open("experiments/configs/embed/structural/n2v.yaml", 'r') as fin:
         cfg = yaml.safe_load(fin)
 
     args = get_args()
@@ -59,9 +59,7 @@ def main():
         # Save embeddings
         embedding_path = os.path.join(
             DATA_DIR,
-            cfg["paths"]["output"]["embedding"]
-            .replace("${name}", dataset_name)
-            .replace("${idx}", str(idx)),
+            f"embeddings/structural/n2v/{dataset_name}/emb_{idx}.pt",
         )
         os.makedirs(os.path.dirname(embedding_path), exist_ok=True)
         torch.save(obj=z, f=embedding_path)

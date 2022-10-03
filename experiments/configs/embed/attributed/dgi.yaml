@@ -1,22 +1,17 @@
-defaults: &default_values
-  emb_dim: 128
-  lr: 0.001
-  num_epochs: 100
-
-paths:
-  output:
-    embedding: 'embeddings/attributed/dgi/${name}/emb_${idx}.pt'
-
 params:
-  WikiCS:
-    <<: *default_values
-
   Amazon-CS:
-    <<: *default_values
-
+    emb_dim: 128
+    lr: 0.00022433497490294773
+    num_epochs: 100
   Amazon-Photo:
-    <<: *default_values
-
+    emb_dim: 128
+    lr: 0.0005662724736601763
+    num_epochs: 100
   Coauthor-CS:
-    <<: *default_values
-
+    emb_dim: 128
+    lr: 0.0001796714020170723
+    num_epochs: 100
+  WikiCS:
+    emb_dim: 128
+    lr: 0.0004877389523631676
+    num_epochs: 100

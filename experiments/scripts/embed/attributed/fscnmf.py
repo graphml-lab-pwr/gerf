@@ -41,6 +41,12 @@ def main():
         fscnmf = _FSCNMF(
             dimensions=params["emb_dim"],
             iterations=params["num_epochs"],
+            alpha_1=params["alpha_1"],
+            alpha_2=params["alpha_2"],
+            alpha_3=params["alpha_3"],
+            beta_1=params["beta_1"],
+            beta_2=params["beta_2"],
+            beta_3=params["beta_3"],
         )
 
         fscnmf.allow_disjoint = True
@@ -54,9 +60,7 @@ def main():
         # Save embeddings
         embedding_path = os.path.join(
             DATA_DIR,
-            cfg["paths"]["output"]["embedding"]
-            .replace("${name}", dataset_name)
-            .replace("${idx}", str(idx)),
+            f"embeddings/attributed/fscnmf/{dataset_name}/emb_{idx}.pt",
         )
         os.makedirs(os.path.dirname(embedding_path), exist_ok=True)
         torch.save(obj=z, f=embedding_path)

@@ -2898,3 +2898,93 @@ stages:
     - path: data/hps/structural/sdne/Amazon-CS.db
       md5: c5d3135d5d5472b4fb28eeff00a2d5e4
       size: 819200
+  extract_best_runs@structural/n2v:
+    cmd: python3 experiments/scripts/hps_embed/extract_best_runs.py --storage-dir
+      sqlite:///data/hps/structural/n2v --output-path experiments/configs/embed/structural/n2v.yaml
+    deps:
+    - path: data/hps/structural/n2v/
+      md5: 94d16165c2313bf928951bfbdef509b8.dir
+      size: 3407872
+      nfiles: 4
+    - path: experiments/scripts/hps_embed/extract_best_runs.py
+      md5: 59bfba2e17b06cf1990cfc1aa1ecee80
+      size: 745
+    outs:
+    - path: experiments/configs/embed/structural/n2v.yaml
+      md5: b297a527047b4a929100195c7396a602
+      size: 974
+  extract_best_runs@attributed/dgi:
+    cmd: python3 experiments/scripts/hps_embed/extract_best_runs.py --storage-dir
+      sqlite:///data/hps/attributed/dgi --output-path experiments/configs/embed/attributed/dgi.yaml
+    deps:
+    - path: data/hps/attributed/dgi/
+      md5: d69d415025224b619441850842542a6e.dir
+      size: 2805760
+      nfiles: 4
+    - path: experiments/scripts/hps_embed/extract_best_runs.py
+      md5: 59bfba2e17b06cf1990cfc1aa1ecee80
+      size: 745
+    outs:
+    - path: experiments/configs/embed/attributed/dgi.yaml
+      md5: bcb58aa88fea81b12732befa68c2b366
+      size: 331
+  extract_best_runs@structural/sdne:
+    cmd: python3 experiments/scripts/hps_embed/extract_best_runs.py --storage-dir
+      sqlite:///data/hps/structural/sdne --output-path experiments/configs/embed/structural/sdne.yaml
+    deps:
+    - path: data/hps/structural/sdne/
+      md5: 9e55e4e53f609b9a81591c9840484e07.dir
+      size: 3301376
+      nfiles: 4
+    - path: experiments/scripts/hps_embed/extract_best_runs.py
+      md5: 59bfba2e17b06cf1990cfc1aa1ecee80
+      size: 745
+    outs:
+    - path: experiments/configs/embed/structural/sdne.yaml
+      md5: 435a528a53b5650a9283a8eb7dab7907
+      size: 863
+  extract_best_runs@attributed/fscnmf:
+    cmd: python3 experiments/scripts/hps_embed/extract_best_runs.py --storage-dir
+      sqlite:///data/hps/attributed/fscnmf --output-path experiments/configs/embed/attributed/fscnmf.yaml
+    deps:
+    - path: data/hps/attributed/fscnmf/
+      md5: 2b45d8901874c48ac6d93649c3c2e28f.dir
+      size: 3006464
+      nfiles: 4
+    - path: experiments/scripts/hps_embed/extract_best_runs.py
+      md5: 59bfba2e17b06cf1990cfc1aa1ecee80
+      size: 745
+    outs:
+    - path: experiments/configs/embed/attributed/fscnmf.yaml
+      md5: 032b45dfa6523af94fb200e612af5deb
+      size: 847
+  extract_best_runs@structural/line:
+    cmd: python3 experiments/scripts/hps_embed/extract_best_runs.py --storage-dir
+      sqlite:///data/hps/structural/line --output-path experiments/configs/embed/structural/line.yaml
+    deps:
+    - path: data/hps/structural/line/
+      md5: 87e2f794a3980fc19b6c64719200d08a.dir
+      size: 2789376
+      nfiles: 4
+    - path: experiments/scripts/hps_embed/extract_best_runs.py
+      md5: 59bfba2e17b06cf1990cfc1aa1ecee80
+      size: 745
+    outs:
+    - path: experiments/configs/embed/structural/line.yaml
+      md5: 4dcbf2e29f67b8771105f53f101febd8
+      size: 440
+  extract_best_runs@attributed/tadw:
+    cmd: python3 experiments/scripts/hps_embed/extract_best_runs.py --storage-dir
+      sqlite:///data/hps/attributed/tadw --output-path experiments/configs/embed/attributed/tadw.yaml
+    deps:
+    - path: data/hps/attributed/tadw/
+      md5: 2beb68129b1a31cfd8c31929b10431ac.dir
+      size: 3244032
+      nfiles: 4
+    - path: experiments/scripts/hps_embed/extract_best_runs.py
+      md5: 59bfba2e17b06cf1990cfc1aa1ecee80
+      size: 745
+    outs:
+    - path: experiments/configs/embed/attributed/tadw.yaml
+      md5: 5e4057ccb1a559c6fcb8ff2780547aa8
+      size: 582
