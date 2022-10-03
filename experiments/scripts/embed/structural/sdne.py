@@ -58,9 +58,7 @@ def main():
         # Save embeddings
         embedding_path = os.path.join(
             DATA_DIR,
-            cfg["paths"]["output"]["embedding"]
-            .replace("${name}", dataset_name)
-            .replace("${idx}", str(idx)),
+            f"embeddings/structural/sdne/{dataset_name}/emb_{idx}.pt",
         )
         os.makedirs(os.path.dirname(embedding_path), exist_ok=True)
         torch.save(obj=z, f=embedding_path)

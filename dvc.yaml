@@ -3,120 +3,6 @@ vars:
   - n_trials: 100
 
 stages:
-  embed_node2vec:
-    foreach:
-      - WikiCS
-      - Amazon-CS
-      - Amazon-Photo
-      - Coauthor-CS
-    do:
-      wdir: .
-      cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/node2vec.py --dataset ${item} --num-retrains ${num_retrains}
-      params:
-        - experiments/configs/embed/structural/node2vec.yaml:
-            - paths
-            - params.${item}
-      deps:
-        - experiments/scripts/embed/structural/node2vec.py
-        - src/embed/structural/node2vec.py
-      outs:
-        - data/embeddings/structural/n2v/${item}/
-
-  embed_line:
-    foreach:
-      - WikiCS
-      - Amazon-CS
-      - Amazon-Photo
-      - Coauthor-CS
-    do:
-      wdir: .
-      cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/line.py --dataset ${item} --num-retrains ${num_retrains}
-      params:
-        - experiments/configs/embed/structural/line.yaml:
-            - paths
-            - params.${item}
-      deps:
-        - experiments/scripts/embed/structural/line.py
-        - src/embed/structural/line.py
-      outs:
-        - data/embeddings/structural/line/${item}/
-
-  embed_sdne:
-    foreach:
-      - WikiCS
-      - Amazon-CS
-      - Amazon-Photo
-      - Coauthor-CS
-    do:
-      wdir: .
-      cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/sdne.py --dataset ${item} --num-retrains ${num_retrains}
-      params:
-        - experiments/configs/embed/structural/sdne.yaml:
-            - paths
-            - params.${item}
-      deps:
-        - experiments/scripts/embed/structural/sdne.py
-        - src/embed/structural/sdne.py
-      outs:
-        - data/embeddings/structural/sdne/${item}/
-
-  embed_tadw:
-    foreach:
-      - WikiCS
-      - Amazon-CS
-      - Amazon-Photo
-      - Coauthor-CS
-    do:
-      wdir: .
-      cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/tadw.py --dataset ${item} --num-retrains ${num_retrains}
-      params:
-        - experiments/configs/embed/attributed/tadw.yaml:
-            - paths
-            - params.${item}
-      deps:
-        - experiments/scripts/embed/attributed/tadw.py
-        - src/embed/attributed/tadw.py
-      outs:
-        - data/embeddings/attributed/tadw/${item}/
-
-  embed_fscnmf:
-    foreach:
-      - WikiCS
-      - Amazon-CS
-      - Amazon-Photo
-      - Coauthor-CS
-    do:
-      wdir: .
-      cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/fscnmf.py --dataset ${item} --num-retrains ${num_retrains}
-      params:
-        - experiments/configs/embed/attributed/fscnmf.yaml:
-            - paths
-            - params.${item}
-      deps:
-        - experiments/scripts/embed/attributed/fscnmf.py
-        - src/embed/attributed/fscnmf.py
-      outs:
-        - data/embeddings/attributed/fscnmf/${item}/
-
-  embed_dgi:
-    foreach:
-      - WikiCS
-      - Amazon-CS
-      - Amazon-Photo
-      - Coauthor-CS
-    do:
-      wdir: .
-      cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/dgi.py --dataset ${item} --num-retrains ${num_retrains}
-      params:
-        - experiments/configs/embed/attributed/dgi.yaml:
-            - paths
-            - params.${item}
-      deps:
-        - experiments/scripts/embed/attributed/dgi.py
-        - src/embed/attributed/dgi.py
-      outs:
-        - data/embeddings/attributed/dgi/${item}/
-
   hps_embed_node2vec:
     foreach:
       - WikiCS
@@ -231,6 +117,158 @@ stages:
       outs:
         - data/hps/attributed/dgi/${item}.db
 
+  extract_best_runs:
+    foreach:
+      - structural/n2v
+      - structural/line
+      - structural/sdne
+      - attributed/tadw
+      - attributed/fscnmf
+      - attributed/dgi
+    do:
+      wdir: .
+      cmd: >-
+        python3 experiments/scripts/hps_embed/extract_best_runs.py
+        --storage-dir sqlite:///data/hps/${item}
+        --output-path experiments/configs/embed/${item}.yaml
+      deps:
+        - experiments/scripts/hps_embed/extract_best_runs.py
+        - data/hps/${item}/
+      outs:
+        - experiments/configs/embed/${item}.yaml:
+            cache: false
+
+  embed_node2vec:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: >-
+        PYTHONPATH=.
+        python3 experiments/scripts/embed/structural/node2vec.py
+        --dataset ${item}
+        --num-retrains ${num_retrains}
+      params:
+        - experiments/configs/embed/structural/n2v.yaml:
+            - params.${item}
+      deps:
+        - experiments/scripts/embed/structural/node2vec.py
+        - src/embed/structural/node2vec.py
+      outs:
+        - data/embeddings/structural/n2v/${item}/
+
+  embed_line:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: >-
+        PYTHONPATH=.
+        python3 experiments/scripts/embed/structural/line.py
+        --dataset ${item}
+        --num-retrains ${num_retrains}
+      params:
+        - experiments/configs/embed/structural/line.yaml:
+            - params.${item}
+      deps:
+        - experiments/scripts/embed/structural/line.py
+        - src/embed/structural/line.py
+      outs:
+        - data/embeddings/structural/line/${item}/
+
+  embed_sdne:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: >-
+        PYTHONPATH=.
+        python3 experiments/scripts/embed/structural/sdne.py
+        --dataset ${item}
+        --num-retrains ${num_retrains}
+      params:
+        - experiments/configs/embed/structural/sdne.yaml:
+            - params.${item}
+      deps:
+        - experiments/scripts/embed/structural/sdne.py
+        - src/embed/structural/sdne.py
+      outs:
+        - data/embeddings/structural/sdne/${item}/
+
+  embed_tadw:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: >-
+        PYTHONPATH=.
+        python3 experiments/scripts/embed/attributed/tadw.py
+        --dataset ${item}
+        --num-retrains ${num_retrains}
+      params:
+        - experiments/configs/embed/attributed/tadw.yaml:
+            - params.${item}
+      deps:
+        - experiments/scripts/embed/attributed/tadw.py
+        - src/embed/attributed/tadw.py
+      outs:
+        - data/embeddings/attributed/tadw/${item}/
+
+  embed_fscnmf:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: >-
+        PYTHONPATH=.
+        python3 experiments/scripts/embed/attributed/fscnmf.py
+        --dataset ${item}
+        --num-retrains ${num_retrains}
+      params:
+        - experiments/configs/embed/attributed/fscnmf.yaml:
+            - params.${item}
+      deps:
+        - experiments/scripts/embed/attributed/fscnmf.py
+        - src/embed/attributed/fscnmf.py
+      outs:
+        - data/embeddings/attributed/fscnmf/${item}/
+
+  embed_dgi:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: >-
+        PYTHONPATH=.
+        python3 experiments/scripts/embed/attributed/dgi.py
+        --dataset ${item}
+        --num-retrains ${num_retrains}
+      params:
+        - experiments/configs/embed/attributed/dgi.yaml:
+            - params.${item}
+      deps:
+        - experiments/scripts/embed/attributed/dgi.py
+        - src/embed/attributed/dgi.py
+      outs:
+        - data/embeddings/attributed/dgi/${item}/
 
   apply_concat_refiner:
     foreach:
