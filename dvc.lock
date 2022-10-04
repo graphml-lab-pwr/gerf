@@ -106,16 +106,16 @@ stages:
       ConcatPCA --dataset WikiCS
     deps:
     - path: data/embeddings/structural/line/WikiCS/
-      md5: 4d2a08e1a6c8fa3056d475faa396cdf4.dir
-      size: 59916720
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
       nfiles: 10
     - path: data/embeddings/structural/n2v/WikiCS/
-      md5: 6d3cdf9e296d6d7af54206c2ee4f96d2.dir
-      size: 59916720
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
       nfiles: 10
     - path: data/embeddings/structural/sdne/WikiCS/
-      md5: cbfffca1a67a53428df47656d287bfc3.dir
-      size: 59916720
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
       nfiles: 10
     - path: experiments/scripts/refine/apply_naive_refiner.py
       md5: f9a2fa56d58139593ba0d029d5493a60
@@ -131,32 +131,32 @@ stages:
         - sdne
     outs:
     - path: data/embeddings/refined/naive/ConcatPCA/line/WikiCS/
-      md5: 71abc17a9d5a7891c588e3f0fe40de18.dir
-      size: 59916720
+      md5: 43815b5fa29c08d8bd27d51fc92e649e.dir
+      size: 59916660
       nfiles: 10
     - path: data/embeddings/refined/naive/ConcatPCA/n2v/WikiCS/
-      md5: b84a4dbc82bad4ebe5de10fc5d5f814b.dir
-      size: 59916720
+      md5: 87fd64921fe7cea007ec5d198e8412be.dir
+      size: 59916660
       nfiles: 10
     - path: data/embeddings/refined/naive/ConcatPCA/sdne/WikiCS/
-      md5: 22f3142af25dd2ee3e88e913b2b4d020.dir
-      size: 59916720
+      md5: 60fc132c98d867b551f240fcdc229da9.dir
+      size: 59916660
       nfiles: 10
   apply_concat_refiner@WikiCS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
       Concat --dataset WikiCS
     deps:
     - path: data/embeddings/structural/line/WikiCS/
-      md5: 4d2a08e1a6c8fa3056d475faa396cdf4.dir
-      size: 59916720
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
       nfiles: 10
     - path: data/embeddings/structural/n2v/WikiCS/
-      md5: 6d3cdf9e296d6d7af54206c2ee4f96d2.dir
-      size: 59916720
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
       nfiles: 10
     - path: data/embeddings/structural/sdne/WikiCS/
-      md5: cbfffca1a67a53428df47656d287bfc3.dir
-      size: 59916720
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
       nfiles: 10
     - path: experiments/scripts/refine/apply_naive_refiner.py
       md5: f9a2fa56d58139593ba0d029d5493a60
@@ -172,32 +172,32 @@ stages:
         - sdne
     outs:
     - path: data/embeddings/refined/naive/Concat/line/WikiCS/
-      md5: 0e91e0ff0ac5a6790ea18a360624293a.dir
-      size: 200328240
+      md5: 15d0c647ffeddf04e0b07fce350c76ad.dir
+      size: 200328180
       nfiles: 10
     - path: data/embeddings/refined/naive/Concat/n2v/WikiCS/
-      md5: 06157daccdbc8a0ca0291cbe40276856.dir
-      size: 200328240
+      md5: 0ffeab626482c3583ccfb7859fa6a335.dir
+      size: 200328180
       nfiles: 10
     - path: data/embeddings/refined/naive/Concat/sdne/WikiCS/
-      md5: 24563b476fb710ae39aa6b1b977c74c5.dir
-      size: 200328240
+      md5: 08a1cb8ebb656354b40b8fb51ba8e332.dir
+      size: 200328180
       nfiles: 10
   apply_mlp_refiner@WikiCS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
       MLP --dataset WikiCS
     deps:
     - path: data/embeddings/structural/line/WikiCS/
-      md5: 4d2a08e1a6c8fa3056d475faa396cdf4.dir
-      size: 59916720
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
       nfiles: 10
     - path: data/embeddings/structural/n2v/WikiCS/
-      md5: 6d3cdf9e296d6d7af54206c2ee4f96d2.dir
-      size: 59916720
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
       nfiles: 10
     - path: data/embeddings/structural/sdne/WikiCS/
-      md5: cbfffca1a67a53428df47656d287bfc3.dir
-      size: 59916720
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
       nfiles: 10
     - path: experiments/scripts/refine/apply_naive_refiner.py
       md5: f9a2fa56d58139593ba0d029d5493a60
@@ -217,16 +217,16 @@ stages:
         - sdne
     outs:
     - path: data/embeddings/refined/naive/MLP/line/WikiCS/
-      md5: 129027524b570a65c9049200b0435f77.dir
-      size: 59916720
+      md5: fbac8f54790080f8fb2fbd8d50379459.dir
+      size: 59916664
       nfiles: 10
     - path: data/embeddings/refined/naive/MLP/n2v/WikiCS/
-      md5: bc793f8a91789aa2ea0756f1f9a8e37e.dir
-      size: 59916720
+      md5: 8d7cf69f500f5763464a0b2cc73b43bc.dir
+      size: 59916666
       nfiles: 10
     - path: data/embeddings/refined/naive/MLP/sdne/WikiCS/
-      md5: e010c9ae83f4376e42ead5db8e406992.dir
-      size: 59916720
+      md5: dc05f659ee19b3f654989af9b0a63c08.dir
+      size: 59916668
       nfiles: 10
   evaluate_node_classification@WikiCS:
     cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_node_classification.py
@@ -365,16 +365,16 @@ stages:
       Concat --dataset Amazon-CS
     deps:
     - path: data/embeddings/structural/line/Amazon-CS/
-      md5: 2cb66f0dc8d733e5c1c7d059f6a14d78.dir
-      size: 70417840
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
       nfiles: 10
     - path: data/embeddings/structural/n2v/Amazon-CS/
-      md5: d5888904e4ab95865c9aaec2291e471c.dir
-      size: 70417840
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
       nfiles: 10
     - path: data/embeddings/structural/sdne/Amazon-CS/
-      md5: 8b4639c53f0c4f141feecc33d6f22128.dir
-      size: 70417840
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
       nfiles: 10
     - path: experiments/scripts/refine/apply_naive_refiner.py
       md5: f9a2fa56d58139593ba0d029d5493a60
@@ -390,32 +390,32 @@ stages:
         - sdne
     outs:
     - path: data/embeddings/refined/naive/Concat/line/Amazon-CS/
-      md5: 59fef0043e51fa24ab074383adf87806.dir
-      size: 492328880
+      md5: b583a1505dadf524ab1e5f7bbf55c9dc.dir
+      size: 492328820
       nfiles: 10
     - path: data/embeddings/refined/naive/Concat/n2v/Amazon-CS/
-      md5: 1a6eafc9be68a13e20d2b1977d23e69b.dir
-      size: 492328880
+      md5: 888c392895fd7b702f230ed199509e38.dir
+      size: 492328820
       nfiles: 10
     - path: data/embeddings/refined/naive/Concat/sdne/Amazon-CS/
-      md5: 4edde78c9c5e9d4cedb1054168ac13ec.dir
-      size: 492328880
+      md5: ea299db609b9b187807599a90c90f2e3.dir
+      size: 492328820
       nfiles: 10
   apply_concat_pca_refiner@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
       ConcatPCA --dataset Amazon-CS
     deps:
     - path: data/embeddings/structural/line/Amazon-CS/
-      md5: 2cb66f0dc8d733e5c1c7d059f6a14d78.dir
-      size: 70417840
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
       nfiles: 10
     - path: data/embeddings/structural/n2v/Amazon-CS/
-      md5: d5888904e4ab95865c9aaec2291e471c.dir
-      size: 70417840
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
       nfiles: 10
     - path: data/embeddings/structural/sdne/Amazon-CS/
-      md5: 8b4639c53f0c4f141feecc33d6f22128.dir
-      size: 70417840
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
       nfiles: 10
     - path: experiments/scripts/refine/apply_naive_refiner.py
       md5: f9a2fa56d58139593ba0d029d5493a60
@@ -431,32 +431,32 @@ stages:
         - sdne
     outs:
     - path: data/embeddings/refined/naive/ConcatPCA/line/Amazon-CS/
-      md5: d80e36a1011dc8e0ad63e7b5e1ffd0c9.dir
-      size: 70417840
+      md5: f101064c15f8c0061a36538b9eb56d17.dir
+      size: 70417790
       nfiles: 10
     - path: data/embeddings/refined/naive/ConcatPCA/n2v/Amazon-CS/
-      md5: 34b67816e1c9317f5e72f22ffdac425e.dir
-      size: 70417840
+      md5: 2aa4cd01a685ef26d1ba17b4c63020a6.dir
+      size: 70417790
       nfiles: 10
     - path: data/embeddings/refined/naive/ConcatPCA/sdne/Amazon-CS/
-      md5: 80761c1ace94a38108705ef5f99b97c4.dir
-      size: 70417840
+      md5: 88d8014af0c89923484710fe1df234dd.dir
+      size: 70417790
       nfiles: 10
   apply_mlp_refiner@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
       MLP --dataset Amazon-CS
     deps:
     - path: data/embeddings/structural/line/Amazon-CS/
-      md5: 2cb66f0dc8d733e5c1c7d059f6a14d78.dir
-      size: 70417840
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
       nfiles: 10
     - path: data/embeddings/structural/n2v/Amazon-CS/
-      md5: d5888904e4ab95865c9aaec2291e471c.dir
-      size: 70417840
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
       nfiles: 10
     - path: data/embeddings/structural/sdne/Amazon-CS/
-      md5: 8b4639c53f0c4f141feecc33d6f22128.dir
-      size: 70417840
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
       nfiles: 10
     - path: experiments/scripts/refine/apply_naive_refiner.py
       md5: f9a2fa56d58139593ba0d029d5493a60
@@ -476,16 +476,16 @@ stages:
         - sdne
     outs:
     - path: data/embeddings/refined/naive/MLP/line/Amazon-CS/
-      md5: fa92d8cae2c32c29659c79adf3bdab0f.dir
-      size: 70417840
+      md5: 8679cede7017a57a22390e26272d7acd.dir
+      size: 70417798
       nfiles: 10
     - path: data/embeddings/refined/naive/MLP/n2v/Amazon-CS/
-      md5: f8d4971aa5cead11c476b44ffa67c5c5.dir
-      size: 70417840
+      md5: db3790a1ff80ac2dfe73ba5e90376cad.dir
+      size: 70417800
       nfiles: 10
     - path: data/embeddings/refined/naive/MLP/sdne/Amazon-CS/
-      md5: 27248d2b3f35cf30d579d439600f3939.dir
-      size: 70417840
+      md5: a41375dbe6e4759b49e07acc2ed530bc.dir
+      size: 70417800
       nfiles: 10
   embed_tadw@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/tadw.py --dataset
@@ -889,16 +889,16 @@ stages:
       Concat --dataset Amazon-Photo
     deps:
     - path: data/embeddings/structural/line/Amazon-Photo/
-      md5: 3abaf23349b08c522694fccc212bd66a.dir
-      size: 39175600
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
       nfiles: 10
     - path: data/embeddings/structural/n2v/Amazon-Photo/
-      md5: fc18240437067205c5c71343e101b5de.dir
-      size: 39175600
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
       nfiles: 10
     - path: data/embeddings/structural/sdne/Amazon-Photo/
-      md5: 33a76166445a877a19218941f493b887.dir
-      size: 39175600
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
       nfiles: 10
     - path: experiments/scripts/refine/apply_naive_refiner.py
       md5: f9a2fa56d58139593ba0d029d5493a60
@@ -914,32 +914,32 @@ stages:
         - sdne
     outs:
     - path: data/embeddings/refined/naive/Concat/line/Amazon-Photo/
-      md5: 9c9aa2d7e7041680b0a919c82c8336d1.dir
-      size: 267145520
+      md5: ddd32fe66efcc5a7551ce414bb4e9250.dir
+      size: 267145460
       nfiles: 10
     - path: data/embeddings/refined/naive/Concat/n2v/Amazon-Photo/
-      md5: f073b35f20cb12ec87ad469b2d4d7749.dir
-      size: 267145520
+      md5: beb50f33d3d4dc42e6968039806f381a.dir
+      size: 267145460
       nfiles: 10
     - path: data/embeddings/refined/naive/Concat/sdne/Amazon-Photo/
-      md5: 1c149574aa8ffee00189b69f30207fad.dir
-      size: 267145520
+      md5: e3e01f52ba2d62aae67fac1dd4dafc5d.dir
+      size: 267145460
       nfiles: 10
   apply_concat_pca_refiner@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
       ConcatPCA --dataset Amazon-Photo
     deps:
     - path: data/embeddings/structural/line/Amazon-Photo/
-      md5: 3abaf23349b08c522694fccc212bd66a.dir
-      size: 39175600
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
       nfiles: 10
     - path: data/embeddings/structural/n2v/Amazon-Photo/
-      md5: fc18240437067205c5c71343e101b5de.dir
-      size: 39175600
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
       nfiles: 10
     - path: data/embeddings/structural/sdne/Amazon-Photo/
-      md5: 33a76166445a877a19218941f493b887.dir
-      size: 39175600
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
       nfiles: 10
     - path: experiments/scripts/refine/apply_naive_refiner.py
       md5: f9a2fa56d58139593ba0d029d5493a60
@@ -955,32 +955,32 @@ stages:
         - sdne
     outs:
     - path: data/embeddings/refined/naive/ConcatPCA/line/Amazon-Photo/
-      md5: f970021d62e0a1684ce5805ccd10ccba.dir
-      size: 39175600
+      md5: a8c77ec0e8063ca12b3c714b447507bd.dir
+      size: 39175540
       nfiles: 10
     - path: data/embeddings/refined/naive/ConcatPCA/n2v/Amazon-Photo/
-      md5: 366bbe3628c21601f76f95422942c922.dir
-      size: 39175600
+      md5: ca35e13ad808c0bb6f0e365e4265d403.dir
+      size: 39175540
       nfiles: 10
     - path: data/embeddings/refined/naive/ConcatPCA/sdne/Amazon-Photo/
-      md5: 79842605c3efa7b88ef87be0c6812ec7.dir
-      size: 39175600
+      md5: 54e3eb39ec92f9db05268840a5880cad.dir
+      size: 39175540
       nfiles: 10
   apply_mlp_refiner@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
       MLP --dataset Amazon-Photo
     deps:
     - path: data/embeddings/structural/line/Amazon-Photo/
-      md5: 3abaf23349b08c522694fccc212bd66a.dir
-      size: 39175600
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
       nfiles: 10
     - path: data/embeddings/structural/n2v/Amazon-Photo/
-      md5: fc18240437067205c5c71343e101b5de.dir
-      size: 39175600
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
       nfiles: 10
     - path: data/embeddings/structural/sdne/Amazon-Photo/
-      md5: 33a76166445a877a19218941f493b887.dir
-      size: 39175600
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
       nfiles: 10
     - path: experiments/scripts/refine/apply_naive_refiner.py
       md5: f9a2fa56d58139593ba0d029d5493a60
@@ -1000,16 +1000,16 @@ stages:
         - sdne
     outs:
     - path: data/embeddings/refined/naive/MLP/line/Amazon-Photo/
-      md5: 96224714de5dd089ba4683c49b27bf94.dir
-      size: 39175600
+      md5: 27d055ed75dd0b301660c2a9beb09dba.dir
+      size: 39175555
       nfiles: 10
     - path: data/embeddings/refined/naive/MLP/n2v/Amazon-Photo/
-      md5: a0f226fcb11857eb87d0131c98094b78.dir
-      size: 39175600
+      md5: 4b265c769e30cc853fae5ceaa760bd39.dir
+      size: 39175555
       nfiles: 10
     - path: data/embeddings/refined/naive/MLP/sdne/Amazon-Photo/
-      md5: 739f4190278114edddeebaee6321d67f.dir
-      size: 39175600
+      md5: 92d18f66539780c9145d2aa9c1ba3f5c.dir
+      size: 39175559
       nfiles: 10
   embed_tadw@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/tadw.py --dataset
@@ -1284,16 +1284,16 @@ stages:
       Concat --dataset Coauthor-CS
     deps:
     - path: data/embeddings/structural/line/Coauthor-CS/
-      md5: 7d11f4579d283d698cb23f51cd5e66eb.dir
-      size: 93872560
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
       nfiles: 10
     - path: data/embeddings/structural/n2v/Coauthor-CS/
-      md5: 05733daf2f7ff2a7c85d2cc7b431d985.dir
-      size: 93872560
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
       nfiles: 10
     - path: data/embeddings/structural/sdne/Coauthor-CS/
-      md5: 401d875da4f390a738dbeef8690842dc.dir
-      size: 93872560
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
       nfiles: 10
     - path: experiments/scripts/refine/apply_naive_refiner.py
       md5: f9a2fa56d58139593ba0d029d5493a60
@@ -1309,32 +1309,32 @@ stages:
         - sdne
     outs:
     - path: data/embeddings/refined/naive/Concat/line/Coauthor-CS/
-      md5: 308ea13d549d8326bc4bc42159cdf117.dir
-      size: 5084115120
+      md5: 6334e8042ec274fb9bcf8a7b81912068.dir
+      size: 5084115060
       nfiles: 10
     - path: data/embeddings/refined/naive/Concat/n2v/Coauthor-CS/
-      md5: 83ccc40c75f38ca37439fb4455fcf6ff.dir
-      size: 5084115120
+      md5: 183a1f01dd310cc8a6a6c0033ca73b26.dir
+      size: 5084115060
       nfiles: 10
     - path: data/embeddings/refined/naive/Concat/sdne/Coauthor-CS/
-      md5: 80790446a57ef019b398b9243009104b.dir
-      size: 5084115120
+      md5: 16818b7aa3f00b4dd581926d3441e0ef.dir
+      size: 5084115060
       nfiles: 10
   apply_concat_pca_refiner@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
       ConcatPCA --dataset Coauthor-CS
     deps:
     - path: data/embeddings/structural/line/Coauthor-CS/
-      md5: 7d11f4579d283d698cb23f51cd5e66eb.dir
-      size: 93872560
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
       nfiles: 10
     - path: data/embeddings/structural/n2v/Coauthor-CS/
-      md5: 05733daf2f7ff2a7c85d2cc7b431d985.dir
-      size: 93872560
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
       nfiles: 10
     - path: data/embeddings/structural/sdne/Coauthor-CS/
-      md5: 401d875da4f390a738dbeef8690842dc.dir
-      size: 93872560
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
       nfiles: 10
     - path: experiments/scripts/refine/apply_naive_refiner.py
       md5: f9a2fa56d58139593ba0d029d5493a60
@@ -1350,32 +1350,32 @@ stages:
         - sdne
     outs:
     - path: data/embeddings/refined/naive/ConcatPCA/line/Coauthor-CS/
-      md5: 7de54aaa7ea194f2fe792907a46297ea.dir
-      size: 93872560
+      md5: 40b4c0479d0e2010f4a8e04ce030270d.dir
+      size: 93872502
       nfiles: 10
     - path: data/embeddings/refined/naive/ConcatPCA/n2v/Coauthor-CS/
-      md5: f071f3046f51c245f90baae17e978541.dir
-      size: 93872560
+      md5: b943d1e429f23a43bca19d5ff0c39cd5.dir
+      size: 93872502
       nfiles: 10
     - path: data/embeddings/refined/naive/ConcatPCA/sdne/Coauthor-CS/
-      md5: 1be614566099bdcb765e5e213bcf1147.dir
-      size: 93872560
+      md5: 939ce456d00cd1dabb6a12ed61a8d6d3.dir
+      size: 93872502
       nfiles: 10
   apply_mlp_refiner@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
       MLP --dataset Coauthor-CS
     deps:
     - path: data/embeddings/structural/line/Coauthor-CS/
-      md5: 7d11f4579d283d698cb23f51cd5e66eb.dir
-      size: 93872560
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
       nfiles: 10
     - path: data/embeddings/structural/n2v/Coauthor-CS/
-      md5: 05733daf2f7ff2a7c85d2cc7b431d985.dir
-      size: 93872560
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
       nfiles: 10
     - path: data/embeddings/structural/sdne/Coauthor-CS/
-      md5: 401d875da4f390a738dbeef8690842dc.dir
-      size: 93872560
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
       nfiles: 10
     - path: experiments/scripts/refine/apply_naive_refiner.py
       md5: f9a2fa56d58139593ba0d029d5493a60
@@ -1395,16 +1395,16 @@ stages:
         - sdne
     outs:
     - path: data/embeddings/refined/naive/MLP/line/Coauthor-CS/
-      md5: e1dd49d0bee5a8afe715c5e254b24fb8.dir
-      size: 93872560
+      md5: 6595508744248b6222bebc335ff8f403.dir
+      size: 93872520
       nfiles: 10
     - path: data/embeddings/refined/naive/MLP/n2v/Coauthor-CS/
-      md5: a9b8c82fc2765de081f94056e172314a.dir
-      size: 93872560
+      md5: b299955814a4e072d7d640b8ddf1dc82.dir
+      size: 93872518
       nfiles: 10
     - path: data/embeddings/refined/naive/MLP/sdne/Coauthor-CS/
-      md5: 67f4e4e3ace41b9b425eea4308a90a38.dir
-      size: 93872560
+      md5: a5aff5f88f9749cbc21d28268fc2391e.dir
+      size: 93872520
       nfiles: 10
   hps_GERF@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF.py --dataset Coauthor-CS
