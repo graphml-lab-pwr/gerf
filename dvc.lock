@@ -5,94 +5,85 @@ stages:
       WikiCS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/structural/node2vec.py
-      md5: 2f394d3a741bb93db281679f2ce8e98d
-      size: 1986
+      md5: 6b7f6ceee5333cc2b17183e6d80f7c62
+      size: 1915
     - path: src/embed/structural/node2vec.py
       md5: 7afa219ee2979a8bb0d118cab4ebb526
       size: 2719
     params:
-      experiments/configs/embed/structural/node2vec.yaml:
+      experiments/configs/embed/structural/n2v.yaml:
         params.WikiCS:
+          batch_size: 256
+          context_size: 11
           emb_dim: 128
-          lr: 0.01
-          batch_size: 128
-          walk_length: 20
-          walks_per_node: 10
-          context_size: 10
-          num_negative_samples: 1
-          p: 1
-          q: 1
+          lr: 0.015526135020330113
           num_epochs: 20
-        paths:
-          output:
-            embedding: embeddings/structural/n2v/${name}/emb_${idx}.pt
+          num_negative_samples: 3
+          p: 0.9903532902564003
+          q: 0.6495195865065801
+          walk_length: 27
+          walks_per_node: 20
     outs:
     - path: data/embeddings/structural/n2v/WikiCS/
-      md5: 6d3cdf9e296d6d7af54206c2ee4f96d2.dir
-      size: 59916720
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
       nfiles: 10
   embed_line@WikiCS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/line.py --dataset
       WikiCS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/structural/line.py
-      md5: 7e38e04715d4398b546b9d701b85a762
-      size: 1795
+      md5: 202e83d692708bafbece1ae4461cb1fa
+      size: 1730
     - path: src/embed/structural/line.py
       md5: bb397890d7e8ae86e8fce49b20ac61e2
       size: 1059
     params:
       experiments/configs/embed/structural/line.yaml:
         params.WikiCS:
-          emb_dim: 64
-          negative_ratio: 1
-          order: all
-          batch_size: 128
+          batch_size: 32
+          emb_dim: 128
+          negative_ratio: 0
           num_epochs: 10
-        paths:
-          output:
-            embedding: embeddings/structural/line/${name}/emb_${idx}.pt
+          order: first
     outs:
     - path: data/embeddings/structural/line/WikiCS/
-      md5: 4d2a08e1a6c8fa3056d475faa396cdf4.dir
-      size: 59916720
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
       nfiles: 10
   embed_sdne@WikiCS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/sdne.py --dataset
       WikiCS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/structural/sdne.py
-      md5: 0fbaac1f8f5c15abee046ede21fdf001
-      size: 1835
+      md5: 27563b5321bd644f5b9289bb5a9d0654
+      size: 1770
     - path: src/embed/structural/sdne.py
       md5: 05dbed82355e314895b84e85d8f80925
       size: 1153
     params:
       experiments/configs/embed/structural/sdne.yaml:
         params.WikiCS:
+          alpha: 0.0006538975205078281
+          batch_size: 256
+          beta: 3.9129865692749264
           emb_dim: 128
           hidden_size: 256
-          nu1: 1e-05
-          nu2: 0.0001
-          alpha: 0.0001
-          beta: 5
-          batch_size: 128
+          nu1: 7.406097210272269e-05
+          nu2: 0.0008783294037345857
           num_epochs: 50
-        paths:
-          output:
-            embedding: embeddings/structural/sdne/${name}/emb_${idx}.pt
     outs:
     - path: data/embeddings/structural/sdne/WikiCS/
-      md5: cbfffca1a67a53428df47656d287bfc3.dir
-      size: 59916720
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
       nfiles: 10
   embed_tadw@WikiCS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/tadw.py --dataset
       WikiCS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/attributed/tadw.py
-      md5: 0b5ea04be3851efafa842db837771f37
-      size: 1725
+      md5: 0dc38ece73761c588cff67042a1ea035
+      size: 1813
     - path: src/embed/attributed/tadw.py
       md5: 4f28414eb682677e8b96a00cecf1a5d4
       size: 769
@@ -100,15 +91,15 @@ stages:
       experiments/configs/embed/attributed/tadw.yaml:
         params.WikiCS:
           emb_dim: 64
-          lr: 0.01
+          lambd: 8
+          lr: 0.0012673894851240107
           num_epochs: 20
-        paths:
-          output:
-            embedding: embeddings/attributed/tadw/${name}/emb_${idx}.pt
+          reduction_dimensions: 32
+          svd_iterations: 21
     outs:
     - path: data/embeddings/attributed/tadw/WikiCS/
-      md5: 36f5d892213103bb066f688364b464f4.dir
-      size: 59916720
+      md5: 4784222190f29ea00389b0934e276c7b.dir
+      size: 59916670
       nfiles: 10
   apply_concat_pca_refiner@WikiCS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
@@ -297,86 +288,77 @@ stages:
       Amazon-CS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/structural/node2vec.py
-      md5: 2f394d3a741bb93db281679f2ce8e98d
-      size: 1986
+      md5: 6b7f6ceee5333cc2b17183e6d80f7c62
+      size: 1915
     - path: src/embed/structural/node2vec.py
       md5: 7afa219ee2979a8bb0d118cab4ebb526
       size: 2719
     params:
-      experiments/configs/embed/structural/node2vec.yaml:
+      experiments/configs/embed/structural/n2v.yaml:
         params.Amazon-CS:
+          batch_size: 256
+          context_size: 8
           emb_dim: 128
-          lr: 0.01
-          batch_size: 128
-          walk_length: 20
-          walks_per_node: 10
-          context_size: 10
-          num_negative_samples: 1
-          p: 1
-          q: 1
+          lr: 0.014882587046783491
           num_epochs: 20
-        paths:
-          output:
-            embedding: embeddings/structural/n2v/${name}/emb_${idx}.pt
+          num_negative_samples: 1
+          p: 0.739931968708869
+          q: 1.1484292305792294
+          walk_length: 29
+          walks_per_node: 20
     outs:
     - path: data/embeddings/structural/n2v/Amazon-CS/
-      md5: d5888904e4ab95865c9aaec2291e471c.dir
-      size: 70417840
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
       nfiles: 10
   embed_line@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/line.py --dataset
       Amazon-CS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/structural/line.py
-      md5: 7e38e04715d4398b546b9d701b85a762
-      size: 1795
+      md5: 202e83d692708bafbece1ae4461cb1fa
+      size: 1730
     - path: src/embed/structural/line.py
       md5: bb397890d7e8ae86e8fce49b20ac61e2
       size: 1059
     params:
       experiments/configs/embed/structural/line.yaml:
         params.Amazon-CS:
-          emb_dim: 64
-          negative_ratio: 1
-          order: all
-          batch_size: 4096
+          batch_size: 1024
+          emb_dim: 128
+          negative_ratio: 0
           num_epochs: 10
-        paths:
-          output:
-            embedding: embeddings/structural/line/${name}/emb_${idx}.pt
+          order: first
     outs:
     - path: data/embeddings/structural/line/Amazon-CS/
-      md5: 2cb66f0dc8d733e5c1c7d059f6a14d78.dir
-      size: 70417840
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
       nfiles: 10
   embed_sdne@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/sdne.py --dataset
       Amazon-CS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/structural/sdne.py
-      md5: 0fbaac1f8f5c15abee046ede21fdf001
-      size: 1835
+      md5: 27563b5321bd644f5b9289bb5a9d0654
+      size: 1770
     - path: src/embed/structural/sdne.py
       md5: 05dbed82355e314895b84e85d8f80925
       size: 1153
     params:
       experiments/configs/embed/structural/sdne.yaml:
         params.Amazon-CS:
+          alpha: 2.096087512750295e-05
+          batch_size: 256
+          beta: 4.463429019746708
           emb_dim: 128
-          hidden_size: 256
-          nu1: 1e-05
-          nu2: 0.0001
-          alpha: 0.0001
-          beta: 5
-          batch_size: 128
+          hidden_size: 128
+          nu1: 3.123777168711336e-05
+          nu2: 0.000977667668104079
           num_epochs: 50
-        paths:
-          output:
-            embedding: embeddings/structural/sdne/${name}/emb_${idx}.pt
     outs:
     - path: data/embeddings/structural/sdne/Amazon-CS/
-      md5: 8b4639c53f0c4f141feecc33d6f22128.dir
-      size: 70417840
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
       nfiles: 10
   apply_concat_refiner@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
@@ -510,8 +492,8 @@ stages:
       Amazon-CS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/attributed/tadw.py
-      md5: 0b5ea04be3851efafa842db837771f37
-      size: 1725
+      md5: 0dc38ece73761c588cff67042a1ea035
+      size: 1813
     - path: src/embed/attributed/tadw.py
       md5: 4f28414eb682677e8b96a00cecf1a5d4
       size: 769
@@ -519,15 +501,15 @@ stages:
       experiments/configs/embed/attributed/tadw.yaml:
         params.Amazon-CS:
           emb_dim: 64
-          lr: 0.01
+          lambd: 1
+          lr: 0.0013739374279425401
           num_epochs: 20
-        paths:
-          output:
-            embedding: embeddings/attributed/tadw/${name}/emb_${idx}.pt
+          reduction_dimensions: 16
+          svd_iterations: 36
     outs:
     - path: data/embeddings/attributed/tadw/Amazon-CS/
-      md5: e4cae489d75bfae4341525a0ab9b2c80.dir
-      size: 70417840
+      md5: de6c899fc880672a536efc6fd9022a04.dir
+      size: 70417790
       nfiles: 10
   evaluate_node_classification@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_node_classification.py
@@ -575,8 +557,8 @@ stages:
       WikiCS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/attributed/dgi.py
-      md5: 828d1c4c35df1625649e4b39bae34a58
-      size: 1667
+      md5: 2cfe6b3c9568f26a6e4441181c4833f7
+      size: 1601
     - path: src/embed/attributed/dgi.py
       md5: 5b2024dcca751529c41578a62d54ff92
       size: 2035
@@ -584,23 +566,20 @@ stages:
       experiments/configs/embed/attributed/dgi.yaml:
         params.WikiCS:
           emb_dim: 128
-          lr: 0.001
+          lr: 0.0004877389523631676
           num_epochs: 100
-        paths:
-          output:
-            embedding: embeddings/attributed/dgi/${name}/emb_${idx}.pt
     outs:
     - path: data/embeddings/attributed/dgi/WikiCS/
-      md5: f53da7b771fa47817d6c0f1ec01eb30c.dir
-      size: 59916720
+      md5: 956c43d45224b1198c12f0efc9a3af5c.dir
+      size: 59916679
       nfiles: 10
   embed_dgi@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/dgi.py --dataset
       Amazon-CS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/attributed/dgi.py
-      md5: 828d1c4c35df1625649e4b39bae34a58
-      size: 1667
+      md5: 2cfe6b3c9568f26a6e4441181c4833f7
+      size: 1601
     - path: src/embed/attributed/dgi.py
       md5: 5b2024dcca751529c41578a62d54ff92
       size: 2035
@@ -608,61 +587,64 @@ stages:
       experiments/configs/embed/attributed/dgi.yaml:
         params.Amazon-CS:
           emb_dim: 128
-          lr: 0.001
+          lr: 0.00022433497490294773
           num_epochs: 100
-        paths:
-          output:
-            embedding: embeddings/attributed/dgi/${name}/emb_${idx}.pt
     outs:
     - path: data/embeddings/attributed/dgi/Amazon-CS/
-      md5: d0cf3602cbc8a0a15e4269d9e502bf24.dir
-      size: 70417840
+      md5: 77a2e321f740fb7986a2b64ad96cf8cc.dir
+      size: 70417800
       nfiles: 10
   embed_fscnmf@WikiCS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/fscnmf.py --dataset
       WikiCS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/attributed/fscnmf.py
-      md5: 557a256601585b1862b3146929c5af30
-      size: 1716
+      md5: 35e2ef7c1dbf7316bc2d7eaca531ea3b
+      size: 1881
     - path: src/embed/attributed/fscnmf.py
       md5: db25cddb25bbdd70f095acd522f29254
       size: 1413
     params:
       experiments/configs/embed/attributed/fscnmf.yaml:
         params.WikiCS:
+          alpha_1: 1204
+          alpha_2: 1.4891700115683768
+          alpha_3: 0.6838041609077723
+          beta_1: 1337
+          beta_2: 1.340005869245568
+          beta_3: 1.3879204425017988
           emb_dim: 64
           num_epochs: 500
-        paths:
-          output:
-            embedding: embeddings/attributed/fscnmf/${name}/emb_${idx}.pt
     outs:
     - path: data/embeddings/attributed/fscnmf/WikiCS/
-      md5: 517c7d1686b2903f7f98f604eb781e90.dir
-      size: 59916720
+      md5: cba03dffcd183d72c82a1b124e2725c2.dir
+      size: 59916663
       nfiles: 10
   embed_fscnmf@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/fscnmf.py --dataset
       Amazon-CS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/attributed/fscnmf.py
-      md5: 557a256601585b1862b3146929c5af30
-      size: 1716
+      md5: 35e2ef7c1dbf7316bc2d7eaca531ea3b
+      size: 1881
     - path: src/embed/attributed/fscnmf.py
       md5: db25cddb25bbdd70f095acd522f29254
       size: 1413
     params:
       experiments/configs/embed/attributed/fscnmf.yaml:
         params.Amazon-CS:
+          alpha_1: 227
+          alpha_2: 1.2886208038871247
+          alpha_3: 0.3802003542154301
+          beta_1: 100
+          beta_2: 0.25423894181169904
+          beta_3: 0.10867964292175775
           emb_dim: 64
           num_epochs: 500
-        paths:
-          output:
-            embedding: embeddings/attributed/fscnmf/${name}/emb_${idx}.pt
     outs:
     - path: data/embeddings/attributed/fscnmf/Amazon-CS/
-      md5: 34f4d71aab506b9b521df74af66aa19a.dir
-      size: 70417840
+      md5: 8300bac0745b33d00388af500d52cb39.dir
+      size: 70417780
       nfiles: 10
   hps_GERF@WikiCS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF.py --dataset WikiCS
@@ -809,94 +791,85 @@ stages:
       Amazon-Photo --num-retrains 10
     deps:
     - path: experiments/scripts/embed/structural/node2vec.py
-      md5: 2f394d3a741bb93db281679f2ce8e98d
-      size: 1986
+      md5: 6b7f6ceee5333cc2b17183e6d80f7c62
+      size: 1915
     - path: src/embed/structural/node2vec.py
       md5: 7afa219ee2979a8bb0d118cab4ebb526
       size: 2719
     params:
-      experiments/configs/embed/structural/node2vec.yaml:
+      experiments/configs/embed/structural/n2v.yaml:
         params.Amazon-Photo:
-          emb_dim: 128
-          lr: 0.01
-          batch_size: 128
-          walk_length: 20
-          walks_per_node: 10
+          batch_size: 256
           context_size: 10
-          num_negative_samples: 1
-          p: 1
-          q: 1
+          emb_dim: 128
+          lr: 0.01619429669481697
           num_epochs: 20
-        paths:
-          output:
-            embedding: embeddings/structural/n2v/${name}/emb_${idx}.pt
+          num_negative_samples: 3
+          p: 0.8956405902580619
+          q: 1.3021330154973136
+          walk_length: 27
+          walks_per_node: 17
     outs:
     - path: data/embeddings/structural/n2v/Amazon-Photo/
-      md5: fc18240437067205c5c71343e101b5de.dir
-      size: 39175600
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
       nfiles: 10
   embed_line@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/line.py --dataset
       Amazon-Photo --num-retrains 10
     deps:
     - path: experiments/scripts/embed/structural/line.py
-      md5: 7e38e04715d4398b546b9d701b85a762
-      size: 1795
+      md5: 202e83d692708bafbece1ae4461cb1fa
+      size: 1730
     - path: src/embed/structural/line.py
       md5: bb397890d7e8ae86e8fce49b20ac61e2
       size: 1059
     params:
       experiments/configs/embed/structural/line.yaml:
         params.Amazon-Photo:
-          emb_dim: 64
-          negative_ratio: 1
-          order: all
-          batch_size: 256
+          batch_size: 64
+          emb_dim: 128
+          negative_ratio: 0
           num_epochs: 10
-        paths:
-          output:
-            embedding: embeddings/structural/line/${name}/emb_${idx}.pt
+          order: first
     outs:
     - path: data/embeddings/structural/line/Amazon-Photo/
-      md5: 3abaf23349b08c522694fccc212bd66a.dir
-      size: 39175600
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
       nfiles: 10
   embed_sdne@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/sdne.py --dataset
       Amazon-Photo --num-retrains 10
     deps:
     - path: experiments/scripts/embed/structural/sdne.py
-      md5: 0fbaac1f8f5c15abee046ede21fdf001
-      size: 1835
+      md5: 27563b5321bd644f5b9289bb5a9d0654
+      size: 1770
     - path: src/embed/structural/sdne.py
       md5: 05dbed82355e314895b84e85d8f80925
       size: 1153
     params:
       experiments/configs/embed/structural/sdne.yaml:
         params.Amazon-Photo:
+          alpha: 0.0004122915224267525
+          batch_size: 256
+          beta: 5.4047113784687895
           emb_dim: 128
-          hidden_size: 256
-          nu1: 1e-05
-          nu2: 0.0001
-          alpha: 0.0001
-          beta: 5
-          batch_size: 128
+          hidden_size: 512
+          nu1: 9.18909389592212e-05
+          nu2: 0.0007711930118292152
           num_epochs: 50
-        paths:
-          output:
-            embedding: embeddings/structural/sdne/${name}/emb_${idx}.pt
     outs:
     - path: data/embeddings/structural/sdne/Amazon-Photo/
-      md5: 33a76166445a877a19218941f493b887.dir
-      size: 39175600
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
       nfiles: 10
   embed_dgi@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/dgi.py --dataset
       Amazon-Photo --num-retrains 10
     deps:
     - path: experiments/scripts/embed/attributed/dgi.py
-      md5: 828d1c4c35df1625649e4b39bae34a58
-      size: 1667
+      md5: 2cfe6b3c9568f26a6e4441181c4833f7
+      size: 1601
     - path: src/embed/attributed/dgi.py
       md5: 5b2024dcca751529c41578a62d54ff92
       size: 2035
@@ -904,15 +877,12 @@ stages:
       experiments/configs/embed/attributed/dgi.yaml:
         params.Amazon-Photo:
           emb_dim: 128
-          lr: 0.001
+          lr: 0.0005662724736601763
           num_epochs: 100
-        paths:
-          output:
-            embedding: embeddings/attributed/dgi/${name}/emb_${idx}.pt
     outs:
     - path: data/embeddings/attributed/dgi/Amazon-Photo/
-      md5: 6aa4a0b5570df308035e1ddee169f356.dir
-      size: 39175600
+      md5: e24a009204b36e4c4e3b673d941e0681.dir
+      size: 39175560
       nfiles: 10
   apply_concat_refiner@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
@@ -1046,8 +1016,8 @@ stages:
       Amazon-Photo --num-retrains 10
     deps:
     - path: experiments/scripts/embed/attributed/tadw.py
-      md5: 0b5ea04be3851efafa842db837771f37
-      size: 1725
+      md5: 0dc38ece73761c588cff67042a1ea035
+      size: 1813
     - path: src/embed/attributed/tadw.py
       md5: 4f28414eb682677e8b96a00cecf1a5d4
       size: 769
@@ -1055,38 +1025,41 @@ stages:
       experiments/configs/embed/attributed/tadw.yaml:
         params.Amazon-Photo:
           emb_dim: 64
-          lr: 0.01
+          lambd: 9
+          lr: 0.0012924394318061566
           num_epochs: 20
-        paths:
-          output:
-            embedding: embeddings/attributed/tadw/${name}/emb_${idx}.pt
+          reduction_dimensions: 64
+          svd_iterations: 18
     outs:
     - path: data/embeddings/attributed/tadw/Amazon-Photo/
-      md5: b4b25843db7711e35d271c30786fc12f.dir
-      size: 39175600
+      md5: 4f5a93d872aee3818373510f9e437872.dir
+      size: 39175541
       nfiles: 10
   embed_fscnmf@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/fscnmf.py --dataset
       Amazon-Photo --num-retrains 10
     deps:
     - path: experiments/scripts/embed/attributed/fscnmf.py
-      md5: 557a256601585b1862b3146929c5af30
-      size: 1716
+      md5: 35e2ef7c1dbf7316bc2d7eaca531ea3b
+      size: 1881
     - path: src/embed/attributed/fscnmf.py
       md5: db25cddb25bbdd70f095acd522f29254
       size: 1413
     params:
       experiments/configs/embed/attributed/fscnmf.yaml:
         params.Amazon-Photo:
+          alpha_1: 255
+          alpha_2: 1.4441718246177857
+          alpha_3: 0.1923242321989463
+          beta_1: 224
+          beta_2: 0.3180584962714869
+          beta_3: 0.5952530860398961
           emb_dim: 64
           num_epochs: 500
-        paths:
-          output:
-            embedding: embeddings/attributed/fscnmf/${name}/emb_${idx}.pt
     outs:
     - path: data/embeddings/attributed/fscnmf/Amazon-Photo/
-      md5: 0f5aa5c4ab7aadca8eb6bce551eff26d.dir
-      size: 39175600
+      md5: a7ec1de4d97e7c5051ef40851c6e89ff.dir
+      size: 39175542
       nfiles: 10
   hps_GERF@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF.py --dataset Amazon-Photo
@@ -1163,94 +1136,85 @@ stages:
       Coauthor-CS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/structural/node2vec.py
-      md5: 2f394d3a741bb93db281679f2ce8e98d
-      size: 1986
+      md5: 6b7f6ceee5333cc2b17183e6d80f7c62
+      size: 1915
     - path: src/embed/structural/node2vec.py
       md5: 7afa219ee2979a8bb0d118cab4ebb526
       size: 2719
     params:
-      experiments/configs/embed/structural/node2vec.yaml:
+      experiments/configs/embed/structural/n2v.yaml:
         params.Coauthor-CS:
+          batch_size: 256
+          context_size: 20
           emb_dim: 128
-          lr: 0.01
-          batch_size: 128
-          walk_length: 20
-          walks_per_node: 10
-          context_size: 10
-          num_negative_samples: 1
-          p: 1
-          q: 1
+          lr: 0.010512850008743762
           num_epochs: 20
-        paths:
-          output:
-            embedding: embeddings/structural/n2v/${name}/emb_${idx}.pt
+          num_negative_samples: 2
+          p: 1.0661616864973307
+          q: 1.279779305448772
+          walk_length: 30
+          walks_per_node: 12
     outs:
     - path: data/embeddings/structural/n2v/Coauthor-CS/
-      md5: 05733daf2f7ff2a7c85d2cc7b431d985.dir
-      size: 93872560
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
       nfiles: 10
   embed_sdne@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/sdne.py --dataset
       Coauthor-CS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/structural/sdne.py
-      md5: 0fbaac1f8f5c15abee046ede21fdf001
-      size: 1835
+      md5: 27563b5321bd644f5b9289bb5a9d0654
+      size: 1770
     - path: src/embed/structural/sdne.py
       md5: 05dbed82355e314895b84e85d8f80925
       size: 1153
     params:
       experiments/configs/embed/structural/sdne.yaml:
         params.Coauthor-CS:
+          alpha: 0.0003282659035978998
+          batch_size: 256
+          beta: 6.239437204135304
           emb_dim: 128
-          hidden_size: 256
-          nu1: 1e-05
-          nu2: 0.0001
-          alpha: 0.0001
-          beta: 5
-          batch_size: 128
+          hidden_size: 128
+          nu1: 3.1749958779312295e-06
+          nu2: 0.0004261131270556746
           num_epochs: 50
-        paths:
-          output:
-            embedding: embeddings/structural/sdne/${name}/emb_${idx}.pt
     outs:
     - path: data/embeddings/structural/sdne/Coauthor-CS/
-      md5: 401d875da4f390a738dbeef8690842dc.dir
-      size: 93872560
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
       nfiles: 10
   embed_line@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/line.py --dataset
       Coauthor-CS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/structural/line.py
-      md5: 7e38e04715d4398b546b9d701b85a762
-      size: 1795
+      md5: 202e83d692708bafbece1ae4461cb1fa
+      size: 1730
     - path: src/embed/structural/line.py
       md5: bb397890d7e8ae86e8fce49b20ac61e2
       size: 1059
     params:
       experiments/configs/embed/structural/line.yaml:
         params.Coauthor-CS:
-          emb_dim: 64
-          negative_ratio: 1
-          order: all
-          batch_size: 128
+          batch_size: 32
+          emb_dim: 128
+          negative_ratio: 0
           num_epochs: 10
-        paths:
-          output:
-            embedding: embeddings/structural/line/${name}/emb_${idx}.pt
+          order: first
     outs:
     - path: data/embeddings/structural/line/Coauthor-CS/
-      md5: 7d11f4579d283d698cb23f51cd5e66eb.dir
-      size: 93872560
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
       nfiles: 10
   embed_dgi@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/dgi.py --dataset
       Coauthor-CS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/attributed/dgi.py
-      md5: 828d1c4c35df1625649e4b39bae34a58
-      size: 1667
+      md5: 2cfe6b3c9568f26a6e4441181c4833f7
+      size: 1601
     - path: src/embed/attributed/dgi.py
       md5: 5b2024dcca751529c41578a62d54ff92
       size: 2035
@@ -1258,46 +1222,46 @@ stages:
       experiments/configs/embed/attributed/dgi.yaml:
         params.Coauthor-CS:
           emb_dim: 128
-          lr: 0.001
+          lr: 0.0001796714020170723
           num_epochs: 100
-        paths:
-          output:
-            embedding: embeddings/attributed/dgi/${name}/emb_${idx}.pt
     outs:
     - path: data/embeddings/attributed/dgi/Coauthor-CS/
-      md5: 58c690be2b44aad5e9321996e21e10ac.dir
-      size: 93872560
+      md5: f1624f648e535a85ab6561e9c212c994.dir
+      size: 93872519
       nfiles: 10
   embed_fscnmf@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/fscnmf.py --dataset
       Coauthor-CS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/attributed/fscnmf.py
-      md5: 557a256601585b1862b3146929c5af30
-      size: 1716
+      md5: 35e2ef7c1dbf7316bc2d7eaca531ea3b
+      size: 1881
     - path: src/embed/attributed/fscnmf.py
       md5: db25cddb25bbdd70f095acd522f29254
       size: 1413
     params:
       experiments/configs/embed/attributed/fscnmf.yaml:
         params.Coauthor-CS:
+          alpha_1: 158
+          alpha_2: 1.0023287375849204
+          alpha_3: 0.27115567565701376
+          beta_1: 276
+          beta_2: 0.9231700320793558
+          beta_3: 0.18769578539819926
           emb_dim: 64
           num_epochs: 500
-        paths:
-          output:
-            embedding: embeddings/attributed/fscnmf/${name}/emb_${idx}.pt
     outs:
     - path: data/embeddings/attributed/fscnmf/Coauthor-CS/
-      md5: 1e17f181083357934b36c6d4b5c5fef5.dir
-      size: 93872560
+      md5: 6edca1c9b99ee730744737cc83d7d771.dir
+      size: 93872500
       nfiles: 10
   embed_tadw@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/tadw.py --dataset
       Coauthor-CS --num-retrains 10
     deps:
     - path: experiments/scripts/embed/attributed/tadw.py
-      md5: 0b5ea04be3851efafa842db837771f37
-      size: 1725
+      md5: 0dc38ece73761c588cff67042a1ea035
+      size: 1813
     - path: src/embed/attributed/tadw.py
       md5: 4f28414eb682677e8b96a00cecf1a5d4
       size: 769
@@ -1305,15 +1269,15 @@ stages:
       experiments/configs/embed/attributed/tadw.yaml:
         params.Coauthor-CS:
           emb_dim: 64
-          lr: 0.01
+          lambd: 1
+          lr: 0.0018229329876730746
           num_epochs: 20
-        paths:
-          output:
-            embedding: embeddings/attributed/tadw/${name}/emb_${idx}.pt
+          reduction_dimensions: 16
+          svd_iterations: 11
     outs:
     - path: data/embeddings/attributed/tadw/Coauthor-CS/
-      md5: 67b6439944f58f194510f334d07e6e5c.dir
-      size: 93872560
+      md5: 4d2538cc79837b54899ef9f6824953bb.dir
+      size: 93872500
       nfiles: 10
   apply_concat_refiner@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_naive_refiner.py --method
