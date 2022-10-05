@@ -233,8 +233,8 @@ stages:
       --dataset WikiCS
     deps:
     - path: data/embeddings/
-      md5: 674d71762f85ff00824888122d6d6f56.dir
-      size: 22082494080
+      md5: 78264f6d3b63cf9e12bdca8de60e7e93.dir
+      size: 22082490442
       nfiles: 720
     - path: experiments/scripts/evaluate_node_classification.py
       md5: dc25a67637b47bd4957d57a704a05782
@@ -266,8 +266,8 @@ stages:
         - refined/GERF/sdne
     outs:
     - path: data/metrics/node_classification/WikiCS/
-      md5: 05980f25d6358c4e75ba6dd3e2909e34.dir
-      size: 2875247
+      md5: fdcc30d9e9512f2df56fe7a4c69745c5.dir
+      size: 2874229
       nfiles: 19
   make_report_tables:
     cmd: PYTHONPATH=. python3 experiments/scripts/make_report_tables.py
@@ -516,8 +516,8 @@ stages:
       --dataset Amazon-CS
     deps:
     - path: data/embeddings/
-      md5: 674d71762f85ff00824888122d6d6f56.dir
-      size: 22082494080
+      md5: 78264f6d3b63cf9e12bdca8de60e7e93.dir
+      size: 22082490442
       nfiles: 720
     - path: experiments/scripts/evaluate_node_classification.py
       md5: dc25a67637b47bd4957d57a704a05782
@@ -549,8 +549,8 @@ stages:
         - refined/GERF/sdne
     outs:
     - path: data/metrics/node_classification/Amazon-CS/
-      md5: c7fa52e3dc055c54831c2bf7c9aea1c9.dir
-      size: 2871165
+      md5: bb11e570480b0f0930d26b07dffcc048.dir
+      size: 2862222
       nfiles: 19
   embed_dgi@WikiCS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/attributed/dgi.py --dataset
@@ -1481,8 +1481,8 @@ stages:
       --dataset Coauthor-CS
     deps:
     - path: data/embeddings/
-      md5: 674d71762f85ff00824888122d6d6f56.dir
-      size: 22082494080
+      md5: 78264f6d3b63cf9e12bdca8de60e7e93.dir
+      size: 22082490442
       nfiles: 720
     - path: experiments/scripts/evaluate_node_classification.py
       md5: dc25a67637b47bd4957d57a704a05782
@@ -1514,16 +1514,16 @@ stages:
         - refined/GERF/sdne
     outs:
     - path: data/metrics/node_classification/Coauthor-CS/
-      md5: c845bc76b7d7d14001bc657ea38df2e1.dir
-      size: 5059084
+      md5: 19525a5272c79e971662bef3259bc672.dir
+      size: 5052671
       nfiles: 19
   evaluate_node_classification@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_node_classification.py
       --dataset Amazon-Photo
     deps:
     - path: data/embeddings/
-      md5: 674d71762f85ff00824888122d6d6f56.dir
-      size: 22082494080
+      md5: 78264f6d3b63cf9e12bdca8de60e7e93.dir
+      size: 22082490442
       nfiles: 720
     - path: experiments/scripts/evaluate_node_classification.py
       md5: dc25a67637b47bd4957d57a704a05782
@@ -1555,8 +1555,8 @@ stages:
         - refined/GERF/sdne
     outs:
     - path: data/metrics/node_classification/Amazon-Photo/
-      md5: 497a4d227f8b9611c299bdffd7e7f4d8.dir
-      size: 2156329
+      md5: 44d9b19ebad2c1fdfb28f2d303f35f3e.dir
+      size: 2147862
       nfiles: 19
   make_hps_plot@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/make_hps_plot.py --dataset Coauthor-CS
