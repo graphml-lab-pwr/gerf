@@ -2952,3 +2952,167 @@ stages:
     - path: experiments/configs/embed/attributed/tadw.yaml
       md5: 5e4057ccb1a559c6fcb8ff2780547aa8
       size: 582
+  evaluate_link_prediction@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_link_prediction.py --dataset
+      WikiCS
+    deps:
+    - path: data/embeddings/
+      md5: 78264f6d3b63cf9e12bdca8de60e7e93.dir
+      size: 22082490442
+      nfiles: 720
+    - path: experiments/scripts/evaluate_link_prediction.py
+      md5: 838d54dd1b21679245c3543c93f429ba
+      size: 1900
+    - path: src/tasks/link_prediction.py
+      md5: 3074685e1a3602b31a00a48b8efe4a76
+      size: 2749
+    params:
+      experiments/configs/link_prediction.yaml:
+        embedding_methods:
+        - features
+        - structural/line
+        - structural/n2v
+        - structural/sdne
+        - attributed/fscnmf
+        - attributed/tadw
+        - attributed/dgi
+        - refined/naive/Concat/line
+        - refined/naive/Concat/n2v
+        - refined/naive/Concat/sdne
+        - refined/naive/ConcatPCA/line
+        - refined/naive/ConcatPCA/n2v
+        - refined/naive/ConcatPCA/sdne
+        - refined/naive/MLP/line
+        - refined/naive/MLP/n2v
+        - refined/naive/MLP/sdne
+        - refined/GERF/line
+        - refined/GERF/n2v
+        - refined/GERF/sdne
+    outs:
+    - path: data/metrics/link_prediction/WikiCS/
+      md5: e51a501526e94948da6eaa0cb1c04358.dir
+      size: 646649
+      nfiles: 19
+  evaluate_link_prediction@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_link_prediction.py --dataset
+      Coauthor-CS
+    deps:
+    - path: data/embeddings/
+      md5: 78264f6d3b63cf9e12bdca8de60e7e93.dir
+      size: 22082490442
+      nfiles: 720
+    - path: experiments/scripts/evaluate_link_prediction.py
+      md5: 838d54dd1b21679245c3543c93f429ba
+      size: 1900
+    - path: src/tasks/link_prediction.py
+      md5: 3074685e1a3602b31a00a48b8efe4a76
+      size: 2749
+    params:
+      experiments/configs/link_prediction.yaml:
+        embedding_methods:
+        - features
+        - structural/line
+        - structural/n2v
+        - structural/sdne
+        - attributed/fscnmf
+        - attributed/tadw
+        - attributed/dgi
+        - refined/naive/Concat/line
+        - refined/naive/Concat/n2v
+        - refined/naive/Concat/sdne
+        - refined/naive/ConcatPCA/line
+        - refined/naive/ConcatPCA/n2v
+        - refined/naive/ConcatPCA/sdne
+        - refined/naive/MLP/line
+        - refined/naive/MLP/n2v
+        - refined/naive/MLP/sdne
+        - refined/GERF/line
+        - refined/GERF/n2v
+        - refined/GERF/sdne
+    outs:
+    - path: data/metrics/link_prediction/Coauthor-CS/
+      md5: ea9c3d0bdfa4d0e63f0a5a0a08eea0a3.dir
+      size: 639765
+      nfiles: 19
+  evaluate_link_prediction@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_link_prediction.py --dataset
+      Amazon-CS
+    deps:
+    - path: data/embeddings/
+      md5: 78264f6d3b63cf9e12bdca8de60e7e93.dir
+      size: 22082490442
+      nfiles: 720
+    - path: experiments/scripts/evaluate_link_prediction.py
+      md5: 838d54dd1b21679245c3543c93f429ba
+      size: 1900
+    - path: src/tasks/link_prediction.py
+      md5: 3074685e1a3602b31a00a48b8efe4a76
+      size: 2749
+    params:
+      experiments/configs/link_prediction.yaml:
+        embedding_methods:
+        - features
+        - structural/line
+        - structural/n2v
+        - structural/sdne
+        - attributed/fscnmf
+        - attributed/tadw
+        - attributed/dgi
+        - refined/naive/Concat/line
+        - refined/naive/Concat/n2v
+        - refined/naive/Concat/sdne
+        - refined/naive/ConcatPCA/line
+        - refined/naive/ConcatPCA/n2v
+        - refined/naive/ConcatPCA/sdne
+        - refined/naive/MLP/line
+        - refined/naive/MLP/n2v
+        - refined/naive/MLP/sdne
+        - refined/GERF/line
+        - refined/GERF/n2v
+        - refined/GERF/sdne
+    outs:
+    - path: data/metrics/link_prediction/Amazon-CS/
+      md5: 53c277fde602ad51ea91f9e22ae57387.dir
+      size: 646879
+      nfiles: 19
+  evaluate_link_prediction@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_link_prediction.py --dataset
+      Amazon-Photo
+    deps:
+    - path: data/embeddings/
+      md5: 78264f6d3b63cf9e12bdca8de60e7e93.dir
+      size: 22082490442
+      nfiles: 720
+    - path: experiments/scripts/evaluate_link_prediction.py
+      md5: 838d54dd1b21679245c3543c93f429ba
+      size: 1900
+    - path: src/tasks/link_prediction.py
+      md5: 3074685e1a3602b31a00a48b8efe4a76
+      size: 2749
+    params:
+      experiments/configs/link_prediction.yaml:
+        embedding_methods:
+        - features
+        - structural/line
+        - structural/n2v
+        - structural/sdne
+        - attributed/fscnmf
+        - attributed/tadw
+        - attributed/dgi
+        - refined/naive/Concat/line
+        - refined/naive/Concat/n2v
+        - refined/naive/Concat/sdne
+        - refined/naive/ConcatPCA/line
+        - refined/naive/ConcatPCA/n2v
+        - refined/naive/ConcatPCA/sdne
+        - refined/naive/MLP/line
+        - refined/naive/MLP/n2v
+        - refined/naive/MLP/sdne
+        - refined/GERF/line
+        - refined/GERF/n2v
+        - refined/GERF/sdne
+    outs:
+    - path: data/metrics/link_prediction/Amazon-Photo/
+      md5: 36c3fe909068b0f4d990e64a7f237762.dir
+      size: 646272
+      nfiles: 19
