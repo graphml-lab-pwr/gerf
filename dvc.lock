@@ -1562,54 +1562,54 @@ stages:
     cmd: PYTHONPATH=. python3 experiments/scripts/make_hps_plot.py --dataset Coauthor-CS
     deps:
     - path: data/hps/GERF/Coauthor-CS/log.csv
-      md5: 9f19e0f231670f067f71f7e3446c2d64
-      size: 6440
+      md5: 626c4e0189e53d157924a59610390629
+      size: 6445
     - path: experiments/scripts/make_hps_plot.py
       md5: 98a292d90f44a368fcee9941b8d414dc
       size: 2200
     outs:
     - path: data/plots/hps_Coauthor-CS.png
-      md5: 420737a65494c2a16d380d4d72144358
-      size: 36654
+      md5: c2af9f77dae25faf34235f25bd704bd6
+      size: 33879
   make_hps_plot@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/make_hps_plot.py --dataset Amazon-CS
     deps:
     - path: data/hps/GERF/Amazon-CS/log.csv
-      md5: 34cce03124c0c53e6ee7eb8e27631628
-      size: 6448
+      md5: 3a3adb888efb82f489699a21763c194c
+      size: 6445
     - path: experiments/scripts/make_hps_plot.py
       md5: 98a292d90f44a368fcee9941b8d414dc
       size: 2200
     outs:
     - path: data/plots/hps_Amazon-CS.png
-      md5: 981dada07bbd6da58227fa58c940c5fd
-      size: 40815
+      md5: 67533ffdf7620cc24adbaf1d97302d31
+      size: 44712
   make_hps_plot@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/make_hps_plot.py --dataset Amazon-Photo
     deps:
     - path: data/hps/GERF/Amazon-Photo/log.csv
-      md5: 6e1d8de0aacc0f43fc57d55188180f96
-      size: 6442
+      md5: 0bcbfdb931fe5095ded75d4b368c5708
+      size: 6433
     - path: experiments/scripts/make_hps_plot.py
       md5: 98a292d90f44a368fcee9941b8d414dc
       size: 2200
     outs:
     - path: data/plots/hps_Amazon-Photo.png
-      md5: 01836f8208734a56eb700a21aa3887c9
-      size: 44796
+      md5: 198e5c10de97961df0ffb8a546bfb123
+      size: 44660
   make_hps_plot@WikiCS:
     cmd: PYTHONPATH=. python3 experiments/scripts/make_hps_plot.py --dataset WikiCS
     deps:
     - path: data/hps/GERF/WikiCS/log.csv
-      md5: 60cc7da64d8285f77265f58be7119c2e
-      size: 6446
+      md5: 5aaf8470677e5ce5165f1c52f1ba7701
+      size: 6448
     - path: experiments/scripts/make_hps_plot.py
       md5: 98a292d90f44a368fcee9941b8d414dc
       size: 2200
     outs:
     - path: data/plots/hps_WikiCS.png
-      md5: a741ea04a85387a22e65f7d65075b2d0
-      size: 43955
+      md5: 1c4b122053ea93dafa5554fe2fd5fc27
+      size: 43773
   hps_embed_node2vec@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/node2vec.py
       --dataset Amazon-CS --n-trials 100
