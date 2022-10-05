@@ -426,8 +426,10 @@ stages:
     deps:
       - experiments/scripts/make_report_tables.py
       - data/metrics/node_classification
+      - data/metrics/link_prediction
     outs:
       - data/report_node_classification.txt
+      - data/report_link_prediction.txt
 
   make_hps_plot:
     foreach:

@@ -272,14 +272,21 @@ stages:
   make_report_tables:
     cmd: PYTHONPATH=. python3 experiments/scripts/make_report_tables.py
     deps:
+    - path: data/metrics/link_prediction
+      md5: 7c88463d94c993428f0c79b509efe277.dir
+      size: 2579565
+      nfiles: 76
     - path: data/metrics/node_classification
       md5: 061092eafd3ca148067464cfe8c3875b.dir
       size: 12936984
       nfiles: 76
     - path: experiments/scripts/make_report_tables.py
-      md5: 596d1e0fd8efb8fea7b1618ed7149dda
-      size: 3377
+      md5: 4541da744e0dba550a8240a5ed5c4552
+      size: 3404
     outs:
+    - path: data/report_link_prediction.txt
+      md5: 5495bca7194fd9e8e88aea570c723f8b
+      size: 1970
     - path: data/report_node_classification.txt
       md5: c3658c38fa21dddfd70c6183b1128b85
       size: 1970
