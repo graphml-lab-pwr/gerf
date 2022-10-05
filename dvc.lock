@@ -273,15 +273,15 @@ stages:
     cmd: PYTHONPATH=. python3 experiments/scripts/make_report_tables.py
     deps:
     - path: data/metrics/node_classification
-      md5: b14e517ad47fae9962e93a0e9b788752.dir
-      size: 12961825
+      md5: 061092eafd3ca148067464cfe8c3875b.dir
+      size: 12936984
       nfiles: 76
     - path: experiments/scripts/make_report_tables.py
       md5: 596d1e0fd8efb8fea7b1618ed7149dda
       size: 3377
     outs:
     - path: data/report_node_classification.txt
-      md5: 514d18011a966debbe7a059c64256e64
+      md5: c3658c38fa21dddfd70c6183b1128b85
       size: 1970
   embed_node2vec@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/node2vec.py --dataset
