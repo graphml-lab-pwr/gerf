@@ -9,8 +9,7 @@ from src.retrofitting.loss import GRLoss
 def retrofit(
     data: Data,
     embedding: torch.Tensor,
-    alpha: float,
-    beta: float,
+    lambda_x: float,
     lr: float,
     num_epochs: int,
 ) -> nn.Module:
@@ -25,8 +24,7 @@ def retrofit(
         edge_index=data.edge_index,
         embedding=embedding,
         attributes=data.x,
-        alpha=alpha,
-        beta=beta,
+        lambda_x=lambda_x,
     )
 
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)

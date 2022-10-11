@@ -29,8 +29,7 @@ def get_args() -> argparse.Namespace:
 def evaluate_retrofitting(
     emb_method: str,
     dataset: str,
-    alpha: float,
-    beta: float,
+    lambda_x: float,
     lr: float,
     num_epochs: int,
 ) -> float:
@@ -51,8 +50,7 @@ def evaluate_retrofitting(
         model = retrofit(
             data=data,
             embedding=z,
-            alpha=alpha,
-            beta=beta,
+            lambda_x=lambda_x,
             lr=lr,
             num_epochs=num_epochs,
         )
@@ -75,14 +73,10 @@ def main():
     # Parameter grid
     lr = 0.1
     num_epochs = 100
-    alphas = np.arange(0, 1, 0.1)
-    betas = np.arange(0, 1, 0.1)
+    step = 0.05
+    lambda_xs = np.arange(0, 1 + step, step)
 
-    output_dir = os.path.join(
-        DATA_DIR,
-        f"hps/GERF/",
-        dataset,
-    )
+    output_dir = os.path.join(DATA_DIR, "hps/GERF/", dataset)
     os.makedirs(output_dir, exist_ok=True)
 
     log_path = os.path.join(output_dir, "log.csv")
@@ -96,49 +90,39 @@ def main():
         desc="Embedding method",
     ):
         best_val_auc = -1
-        best_alpha = None
-        best_beta = None
+        best_lambda_x = None
 
-        for alpha in tqdm(alphas, desc="Alpha", leave=False):
-            for beta in tqdm(betas, desc="Beta", leave=False):
-                if alpha + beta >= 1.0:
-                    continue
+        for lambda_x in tqdm(lambda_xs, desc="Lambda_X", leave=False):
+            mean_val_auc = evaluate_retrofitting(
+                emb_method=emb_method,
+                dataset=dataset,
+                lambda_x=lambda_x,
+                lr=lr,
+                num_epochs=num_epochs,
+            )
 
-                if alpha == 0 and beta == 0:
-                    continue
+            results.append({
+                "emb_method": emb_method,
+                "lambda_x": lambda_x,
+                "lambda_z": 1 - lambda_x,
+                "val_auc": mean_val_auc,
+            })
 
-                mean_val_auc = evaluate_retrofitting(
-                    emb_method=emb_method,
-                    dataset=dataset,
-                    alpha=alpha,
-                    beta=beta,
-                    lr=lr,
-                    num_epochs=num_epochs,
-                )
+            # Save hyperparameter search results
+            (
+                pd.DataFrame
+                .from_records(results)
+                .to_csv(path_or_buf=log_path, index=False)
+            )
 
-                results.append({
-                    "emb_method": emb_method,
-                    "alpha": alpha,
-                    "beta": beta,
-                    "val_auc": mean_val_auc,
-                })
-
-                # Save hyperparameter search results
-                (
-                    pd.DataFrame
-                    .from_records(results)
-                    .to_csv(path_or_buf=log_path, index=False)
-                )
-
-                if mean_val_auc > best_val_auc:
-                    best_val_auc = mean_val_auc
-                    best_alpha = alpha
-                    best_beta = beta
+            if mean_val_auc > best_val_auc:
+                best_val_auc = mean_val_auc
+                best_lambda_x = lambda_x
 
         best_results[emb_method] = {
             "val_auc": best_val_auc,
-            "alpha": best_alpha,
-            "beta": best_beta,
+            "lambda_x": best_lambda_x,
+            "lambda_z": 1 - best_lambda_x,
         }
 
         with open(best_path, "w") as fout:

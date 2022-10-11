@@ -1,5 +1,6 @@
 from sklearn.neighbors import NearestNeighbors
 import torch
+from torch_geometric.utils import degree, to_undirected
 from tqdm.auto import tqdm
 
 
@@ -20,28 +21,19 @@ def get_neighbors(edge_index: torch.Tensor, attr: torch.Tensor):
 
     attribute_edge_index = []
 
-    num_nodes = edge_index.max() + 1
-    degrees = torch.zeros(num_nodes)
+    degrees = degree(to_undirected(edge_index.clone())[0]).int()
 
-    for u in tqdm(unique_nodes, desc="Finding neighbors", leave=False):
-        graph_neighbors = torch.cat([
-            edge_index[:, edge_index[0] == u][1],  # Outgoing graph neighbors
-            edge_index[:, edge_index[1] == u][0],  # Incoming graph neighbors
-        ]).unique()
+    inv_degrees = 1. / degrees
+    inv_degrees[torch.isinf(inv_degrees)] = 0
 
-        num_neighbors = len(graph_neighbors)
-
+    for u in tqdm(unique_nodes, desc="Build attribute edge index", leave=False):
         attr_neighbors = torch.tensor(
-            all_attribute_neighbors[u, 1:(1 + num_neighbors)]
+            all_attribute_neighbors[u, 1:(1 + degrees[u].item())]
         )
 
         for an in attr_neighbors.tolist():
             attribute_edge_index.append((u.item(), an))
 
-        degrees[u] = num_neighbors
-
-    inv_degrees = 1. / degrees
-    inv_degrees[torch.isinf(inv_degrees)] = 0
     attribute_edge_index = torch.tensor(attribute_edge_index).t()
 
-    return edge_index, attribute_edge_index, inv_degrees
+    return attribute_edge_index, inv_degrees

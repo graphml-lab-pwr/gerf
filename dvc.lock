@@ -669,15 +669,15 @@ stages:
       size: 59916670
       nfiles: 10
     - path: experiments/scripts/refine/hps_GERF.py
-      md5: 71a2dc2aed287b54cb47ea7ab5854dd0
-      size: 3733
+      md5: 87c372b07e89124b5a6212ca4c044811
+      size: 3335
     outs:
     - path: data/hps/GERF/WikiCS/best.json
-      md5: 959363a761d1f657f537ee5c3b607097
-      size: 323
+      md5: 2f49561cb11c6387bae903673a0d2b56
+      size: 328
     - path: data/hps/GERF/WikiCS/log.csv
-      md5: 5aaf8470677e5ce5165f1c52f1ba7701
-      size: 6448
+      md5: 5f091e8d3db8f1c90b4785e786db746c
+      size: 2762
   hps_GERF@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF.py --dataset Amazon-CS
     deps:
@@ -694,15 +694,15 @@ stages:
       size: 70417790
       nfiles: 10
     - path: experiments/scripts/refine/hps_GERF.py
-      md5: 71a2dc2aed287b54cb47ea7ab5854dd0
-      size: 3733
+      md5: 87c372b07e89124b5a6212ca4c044811
+      size: 3335
     outs:
     - path: data/hps/GERF/Amazon-CS/best.json
-      md5: 69d544cf5d3a1f12d68fae222666d62b
-      size: 307
+      md5: d17dcea530d1a7df035740a2ba6191b9
+      size: 361
     - path: data/hps/GERF/Amazon-CS/log.csv
-      md5: 3a3adb888efb82f489699a21763c194c
-      size: 6445
+      md5: ea88fef471c58bac363be7feaeeaa0e0
+      size: 2761
   apply_GERF@WikiCS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset WikiCS
     deps:
@@ -1084,15 +1084,15 @@ stages:
       size: 39175550
       nfiles: 10
     - path: experiments/scripts/refine/hps_GERF.py
-      md5: 71a2dc2aed287b54cb47ea7ab5854dd0
-      size: 3733
+      md5: 87c372b07e89124b5a6212ca4c044811
+      size: 3335
     outs:
     - path: data/hps/GERF/Amazon-Photo/best.json
-      md5: a97f7a9eb8395a1335f0e286541a93ed
-      size: 321
+      md5: d2fbad7774c4abd5d1e63f17001cb854
+      size: 376
     - path: data/hps/GERF/Amazon-Photo/log.csv
-      md5: 0bcbfdb931fe5095ded75d4b368c5708
-      size: 6433
+      md5: a42c218ac8b31d285aa44a6e75d9e222
+      size: 2758
   apply_GERF@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-Photo
     deps:
@@ -1429,15 +1429,15 @@ stages:
       size: 93872510
       nfiles: 10
     - path: experiments/scripts/refine/hps_GERF.py
-      md5: 71a2dc2aed287b54cb47ea7ab5854dd0
-      size: 3733
+      md5: 87c372b07e89124b5a6212ca4c044811
+      size: 3335
     outs:
     - path: data/hps/GERF/Coauthor-CS/best.json
-      md5: 1d24f3c8a5c45988bf016ded874ec7f2
-      size: 307
+      md5: b9e35326606a3142cb5fd7fd54931ecf
+      size: 363
     - path: data/hps/GERF/Coauthor-CS/log.csv
-      md5: 626c4e0189e53d157924a59610390629
-      size: 6445
+      md5: 7809802a61453ceaf0e107d6f45554ab
+      size: 2755
   apply_GERF@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Coauthor-CS
     deps:
@@ -1569,54 +1569,54 @@ stages:
     cmd: PYTHONPATH=. python3 experiments/scripts/make_hps_plot.py --dataset Coauthor-CS
     deps:
     - path: data/hps/GERF/Coauthor-CS/log.csv
-      md5: 626c4e0189e53d157924a59610390629
-      size: 6445
+      md5: 7809802a61453ceaf0e107d6f45554ab
+      size: 2755
     - path: experiments/scripts/make_hps_plot.py
-      md5: 98a292d90f44a368fcee9941b8d414dc
-      size: 2200
+      md5: fc636ae1a63c242eb009ff77ae4c06c1
+      size: 1961
     outs:
     - path: data/plots/hps_Coauthor-CS.png
-      md5: c2af9f77dae25faf34235f25bd704bd6
-      size: 33879
+      md5: 488fbdaff452978e8b4e517851892c18
+      size: 45470
   make_hps_plot@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/make_hps_plot.py --dataset Amazon-CS
     deps:
     - path: data/hps/GERF/Amazon-CS/log.csv
-      md5: 3a3adb888efb82f489699a21763c194c
-      size: 6445
+      md5: ea88fef471c58bac363be7feaeeaa0e0
+      size: 2761
     - path: experiments/scripts/make_hps_plot.py
-      md5: 98a292d90f44a368fcee9941b8d414dc
-      size: 2200
+      md5: fc636ae1a63c242eb009ff77ae4c06c1
+      size: 1961
     outs:
     - path: data/plots/hps_Amazon-CS.png
-      md5: 67533ffdf7620cc24adbaf1d97302d31
-      size: 44712
+      md5: 58f3b9ac777fa2200fb2b69703052877
+      size: 46583
   make_hps_plot@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/make_hps_plot.py --dataset Amazon-Photo
     deps:
     - path: data/hps/GERF/Amazon-Photo/log.csv
-      md5: 0bcbfdb931fe5095ded75d4b368c5708
-      size: 6433
+      md5: a42c218ac8b31d285aa44a6e75d9e222
+      size: 2758
     - path: experiments/scripts/make_hps_plot.py
-      md5: 98a292d90f44a368fcee9941b8d414dc
-      size: 2200
+      md5: fc636ae1a63c242eb009ff77ae4c06c1
+      size: 1961
     outs:
     - path: data/plots/hps_Amazon-Photo.png
-      md5: 198e5c10de97961df0ffb8a546bfb123
-      size: 44660
+      md5: 11e23cb42f518119a3192c69b063dc83
+      size: 45387
   make_hps_plot@WikiCS:
     cmd: PYTHONPATH=. python3 experiments/scripts/make_hps_plot.py --dataset WikiCS
     deps:
     - path: data/hps/GERF/WikiCS/log.csv
-      md5: 5aaf8470677e5ce5165f1c52f1ba7701
-      size: 6448
+      md5: 5f091e8d3db8f1c90b4785e786db746c
+      size: 2762
     - path: experiments/scripts/make_hps_plot.py
-      md5: 98a292d90f44a368fcee9941b8d414dc
-      size: 2200
+      md5: fc636ae1a63c242eb009ff77ae4c06c1
+      size: 1961
     outs:
     - path: data/plots/hps_WikiCS.png
-      md5: 1c4b122053ea93dafa5554fe2fd5fc27
-      size: 43773
+      md5: 9437f55b51abe200e211d641ed02a096
+      size: 48347
   hps_embed_node2vec@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/hps_embed/structural/node2vec.py
       --dataset Amazon-CS --n-trials 100

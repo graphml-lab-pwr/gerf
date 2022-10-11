@@ -8,7 +8,7 @@ import seaborn as sns
 
 def make_hps_plot(hps_log_data: pd.DataFrame) -> plt.Figure:
     fig, axs = plt.subplots(
-        nrows=2,
+        nrows=1,
         ncols=3,
         figsize=(15, 5),
         sharex=True,
@@ -26,30 +26,27 @@ def make_hps_plot(hps_log_data: pd.DataFrame) -> plt.Figure:
         data["val_auc"] = data["val_auc"] * 100.
 
         best = data[data["val_auc"] == data["val_auc"].max()]
-        best_alpha = best["alpha"].values[0]
-        best_beta = best["beta"].values[0]
+        best_lambda_x = best["lambda_x"].values[0]
+        best_lambda_z = best["lambda_z"].values[0]
         best_auc = best["val_auc"].values[0]
 
-        alpha = data.groupby("alpha").agg(["mean", "std"])["val_auc"].fillna(0)
-        axs[0, col].errorbar(alpha.index, alpha["mean"], yerr=alpha["std"])
-        axs[0, col].set(
+        axs[col].plot(
+            data["lambda_x"],
+            data["val_auc"],
+            marker="o",
+            linestyle="--",
+        )
+        axs[col].set(
             title=(
                 f"{method_name}\n"
-                f"Best: $\lambda_G$ = {best_alpha}, $\lambda_X$ = {best_beta}, "
+                f"Best: $\lambda_Z$ = {best_lambda_z}, $\lambda_X$ = {best_lambda_x}, "
                 f"AUC = {best_auc:.2f} [%]"
             ),
-            xlabel="$\lambda_G$",
-            ylabel="AUC [%]" if col == 0 else "",
-            xticks=alpha.index,
-        )
-
-        beta = data.groupby("beta").agg(["mean", "std"])["val_auc"].fillna(0)
-        axs[1, col].errorbar(beta.index, beta["mean"], yerr=beta["std"])
-        axs[1, col].set(
             xlabel="$\lambda_X$",
             ylabel="AUC [%]" if col == 0 else "",
-            xticks=beta.index,
+            xticks=data["lambda_x"],
         )
+        axs[col].tick_params(axis='x', rotation=45)
 
     fig.tight_layout()
     return fig

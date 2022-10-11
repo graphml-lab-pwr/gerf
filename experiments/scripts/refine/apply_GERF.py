@@ -56,8 +56,7 @@ def main():
             f"embeddings/structural/{emb_method}/{dataset}/",
         )
 
-        alpha = best_params[emb_method]["alpha"]
-        beta = best_params[emb_method]["beta"]
+        lambda_x = best_params[emb_method]["lambda_x"]
 
         for fname in tqdm(
             iterable=sorted(os.listdir(embeddings_dir)),
@@ -69,8 +68,7 @@ def main():
             model = retrofit(
                 data=data,
                 embedding=z,
-                alpha=alpha,
-                beta=beta,
+                lambda_x=lambda_x,
                 lr=0.1,
                 num_epochs=100,
             )
