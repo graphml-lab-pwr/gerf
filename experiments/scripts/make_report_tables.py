@@ -82,21 +82,24 @@ def main():
         "refined/naive/Concat/n2v",
         "refined/naive/ConcatPCA/n2v",
         "refined/naive/MLP/n2v",
-        "refined/GERF/n2v",
+        "refined/GERF_grid/n2v",
+        "refined/GERF_uniform/n2v",
 
         # LINE based
         "structural/line",
         "refined/naive/Concat/line",
         "refined/naive/ConcatPCA/line",
         "refined/naive/MLP/line",
-        "refined/GERF/line",
+        "refined/GERF_grid/line",
+        "refined/GERF_uniform/line",
 
         # SDNE based
         "structural/sdne",
         "refined/naive/Concat/sdne",
         "refined/naive/ConcatPCA/sdne",
         "refined/naive/MLP/sdne",
-        "refined/GERF/sdne",
+        "refined/GERF_grid/sdne",
+        "refined/GERF_uniform/sdne",
 
         # Attributed
         "attributed/tadw",

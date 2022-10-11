@@ -15,6 +15,9 @@ embedding_methods:
   - refined/naive/MLP/line
   - refined/naive/MLP/n2v
   - refined/naive/MLP/sdne
-  - refined/GERF/line
-  - refined/GERF/n2v
-  - refined/GERF/sdne
+  - refined/GERF_grid/line
+  - refined/GERF_grid/n2v
+  - refined/GERF_grid/sdne
+  - refined/GERF_uniform/line
+  - refined/GERF_uniform/n2v
+  - refined/GERF_uniform/sdne

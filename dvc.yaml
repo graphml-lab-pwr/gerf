@@ -358,7 +358,7 @@ stages:
         - data/hps/GERF/${item}/log.csv
         - data/hps/GERF/${item}/best.json
 
-  apply_GERF:
+  apply_GERF_grid:
     foreach:
       - WikiCS
       - Amazon-CS
@@ -366,11 +366,11 @@ stages:
       - Coauthor-CS
     do:
       wdir: .
-      cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset ${item}
-      params:
-        - experiments/configs/refine/GERF.yaml:
-            - structural_embedding_methods
-            - paths
+      cmd: >-
+        PYTHONPATH=.
+        python3 experiments/scripts/refine/apply_GERF.py
+        --dataset ${item}
+        --hyperparameters-strategy grid
       deps:
         - experiments/scripts/refine/apply_GERF.py
         - data/embeddings/structural/n2v/${item}/
@@ -378,9 +378,32 @@ stages:
         - data/embeddings/structural/sdne/${item}/
         - data/hps/GERF/${item}/best.json
       outs:
-        - data/embeddings/refined/GERF/n2v/${item}/
-        - data/embeddings/refined/GERF/line/${item}/
-        - data/embeddings/refined/GERF/sdne/${item}/
+        - data/embeddings/refined/GERF_grid/n2v/${item}/
+        - data/embeddings/refined/GERF_grid/line/${item}/
+        - data/embeddings/refined/GERF_grid/sdne/${item}/
+
+  apply_GERF_uniform:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: >-
+        PYTHONPATH=.
+        python3 experiments/scripts/refine/apply_GERF.py
+        --dataset ${item}
+        --hyperparameters-strategy uniform
+      deps:
+        - experiments/scripts/refine/apply_GERF.py
+        - data/embeddings/structural/n2v/${item}/
+        - data/embeddings/structural/line/${item}/
+        - data/embeddings/structural/sdne/${item}/
+      outs:
+        - data/embeddings/refined/GERF_uniform/n2v/${item}/
+        - data/embeddings/refined/GERF_uniform/line/${item}/
+        - data/embeddings/refined/GERF_uniform/sdne/${item}/
 
   evaluate_node_classification:
     foreach:

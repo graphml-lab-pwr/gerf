@@ -703,96 +703,6 @@ stages:
     - path: data/hps/GERF/Amazon-CS/log.csv
       md5: ea88fef471c58bac363be7feaeeaa0e0
       size: 2761
-  apply_GERF@WikiCS:
-    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset WikiCS
-    deps:
-    - path: data/embeddings/structural/line/WikiCS/
-      md5: ca9907319666d16bcbff374a97ece1d9.dir
-      size: 59916670
-      nfiles: 10
-    - path: data/embeddings/structural/n2v/WikiCS/
-      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
-      size: 59916678
-      nfiles: 10
-    - path: data/embeddings/structural/sdne/WikiCS/
-      md5: 9dace1a875018a42c72a63f76fc41481.dir
-      size: 59916670
-      nfiles: 10
-    - path: data/hps/GERF/WikiCS/best.json
-      md5: 959363a761d1f657f537ee5c3b607097
-      size: 323
-    - path: experiments/scripts/refine/apply_GERF.py
-      md5: 068b98d67c9a6660e0880cdd17f2f6c4
-      size: 2308
-    params:
-      experiments/configs/refine/GERF.yaml:
-        paths:
-          input:
-            best_params: data/hps/GERF/${dataset}/best.json
-          output:
-            embedding: data/embeddings/refined/GERF/${emb_method}/${dataset}/
-        structural_embedding_methods:
-        - n2v
-        - line
-        - sdne
-    outs:
-    - path: data/embeddings/refined/GERF/line/WikiCS/
-      md5: d52f91b69e5b27e84ee4f232fce8063d.dir
-      size: 59916676
-      nfiles: 10
-    - path: data/embeddings/refined/GERF/n2v/WikiCS/
-      md5: 2289567ae334fd6b6356836408882341.dir
-      size: 59916678
-      nfiles: 10
-    - path: data/embeddings/refined/GERF/sdne/WikiCS/
-      md5: 9a367bf17cbbc625f2ef10110f5fec02.dir
-      size: 59916678
-      nfiles: 10
-  apply_GERF@Amazon-CS:
-    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-CS
-    deps:
-    - path: data/embeddings/structural/line/Amazon-CS/
-      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
-      size: 70417790
-      nfiles: 10
-    - path: data/embeddings/structural/n2v/Amazon-CS/
-      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
-      size: 70417797
-      nfiles: 10
-    - path: data/embeddings/structural/sdne/Amazon-CS/
-      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
-      size: 70417790
-      nfiles: 10
-    - path: data/hps/GERF/Amazon-CS/best.json
-      md5: 69d544cf5d3a1f12d68fae222666d62b
-      size: 307
-    - path: experiments/scripts/refine/apply_GERF.py
-      md5: 068b98d67c9a6660e0880cdd17f2f6c4
-      size: 2308
-    params:
-      experiments/configs/refine/GERF.yaml:
-        paths:
-          input:
-            best_params: data/hps/GERF/${dataset}/best.json
-          output:
-            embedding: data/embeddings/refined/GERF/${emb_method}/${dataset}/
-        structural_embedding_methods:
-        - n2v
-        - line
-        - sdne
-    outs:
-    - path: data/embeddings/refined/GERF/line/Amazon-CS/
-      md5: c6a8f7602c1fd991e5dfff1dc145c729.dir
-      size: 70417798
-      nfiles: 10
-    - path: data/embeddings/refined/GERF/n2v/Amazon-CS/
-      md5: 8084f9eba5e9b8306715757c45ccceb4.dir
-      size: 70417798
-      nfiles: 10
-    - path: data/embeddings/refined/GERF/sdne/Amazon-CS/
-      md5: 6a2a6d2ac0cd095f76f6504211e7d885.dir
-      size: 70417798
-      nfiles: 10
   embed_node2vec@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/node2vec.py --dataset
       Amazon-Photo --num-retrains 10
@@ -1093,51 +1003,6 @@ stages:
     - path: data/hps/GERF/Amazon-Photo/log.csv
       md5: a42c218ac8b31d285aa44a6e75d9e222
       size: 2758
-  apply_GERF@Amazon-Photo:
-    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-Photo
-    deps:
-    - path: data/embeddings/structural/line/Amazon-Photo/
-      md5: 685557904a58128565acb9394c98041d.dir
-      size: 39175550
-      nfiles: 10
-    - path: data/embeddings/structural/n2v/Amazon-Photo/
-      md5: d343747d5872e7d32d5493eb19b4b874.dir
-      size: 39175560
-      nfiles: 10
-    - path: data/embeddings/structural/sdne/Amazon-Photo/
-      md5: a561c74121c9bfc0362b7cfc868cec65.dir
-      size: 39175550
-      nfiles: 10
-    - path: data/hps/GERF/Amazon-Photo/best.json
-      md5: a97f7a9eb8395a1335f0e286541a93ed
-      size: 321
-    - path: experiments/scripts/refine/apply_GERF.py
-      md5: 068b98d67c9a6660e0880cdd17f2f6c4
-      size: 2308
-    params:
-      experiments/configs/refine/GERF.yaml:
-        paths:
-          input:
-            best_params: data/hps/GERF/${dataset}/best.json
-          output:
-            embedding: data/embeddings/refined/GERF/${emb_method}/${dataset}/
-        structural_embedding_methods:
-        - n2v
-        - line
-        - sdne
-    outs:
-    - path: data/embeddings/refined/GERF/line/Amazon-Photo/
-      md5: af44fcb76fd116fba945d8027123286e.dir
-      size: 39175546
-      nfiles: 10
-    - path: data/embeddings/refined/GERF/n2v/Amazon-Photo/
-      md5: 6fd1242c3b761e9ce8d954c7e869718c.dir
-      size: 39175555
-      nfiles: 10
-    - path: data/embeddings/refined/GERF/sdne/Amazon-Photo/
-      md5: 1b2bd7379418d18a146124676f80081e.dir
-      size: 39175554
-      nfiles: 10
   embed_node2vec@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/node2vec.py --dataset
       Coauthor-CS --num-retrains 10
@@ -1438,51 +1303,6 @@ stages:
     - path: data/hps/GERF/Coauthor-CS/log.csv
       md5: 7809802a61453ceaf0e107d6f45554ab
       size: 2755
-  apply_GERF@Coauthor-CS:
-    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Coauthor-CS
-    deps:
-    - path: data/embeddings/structural/line/Coauthor-CS/
-      md5: 8aaff4b7a212f46d661004a109c195e6.dir
-      size: 93872515
-      nfiles: 10
-    - path: data/embeddings/structural/n2v/Coauthor-CS/
-      md5: 9d808314f5600884830d324a03918ecc.dir
-      size: 93872520
-      nfiles: 10
-    - path: data/embeddings/structural/sdne/Coauthor-CS/
-      md5: 1bcb871d529f7d2442e7395610930ccc.dir
-      size: 93872510
-      nfiles: 10
-    - path: data/hps/GERF/Coauthor-CS/best.json
-      md5: 1d24f3c8a5c45988bf016ded874ec7f2
-      size: 307
-    - path: experiments/scripts/refine/apply_GERF.py
-      md5: 068b98d67c9a6660e0880cdd17f2f6c4
-      size: 2308
-    params:
-      experiments/configs/refine/GERF.yaml:
-        paths:
-          input:
-            best_params: data/hps/GERF/${dataset}/best.json
-          output:
-            embedding: data/embeddings/refined/GERF/${emb_method}/${dataset}/
-        structural_embedding_methods:
-        - n2v
-        - line
-        - sdne
-    outs:
-    - path: data/embeddings/refined/GERF/line/Coauthor-CS/
-      md5: c797e05ecf4f2161f0b350ca31368441.dir
-      size: 93872519
-      nfiles: 10
-    - path: data/embeddings/refined/GERF/n2v/Coauthor-CS/
-      md5: d84a7fab8d67a4daff696fc8d5ad87c4.dir
-      size: 93872520
-      nfiles: 10
-    - path: data/embeddings/refined/GERF/sdne/Coauthor-CS/
-      md5: b2ee5c5e32f83c7837c01d79d33d805b.dir
-      size: 93872519
-      nfiles: 10
   evaluate_node_classification@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_node_classification.py
       --dataset Coauthor-CS
@@ -3123,3 +2943,271 @@ stages:
       md5: 36c3fe909068b0f4d990e64a7f237762.dir
       size: 646272
       nfiles: 19
+  apply_GERF_grid@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-CS
+      --hyperparameters-strategy grid
+    deps:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/hps/GERF/Amazon-CS/best.json
+      md5: d17dcea530d1a7df035740a2ba6191b9
+      size: 361
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: c605f57ba27ae15d246732397ecef157
+      size: 2772
+    outs:
+    - path: data/embeddings/refined/GERF_grid/line/Amazon-CS/
+      md5: 4382c6650235e270ec54fd37b456491b.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/n2v/Amazon-CS/
+      md5: 5046de8cec1eeb812f580d0c2f418fbc.dir
+      size: 70417792
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/sdne/Amazon-CS/
+      md5: ed09b4fd16ec4a2faf3047d700d4bb10.dir
+      size: 70417798
+      nfiles: 10
+  apply_GERF_grid@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-Photo
+      --hyperparameters-strategy grid
+    deps:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/hps/GERF/Amazon-Photo/best.json
+      md5: d2fbad7774c4abd5d1e63f17001cb854
+      size: 376
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: c605f57ba27ae15d246732397ecef157
+      size: 2772
+    outs:
+    - path: data/embeddings/refined/GERF_grid/line/Amazon-Photo/
+      md5: 9214cd4ab204f9ac4f6498551eb774b6.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/n2v/Amazon-Photo/
+      md5: 4b459c107cbe6215380d6513b2199318.dir
+      size: 39175556
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/sdne/Amazon-Photo/
+      md5: 8ebd4693520d91929049b0ca31fa50f6.dir
+      size: 39175560
+      nfiles: 10
+  apply_GERF_grid@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset WikiCS
+      --hyperparameters-strategy grid
+    deps:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/hps/GERF/WikiCS/best.json
+      md5: 2f49561cb11c6387bae903673a0d2b56
+      size: 328
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: c605f57ba27ae15d246732397ecef157
+      size: 2772
+    outs:
+    - path: data/embeddings/refined/GERF_grid/line/WikiCS/
+      md5: fffdd4583c5e8f0617e7b27322d7be33.dir
+      size: 59916679
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/n2v/WikiCS/
+      md5: 3f4f4873e3c16cc8a0e876e65f3a0e60.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/sdne/WikiCS/
+      md5: f572498165171229ba854e21559fff9d.dir
+      size: 59916675
+      nfiles: 10
+  apply_GERF_grid@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Coauthor-CS
+      --hyperparameters-strategy grid
+    deps:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+    - path: data/hps/GERF/Coauthor-CS/best.json
+      md5: b9e35326606a3142cb5fd7fd54931ecf
+      size: 363
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: c605f57ba27ae15d246732397ecef157
+      size: 2772
+    outs:
+    - path: data/embeddings/refined/GERF_grid/line/Coauthor-CS/
+      md5: cd24c9c240293db4ea78e7ec220d692a.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/n2v/Coauthor-CS/
+      md5: 84a2235f757e59747cabacabc41df8da.dir
+      size: 93872519
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_grid/sdne/Coauthor-CS/
+      md5: a1ef5fdc0cc5617c94e8f6b241cef8e4.dir
+      size: 93872516
+      nfiles: 10
+  apply_GERF_uniform@WikiCS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset WikiCS
+      --hyperparameters-strategy uniform
+    deps:
+    - path: data/embeddings/structural/line/WikiCS/
+      md5: ca9907319666d16bcbff374a97ece1d9.dir
+      size: 59916670
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/WikiCS/
+      md5: 11f12adff0f40187511a56e6ad7c4fea.dir
+      size: 59916678
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/WikiCS/
+      md5: 9dace1a875018a42c72a63f76fc41481.dir
+      size: 59916670
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: c605f57ba27ae15d246732397ecef157
+      size: 2772
+    outs:
+    - path: data/embeddings/refined/GERF_uniform/line/WikiCS/
+      md5: f3af35c70fd8a98e1e0dc66dcdf8107b.dir
+      size: 59916660
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/n2v/WikiCS/
+      md5: 90ba3fe5b4d34eb16fdc822d6b3e71ce.dir
+      size: 59916664
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/sdne/WikiCS/
+      md5: ecf20ba7f2d8e82aad84ad9cc90c8f9d.dir
+      size: 59916660
+      nfiles: 10
+  apply_GERF_uniform@Amazon-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-CS
+      --hyperparameters-strategy uniform
+    deps:
+    - path: data/embeddings/structural/line/Amazon-CS/
+      md5: 15e5bade62abdc8359bb5f5a513fe3d4.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-CS/
+      md5: 7ec24281d8f4f230c4913f88b693c07f.dir
+      size: 70417797
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-CS/
+      md5: 525f8e48e8df868200b8ad61cd396ee5.dir
+      size: 70417790
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: c605f57ba27ae15d246732397ecef157
+      size: 2772
+    outs:
+    - path: data/embeddings/refined/GERF_uniform/line/Amazon-CS/
+      md5: 722c81888874c6d9720fe6d9ca88200d.dir
+      size: 70417788
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/n2v/Amazon-CS/
+      md5: 04a954a6cb914c9002de46c460832d64.dir
+      size: 70417790
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/sdne/Amazon-CS/
+      md5: 0581432e87b1b043425ea9d2b179e5eb.dir
+      size: 70417792
+      nfiles: 10
+  apply_GERF_uniform@Coauthor-CS:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Coauthor-CS
+      --hyperparameters-strategy uniform
+    deps:
+    - path: data/embeddings/structural/line/Coauthor-CS/
+      md5: 8aaff4b7a212f46d661004a109c195e6.dir
+      size: 93872515
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Coauthor-CS/
+      md5: 9d808314f5600884830d324a03918ecc.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Coauthor-CS/
+      md5: 1bcb871d529f7d2442e7395610930ccc.dir
+      size: 93872510
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: c605f57ba27ae15d246732397ecef157
+      size: 2772
+    outs:
+    - path: data/embeddings/refined/GERF_uniform/line/Coauthor-CS/
+      md5: 17509708dd46ed94c273c394b1a02bb4.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/n2v/Coauthor-CS/
+      md5: 4d4766969fafaecb8293f70bccaa379c.dir
+      size: 93872520
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/sdne/Coauthor-CS/
+      md5: f79fcc9a6ccbe41304d5f78b7a6a152c.dir
+      size: 93872518
+      nfiles: 10
+  apply_GERF_uniform@Amazon-Photo:
+    cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-Photo
+      --hyperparameters-strategy uniform
+    deps:
+    - path: data/embeddings/structural/line/Amazon-Photo/
+      md5: 685557904a58128565acb9394c98041d.dir
+      size: 39175550
+      nfiles: 10
+    - path: data/embeddings/structural/n2v/Amazon-Photo/
+      md5: d343747d5872e7d32d5493eb19b4b874.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/structural/sdne/Amazon-Photo/
+      md5: a561c74121c9bfc0362b7cfc868cec65.dir
+      size: 39175550
+      nfiles: 10
+    - path: experiments/scripts/refine/apply_GERF.py
+      md5: c605f57ba27ae15d246732397ecef157
+      size: 2772
+    outs:
+    - path: data/embeddings/refined/GERF_uniform/line/Amazon-Photo/
+      md5: 463eae85c5b0ebdc56e316df79175564.dir
+      size: 39175558
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/n2v/Amazon-Photo/
+      md5: 5237e518b7f5338b3358a22f60c0c4e0.dir
+      size: 39175560
+      nfiles: 10
+    - path: data/embeddings/refined/GERF_uniform/sdne/Amazon-Photo/
+      md5: 045d433e05267eba4b6faaa3407eaa52.dir
+      size: 39175559
+      nfiles: 10
