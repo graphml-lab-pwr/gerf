@@ -73,39 +73,42 @@ def main():
         "link_prediction",
     ]
 
-    methods = [
-        # Features only
-        "features",
+    methods = {
+        task: [
+            # Features only
+            "features",
 
-        # Node2vec based
-        "structural/n2v",
-        "refined/naive/Concat/n2v",
-        "refined/naive/ConcatPCA/n2v",
-        "refined/naive/MLP/n2v",
-        "refined/GERF_grid/n2v",
-        "refined/GERF_uniform/n2v",
+            # Node2vec based
+            "structural/n2v",
+            "refined/naive/Concat/n2v",
+            "refined/naive/ConcatPCA/n2v",
+            "refined/naive/MLP/n2v",
+            f"refined/GERF_grid{'_lp' if task == 'link_prediction' else ''}/n2v",
+            f"refined/GERF_uniform{'_lp' if task == 'link_prediction' else ''}/n2v",
 
-        # LINE based
-        "structural/line",
-        "refined/naive/Concat/line",
-        "refined/naive/ConcatPCA/line",
-        "refined/naive/MLP/line",
-        "refined/GERF_grid/line",
-        "refined/GERF_uniform/line",
+            # LINE based
+            "structural/line",
+            "refined/naive/Concat/line",
+            "refined/naive/ConcatPCA/line",
+            "refined/naive/MLP/line",
+            f"refined/GERF_grid{'_lp' if task == 'link_prediction' else ''}/line",
+            f"refined/GERF_uniform{'_lp' if task == 'link_prediction' else ''}/line",
 
-        # SDNE based
-        "structural/sdne",
-        "refined/naive/Concat/sdne",
-        "refined/naive/ConcatPCA/sdne",
-        "refined/naive/MLP/sdne",
-        "refined/GERF_grid/sdne",
-        "refined/GERF_uniform/sdne",
+            # SDNE based
+            "structural/sdne",
+            "refined/naive/Concat/sdne",
+            "refined/naive/ConcatPCA/sdne",
+            "refined/naive/MLP/sdne",
+            f"refined/GERF_grid{'_lp' if task == 'link_prediction' else ''}/sdne",
+            f"refined/GERF_uniform{'_lp' if task == 'link_prediction' else ''}/sdne",
 
-        # Attributed
-        "attributed/tadw",
-        "attributed/fscnmf",
-        "attributed/dgi",
-    ]
+            # Attributed
+            "attributed/tadw",
+            "attributed/fscnmf",
+            "attributed/dgi",
+        ]
+        for task in tasks
+    }
 
     datasets = [
         "WikiCS",
@@ -127,7 +130,7 @@ def main():
                 df = make_metric_table(
                     task=task,
                     datasets=datasets,
-                    methods=methods,
+                    methods=methods[task],
                     metric_name=metric_name,
                 )
                 fout.write(f"----- {metric_name} -----\n")
