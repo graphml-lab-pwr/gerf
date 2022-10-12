@@ -9,11 +9,14 @@ from sklearn.linear_model import LogisticRegression
 from torch_geometric.data import Data
 from torch_geometric.utils import to_networkx
 
+from src.retrofitting.neighbors import get_neighbors
+
 
 def estimate_hyperparameters(
     data: Data,
     embedding: torch.Tensor,
     prior_type: str,
+    **prior_kwargs,
 ) -> Dict[str, float]:
     """Estimates hyperparameters with DirichletMultinomialModel."""
     attr_dataset = _get_attr_dataset(data)
@@ -22,7 +25,9 @@ def estimate_hyperparameters(
     embedding_dataset = _get_embedding_dataset(data, embedding)
     embedding_correct_preds = classify_and_count_correct_preds(*embedding_dataset)
 
-    prior_coefficients = get_prior_values(prior_type=prior_type, data=data, embeddings=embedding)
+    prior_coefficients = get_prior_values(
+        prior_type=prior_type, data=data, embeddings=embedding, **prior_kwargs
+    )
     likelihood_values = (embedding_correct_preds, attr_correct_preds)
 
     return dict(zip(
@@ -38,12 +43,15 @@ def get_prior_values(
     prior_type: str,
     data: Optional[Data] = None,
     embeddings: Optional[torch.Tensor] = None,
+    prior_sample_frac: float = 0.05,
 ) -> Tuple[float, float]:
     if prior_type == "uniform":
         return 1.0, 1.0
     elif prior_type == "homophily":
         assert data is not None and embeddings is not None
-        return compute_attr_and_structural_homophily(data, embeddings)
+        prior_sample_size = len(data.x) * prior_sample_frac
+        alpha_z, alpha_x = compute_attr_and_structural_homophily(data, embeddings)
+        return int(alpha_z * prior_sample_size), int(alpha_x * prior_sample_size)
     else:
         raise ValueError(f"Unknown prior type: '{prior_type}'")
 
@@ -60,7 +68,7 @@ def classify_and_count_correct_preds(x_train, y_train, x_val, y_val):
 def calc_Dirichlet_Multinomial_MAP(
     prior_coefficients: Tuple[float, float],
     likelihood_values: Tuple[int, int],
-) -> ...:
+) -> np.ndarray:
     """Calculates the MAP estimate of the Dirichlet-Multinomial model.
 
     Based on: https://gitlab.com/fildne/fildne/-/blob/master/dgem/embedding/incremental/estimators.py
@@ -74,33 +82,30 @@ def calc_Dirichlet_Multinomial_MAP(
 
 
 def compute_attr_and_structural_homophily(
-    data: Data, embeddings: torch.Tensor, homophily_threshold: float = 0.5
+    data: Data, embeddings: torch.Tensor
 ) -> Tuple[float, float]:
-    graph = to_networkx(data)
-    attr_homophily = compute_homophily(graph, data.x.cpu().numpy(), homophily_threshold)
-    structural_homophily = compute_homophily(graph, embeddings, homophily_threshold)
-    return structural_homophily, attr_homophily
+    homophily_z = compute_homophily(data.edge_index, embeddings)
+    homophily_x = compute_homophily(data.edge_index, data.x)
+    return homophily_z, homophily_x
 
 
-def compute_homophily(
-    graph: nx.Graph, features: np.ndarray, homophily_threshold: float
-) -> float:
-    """Homophily defined as mean of the positive neighbors averaged over neighbors and all nodes."""
-    homophilies = []
+def compute_homophily(edge_index: torch.Tensor, features: torch.Tensor) -> float:
+    """Homophily defined as a fraction of nearest neighbors wrt attributes being network neighbors."""
 
-    for node in graph:
-        node_neighbors = np.array(list(graph.neighbors(node)))
+    attribute_edge_index, _ = get_neighbors(edge_index, features)
 
-        if len(node_neighbors) == 0:
-            continue
+    attribute_edges = set(list(zip(*attribute_edge_index.tolist())))
+    network_edges = set(list(zip(*edge_index.tolist())))
+    homophily = len(attribute_edges.intersection(network_edges)) / len(network_edges)
 
-        similarities = metrics.pairwise.cosine_similarity(
-            features[None, node], features[node_neighbors]
-        ).flatten()
-        node_homophily = np.mean(similarities >= homophily_threshold)
-        homophilies.append(node_homophily)
+    return homophily
 
-    return np.mean(homophilies)
+
+def _cosine_sim_to_angular_sim(cosine_similarity: np.ndarray) -> np.ndarray:
+    """Cosine similarity to angular similarity, bounded between 0 and 1.
+    Source: https://en.wikipedia.org/wiki/Cosine_similarity#Angular_distance_and_similarity
+    """
+    return 1 - np.arccos(cosine_similarity) / np.pi
 
 
 def _get_attr_dataset(
