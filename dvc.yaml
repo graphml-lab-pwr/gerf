@@ -340,6 +340,8 @@ stages:
         - data/embeddings/refined/naive/MLP/line/${item}/
         - data/embeddings/refined/naive/MLP/sdne/${item}/
 
+  # Node classification
+
   hps_GERF:
     foreach:
       - WikiCS
@@ -423,6 +425,73 @@ stages:
         - data/embeddings/
       outs:
         - data/metrics/node_classification/${item}/
+
+  # Link prediction
+
+  hps_GERF_lp:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF_lp.py --dataset ${item}
+      deps:
+        - experiments/scripts/refine/hps_GERF_lp.py
+        - data/embeddings/structural/n2v/${item}/
+        - data/embeddings/structural/line/${item}/
+        - data/embeddings/structural/sdne/${item}/
+      outs:
+        - data/hps/GERF_lp/${item}/log.csv
+        - data/hps/GERF_lp/${item}/best.json
+
+  apply_GERF_grid_lp:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: >-
+        PYTHONPATH=.
+        python3 experiments/scripts/refine/apply_GERF_lp.py
+        --dataset ${item}
+        --hyperparameters-strategy grid
+      deps:
+        - experiments/scripts/refine/apply_GERF_lp.py
+        - data/embeddings/structural/n2v/${item}/
+        - data/embeddings/structural/line/${item}/
+        - data/embeddings/structural/sdne/${item}/
+        - data/hps/GERF_lp/${item}/best.json
+      outs:
+        - data/embeddings/refined/GERF_grid_lp/n2v/${item}/
+        - data/embeddings/refined/GERF_grid_lp/line/${item}/
+        - data/embeddings/refined/GERF_grid_lp/sdne/${item}/
+
+  apply_GERF_uniform_lp:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: >-
+        PYTHONPATH=.
+        python3 experiments/scripts/refine/apply_GERF_lp.py
+        --dataset ${item}
+        --hyperparameters-strategy uniform
+      deps:
+        - experiments/scripts/refine/apply_GERF_lp.py
+        - data/embeddings/structural/n2v/${item}/
+        - data/embeddings/structural/line/${item}/
+        - data/embeddings/structural/sdne/${item}/
+      outs:
+        - data/embeddings/refined/GERF_uniform_lp/n2v/${item}/
+        - data/embeddings/refined/GERF_uniform_lp/line/${item}/
+        - data/embeddings/refined/GERF_uniform_lp/sdne/${item}/
 
   evaluate_link_prediction:
     foreach:
