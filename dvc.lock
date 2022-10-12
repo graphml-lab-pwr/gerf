@@ -276,23 +276,23 @@ stages:
     cmd: PYTHONPATH=. python3 experiments/scripts/make_report_tables.py
     deps:
     - path: data/metrics/link_prediction
-      md5: 7c88463d94c993428f0c79b509efe277.dir
-      size: 2579565
-      nfiles: 76
+      md5: be50e8afe3868767036db3bf6d6a1dbb.dir
+      size: 3008221
+      nfiles: 88
     - path: data/metrics/node_classification
-      md5: 061092eafd3ca148067464cfe8c3875b.dir
-      size: 12936984
-      nfiles: 76
+      md5: 49728212b5fa93b6eb5afe125c8ef7a0.dir
+      size: 15092119
+      nfiles: 88
     - path: experiments/scripts/make_report_tables.py
-      md5: 4541da744e0dba550a8240a5ed5c4552
-      size: 3404
+      md5: 355d5a07ab1f08e30f2a33fafa6243ad
+      size: 3529
     outs:
     - path: data/report_link_prediction.txt
-      md5: 5495bca7194fd9e8e88aea570c723f8b
-      size: 1970
+      md5: f33a9d67dbe8ba02e1bea4b153f99c2c
+      size: 2249
     - path: data/report_node_classification.txt
-      md5: c3658c38fa21dddfd70c6183b1128b85
-      size: 1970
+      md5: d14a49b605754d8161ea37a511231933
+      size: 2249
   embed_node2vec@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/embed/structural/node2vec.py --dataset
       Amazon-CS --num-retrains 10
@@ -2796,9 +2796,9 @@ stages:
       WikiCS
     deps:
     - path: data/embeddings/
-      md5: 78264f6d3b63cf9e12bdca8de60e7e93.dir
-      size: 22082490442
-      nfiles: 720
+      md5: 1815c8528db34faaef4b9728f48ef783.dir
+      size: 22872638035
+      nfiles: 840
     - path: experiments/scripts/evaluate_link_prediction.py
       md5: 838d54dd1b21679245c3543c93f429ba
       size: 1900
@@ -2824,22 +2824,25 @@ stages:
         - refined/naive/MLP/line
         - refined/naive/MLP/n2v
         - refined/naive/MLP/sdne
-        - refined/GERF/line
-        - refined/GERF/n2v
-        - refined/GERF/sdne
+        - refined/GERF_grid/line
+        - refined/GERF_grid/n2v
+        - refined/GERF_grid/sdne
+        - refined/GERF_uniform/line
+        - refined/GERF_uniform/n2v
+        - refined/GERF_uniform/sdne
     outs:
     - path: data/metrics/link_prediction/WikiCS/
-      md5: e51a501526e94948da6eaa0cb1c04358.dir
-      size: 646649
-      nfiles: 19
+      md5: 269de3d4bbbd3eb48b76aed7f13109db.dir
+      size: 753814
+      nfiles: 22
   evaluate_link_prediction@Coauthor-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_link_prediction.py --dataset
       Coauthor-CS
     deps:
     - path: data/embeddings/
-      md5: 78264f6d3b63cf9e12bdca8de60e7e93.dir
-      size: 22082490442
-      nfiles: 720
+      md5: 1815c8528db34faaef4b9728f48ef783.dir
+      size: 22872638035
+      nfiles: 840
     - path: experiments/scripts/evaluate_link_prediction.py
       md5: 838d54dd1b21679245c3543c93f429ba
       size: 1900
@@ -2865,22 +2868,25 @@ stages:
         - refined/naive/MLP/line
         - refined/naive/MLP/n2v
         - refined/naive/MLP/sdne
-        - refined/GERF/line
-        - refined/GERF/n2v
-        - refined/GERF/sdne
+        - refined/GERF_grid/line
+        - refined/GERF_grid/n2v
+        - refined/GERF_grid/sdne
+        - refined/GERF_uniform/line
+        - refined/GERF_uniform/n2v
+        - refined/GERF_uniform/sdne
     outs:
     - path: data/metrics/link_prediction/Coauthor-CS/
-      md5: ea9c3d0bdfa4d0e63f0a5a0a08eea0a3.dir
-      size: 639765
-      nfiles: 19
+      md5: c31a1dad08f2c25341f1027f97f21786.dir
+      size: 746819
+      nfiles: 22
   evaluate_link_prediction@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_link_prediction.py --dataset
       Amazon-CS
     deps:
     - path: data/embeddings/
-      md5: 78264f6d3b63cf9e12bdca8de60e7e93.dir
-      size: 22082490442
-      nfiles: 720
+      md5: 1815c8528db34faaef4b9728f48ef783.dir
+      size: 22872638035
+      nfiles: 840
     - path: experiments/scripts/evaluate_link_prediction.py
       md5: 838d54dd1b21679245c3543c93f429ba
       size: 1900
@@ -2906,22 +2912,25 @@ stages:
         - refined/naive/MLP/line
         - refined/naive/MLP/n2v
         - refined/naive/MLP/sdne
-        - refined/GERF/line
-        - refined/GERF/n2v
-        - refined/GERF/sdne
+        - refined/GERF_grid/line
+        - refined/GERF_grid/n2v
+        - refined/GERF_grid/sdne
+        - refined/GERF_uniform/line
+        - refined/GERF_uniform/n2v
+        - refined/GERF_uniform/sdne
     outs:
     - path: data/metrics/link_prediction/Amazon-CS/
-      md5: 53c277fde602ad51ea91f9e22ae57387.dir
-      size: 646879
-      nfiles: 19
+      md5: 915ab6318743173edbb5050bfc365a07.dir
+      size: 754160
+      nfiles: 22
   evaluate_link_prediction@Amazon-Photo:
     cmd: PYTHONPATH=. python3 experiments/scripts/evaluate_link_prediction.py --dataset
       Amazon-Photo
     deps:
     - path: data/embeddings/
-      md5: 78264f6d3b63cf9e12bdca8de60e7e93.dir
-      size: 22082490442
-      nfiles: 720
+      md5: 1815c8528db34faaef4b9728f48ef783.dir
+      size: 22872638035
+      nfiles: 840
     - path: experiments/scripts/evaluate_link_prediction.py
       md5: 838d54dd1b21679245c3543c93f429ba
       size: 1900
@@ -2947,14 +2956,17 @@ stages:
         - refined/naive/MLP/line
         - refined/naive/MLP/n2v
         - refined/naive/MLP/sdne
-        - refined/GERF/line
-        - refined/GERF/n2v
-        - refined/GERF/sdne
+        - refined/GERF_grid/line
+        - refined/GERF_grid/n2v
+        - refined/GERF_grid/sdne
+        - refined/GERF_uniform/line
+        - refined/GERF_uniform/n2v
+        - refined/GERF_uniform/sdne
     outs:
     - path: data/metrics/link_prediction/Amazon-Photo/
-      md5: 36c3fe909068b0f4d990e64a7f237762.dir
-      size: 646272
-      nfiles: 19
+      md5: b53891afbb6e393526e8f438c6b1634d.dir
+      size: 753428
+      nfiles: 22
   apply_GERF_grid@Amazon-CS:
     cmd: PYTHONPATH=. python3 experiments/scripts/refine/apply_GERF.py --dataset Amazon-CS
       --hyperparameters-strategy grid
