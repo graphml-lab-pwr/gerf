@@ -358,6 +358,24 @@ stages:
         - data/hps/GERF/${item}/log.csv
         - data/hps/GERF/${item}/best.json
 
+  hps_GERF_lp:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: PYTHONPATH=. python3 experiments/scripts/refine/hps_GERF_lp.py --dataset ${item}
+      deps:
+        - experiments/scripts/refine/hps_GERF_lp.py
+        - data/embeddings/structural/n2v/${item}/
+        - data/embeddings/structural/line/${item}/
+        - data/embeddings/structural/sdne/${item}/
+      outs:
+        - data/hps/GERF_lp/${item}/log.csv
+        - data/hps/GERF_lp/${item}/best.json
+
   apply_GERF_grid:
     foreach:
       - WikiCS
