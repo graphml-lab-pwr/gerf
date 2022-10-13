@@ -85,6 +85,7 @@ def main():
             "refined/naive/MLP/n2v",
             f"refined/GERF_grid{'_lp' if task == 'link_prediction' else ''}/n2v",
             f"refined/GERF_uniform{'_lp' if task == 'link_prediction' else ''}/n2v",
+            f"refined/GERF_homophily{'_lp' if task == 'link_prediction' else ''}/n2v",
 
             # LINE based
             "structural/line",
@@ -93,6 +94,7 @@ def main():
             "refined/naive/MLP/line",
             f"refined/GERF_grid{'_lp' if task == 'link_prediction' else ''}/line",
             f"refined/GERF_uniform{'_lp' if task == 'link_prediction' else ''}/line",
+            f"refined/GERF_homophily{'_lp' if task == 'link_prediction' else ''}/line",
 
             # SDNE based
             "structural/sdne",
@@ -101,6 +103,7 @@ def main():
             "refined/naive/MLP/sdne",
             f"refined/GERF_grid{'_lp' if task == 'link_prediction' else ''}/sdne",
             f"refined/GERF_uniform{'_lp' if task == 'link_prediction' else ''}/sdne",
+            f"refined/GERF_homophily{'_lp' if task == 'link_prediction' else ''}/sdne",
 
             # Attributed
             "attributed/tadw",

@@ -27,8 +27,8 @@ def get_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--hyperparameters-strategy",
-        help="Which hyperparameters to use: ('grid', 'uniform')",
-        choices=["grid", "uniform"],
+        help="Which hyperparameters to use: ('grid', 'uniform', 'homophily')",
+        choices=["grid", "uniform", "homophily"],
         required=True,
     )
 
@@ -71,6 +71,8 @@ def _convert_to_lp_problem(
             data.x[pos_edge_index[0]] * data.x[pos_edge_index[1]],
             data.x[neg_edge_index[0]] * data.x[neg_edge_index[1]],
         ], dim=0),
+        x_node=data.x,
+        edge_index=pos_edge_index,
         y=torch.cat([pos_labels, neg_labels], dim=0),
         train_mask=train_idx,
         val_mask=val_idx,
@@ -118,11 +120,12 @@ def main():
             if hparams_strategy == "grid":
                 with open(grid_path, "r") as fin:
                     lambda_x = json.load(fin)[emb_method]["lambda_x"]
-            elif hparams_strategy in ("uniform",):
+            elif hparams_strategy in ("uniform", "homophily"):
                 data_lp, z_lp = _convert_to_lp_problem(data, z)
                 lambda_x = estimate_hyperparameters(
                     data=data_lp,
                     embedding=z_lp,
+                    embedding_node=z,
                     prior_type=hparams_strategy,
                 )["lambda_x"]
             else:

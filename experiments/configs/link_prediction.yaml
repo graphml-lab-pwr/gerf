@@ -21,3 +21,6 @@ embedding_methods:
   - refined/GERF_uniform_lp/line
   - refined/GERF_uniform_lp/n2v
   - refined/GERF_uniform_lp/sdne
+  - refined/GERF_homophily_lp/line
+  - refined/GERF_homophily_lp/n2v
+  - refined/GERF_homophily_lp/sdne

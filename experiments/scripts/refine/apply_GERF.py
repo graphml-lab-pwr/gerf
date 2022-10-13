@@ -22,8 +22,8 @@ def get_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--hyperparameters-strategy",
-        help="Which hyperparameters to use: ('grid', 'uniform')",
-        choices=["grid", "uniform"],
+        help="Which hyperparameters to use: ('grid', 'uniform', 'homophily')",
+        choices=["grid", "uniform", "homophily"],
         required=True,
     )
 
@@ -65,7 +65,7 @@ def main():
             if hparams_strategy == "grid":
                 with open(grid_path, "r") as fin:
                     lambda_x = json.load(fin)[emb_method]["lambda_x"]
-            elif hparams_strategy in ("uniform",):
+            elif hparams_strategy in ("uniform", "homophily"):
                 lambda_x = estimate_hyperparameters(
                     data=data,
                     embedding=z,

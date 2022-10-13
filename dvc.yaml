@@ -407,6 +407,29 @@ stages:
         - data/embeddings/refined/GERF_uniform/line/${item}/
         - data/embeddings/refined/GERF_uniform/sdne/${item}/
 
+  apply_GERF_homophily:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: >-
+        PYTHONPATH=.
+        python3 experiments/scripts/refine/apply_GERF.py
+        --dataset ${item}
+        --hyperparameters-strategy homophily
+      deps:
+        - experiments/scripts/refine/apply_GERF.py
+        - data/embeddings/structural/n2v/${item}/
+        - data/embeddings/structural/line/${item}/
+        - data/embeddings/structural/sdne/${item}/
+      outs:
+        - data/embeddings/refined/GERF_homophily/n2v/${item}/
+        - data/embeddings/refined/GERF_homophily/line/${item}/
+        - data/embeddings/refined/GERF_homophily/sdne/${item}/
+
   evaluate_node_classification:
     foreach:
       - WikiCS
@@ -492,6 +515,29 @@ stages:
         - data/embeddings/refined/GERF_uniform_lp/n2v/${item}/
         - data/embeddings/refined/GERF_uniform_lp/line/${item}/
         - data/embeddings/refined/GERF_uniform_lp/sdne/${item}/
+
+  apply_GERF_homophily_lp:
+    foreach:
+      - WikiCS
+      - Amazon-CS
+      - Amazon-Photo
+      - Coauthor-CS
+    do:
+      wdir: .
+      cmd: >-
+        PYTHONPATH=.
+        python3 experiments/scripts/refine/apply_GERF_lp.py
+        --dataset ${item}
+        --hyperparameters-strategy homophily
+      deps:
+        - experiments/scripts/refine/apply_GERF_lp.py
+        - data/embeddings/structural/n2v/${item}/
+        - data/embeddings/structural/line/${item}/
+        - data/embeddings/structural/sdne/${item}/
+      outs:
+        - data/embeddings/refined/GERF_homophily_lp/n2v/${item}/
+        - data/embeddings/refined/GERF_homophily_lp/line/${item}/
+        - data/embeddings/refined/GERF_homophily_lp/sdne/${item}/
 
   evaluate_link_prediction:
     foreach:

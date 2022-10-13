@@ -16,6 +16,7 @@ def estimate_hyperparameters(
     data: Data,
     embedding: torch.Tensor,
     prior_type: str,
+    embedding_node: Optional[torch.Tensor] = None,
     **prior_kwargs,
 ) -> Dict[str, float]:
     """Estimates hyperparameters with DirichletMultinomialModel."""
@@ -26,7 +27,11 @@ def estimate_hyperparameters(
     embedding_correct_preds = classify_and_count_correct_preds(*embedding_dataset)
 
     prior_coefficients = get_prior_values(
-        prior_type=prior_type, data=data, embeddings=embedding, **prior_kwargs
+        prior_type=prior_type,
+        data=data,
+        embeddings=embedding,
+        embeddings_node=embedding_node,
+        **prior_kwargs
     )
     likelihood_values = (embedding_correct_preds, attr_correct_preds)
 
@@ -43,14 +48,19 @@ def get_prior_values(
     prior_type: str,
     data: Optional[Data] = None,
     embeddings: Optional[torch.Tensor] = None,
+    embeddings_node: Optional[torch.Tensor] = None,
     prior_sample_frac: float = 0.05,
 ) -> Tuple[float, float]:
     if prior_type == "uniform":
         return 1.0, 1.0
     elif prior_type == "homophily":
         assert data is not None and embeddings is not None
-        prior_sample_size = len(data.x) * prior_sample_frac
-        alpha_z, alpha_x = compute_attr_and_structural_homophily(data, embeddings)
+        if embeddings_node is not None:
+            num_nodes = len(embeddings_node)
+        else:
+            num_nodes = len(data.x)
+        prior_sample_size = num_nodes * prior_sample_frac
+        alpha_z, alpha_x = compute_attr_and_structural_homophily(data, embeddings, embeddings_node)
         return int(alpha_z * prior_sample_size), int(alpha_x * prior_sample_size)
     else:
         raise ValueError(f"Unknown prior type: '{prior_type}'")
@@ -82,17 +92,32 @@ def calc_Dirichlet_Multinomial_MAP(
 
 
 def compute_attr_and_structural_homophily(
-    data: Data, embeddings: torch.Tensor
+    data: Data,
+    embeddings: torch.Tensor,
+    embeddings_node: Optional[torch.Tensor] = None,
 ) -> Tuple[float, float]:
-    homophily_z = compute_homophily(data.edge_index, embeddings)
-    homophily_x = compute_homophily(data.edge_index, data.x)
+    edge_index = data.edge_index
+
+    if embeddings_node is not None:
+        z = embeddings_node
+    else:
+        z = embeddings
+
+    if hasattr(data, "x_node"):
+        print("Found x_node")
+        x = data.x_node
+    else:
+        x = data.x
+
+    homophily_z = compute_homophily(edge_index, z)
+    homophily_x = compute_homophily(edge_index, x)
     return homophily_z, homophily_x
 
 
 def compute_homophily(edge_index: torch.Tensor, features: torch.Tensor) -> float:
     """Homophily defined as a fraction of nearest neighbors wrt attributes being network neighbors."""
 
-    attribute_edge_index, _ = get_neighbors(edge_index, features)
+    attribute_edge_index, _ = get_neighbors(edge_index.cpu(), features.cpu())
 
     attribute_edges = set(list(zip(*attribute_edge_index.tolist())))
     network_edges = set(list(zip(*edge_index.tolist())))
