@@ -2,7 +2,6 @@
 import os
 
 import optuna
-import torch
 import typer
 import yaml
 
